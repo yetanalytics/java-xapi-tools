@@ -1,14 +1,14 @@
 {
-  "id": "6fbd600f-d17c-4c74-801a-2ec2e53231c9",
+  "id": "6fbd600f-d17c-4c74-801a-2ec2e53231c8",
   "actor": {
     "objectType": "Group",
-    "name": "In-Group",
+    "name": "Relevant Group",
     "mbox": "group@group.com",
     "member": [
       {
         "name": "Cliff Casey",
         "account": {
-          "homePage": "https://users.training.boeing.com",
+          "homePage": "https://users.training.com",
           "name": "23897525"
         }
       }
@@ -19,11 +19,19 @@
     "display": { "en-us": "Set" }
   },
   "object": {
-    "id": "https://www.yetanalytics.com/profiles/va/1.0/concepts/activities/act1"
+    "id": "https://www.yetanalytics.com/profiles/va/1.0/concepts/activities/act1",
+    "definition": {
+      "name": {
+        "en-us": "Activity 1"
+      },
+      "description": {
+        "en-us": "The First Activity"
+      }
+    }
   },
   "authority": {
-    "name": "Offical Authority Comission Department",
-    "mbox": "important@authority.gov"
+    "name": "Yet Analytics Inc",
+    "mbox": "authority@yetanalytics.com"
   },
   "stored": "2023-10-27T09:03:21.722Z",
   "timestamp": "2023-10-27T09:03:21.723Z"
