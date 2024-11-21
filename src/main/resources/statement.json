@@ -15,8 +15,11 @@
     ]
   },
   "verb": {
-    "id": "https://xapi.boeing.com/profiles/va/1.0/concepts/verbs/progressed",
+    "id": "https://www.yetanalytics.com/profiles/va/1.0/concepts/verbs/set",
     "display": { "en-us": "Set" }
+  },
+  "object": {
+    "id": "https://www.yetanalytics.com/profiles/va/1.0/concepts/activities/act1"
   },
   "authority": {
     "name": "Offical Authority Comission Department",

@@ -1,23 +1,12 @@
 package com.yetanalytics.xapi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.yetanalytics.xapi.model.deserializers.AbstractActorDeserializer;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-
-@JsonTypeInfo(use = Id.NAME, property = "objectType", include = As.PROPERTY, defaultImpl = Agent.class)
-@JsonSubTypes(value = { 
-        @JsonSubTypes.Type(value = Agent.class, name = "Agent"),
-        @JsonSubTypes.Type(value = Group.class, name = "Group") 
-})
-public abstract class AbstractActor {
+@JsonDeserialize(using = AbstractActorDeserializer.class)
+public abstract class AbstractActor extends AbstractObject {
     
     private String name;
-    
-    private ActorObjectType objectType;
 
     //IFI
     private String mbox;
@@ -32,13 +21,6 @@ public abstract class AbstractActor {
         this.name = name;
     }
 
-    public ActorObjectType getObjectType() {
-        return objectType;
-    }
-    public void setObjectType(ActorObjectType objectType) {
-        this.objectType = objectType;
-    }
-    
     public String getMbox() {
         return mbox;
     }
