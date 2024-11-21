@@ -1,15 +1,21 @@
 package com.yetanalytics.xapi.model;
 
 import java.util.UUID;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.time.ZonedDateTime;
 
-public class Statement {
+@JsonDeserialize
+public class Statement extends AbstractObject {
     
     private UUID id;
     
-    private AbstractActor actor;
+    private AbstractObject actor;
 
     private Verb verb;
+
+    private AbstractObject object;
     
     private AbstractActor authority;
     
@@ -24,10 +30,10 @@ public class Statement {
         this.id = id;
     }
     
-    public AbstractActor getActor() {
+    public AbstractObject getActor() {
         return actor;
     }
-    public void setActor(AbstractActor actor) {
+    public void setActor(AbstractObject actor) {
         this.actor = actor;
     }
 
@@ -36,6 +42,13 @@ public class Statement {
     }
     public void setVerb(Verb verb) {
         this.verb = verb;
+    }
+
+    public AbstractObject getObject() {
+        return object;
+    }
+    public void setObject(AbstractObject object) {
+        this.object = object;
     }
     
     public AbstractActor getAuthority() {
