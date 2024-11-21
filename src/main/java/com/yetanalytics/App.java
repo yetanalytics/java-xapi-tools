@@ -8,12 +8,7 @@ import java.nio.file.Paths;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yetanalytics.xapi.model.Statement;
-import com.yetanalytics.xapi.util.Mapper;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
