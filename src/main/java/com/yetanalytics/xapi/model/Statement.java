@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -35,6 +36,8 @@ public class Statement extends AbstractObject {
     private ZonedDateTime stored;
 
     private String version;
+
+    private List<Attachment> attachments;
 
     public UUID getId() {
         return id;
@@ -114,5 +117,13 @@ public class Statement extends AbstractObject {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
     }
 }
