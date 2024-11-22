@@ -67,6 +67,12 @@ public class XapiSerializationTest extends TestCase {
         assertEquals(diff.size(), 0);
     }
 
+    public void testAttachments() throws IOException {
+        File testFile = TestFileUtils.getJsonTestFile("attachments");
+        ArrayNode diff = reserializeAndDiff(testFile, Statement.class);
+        assertEquals(diff.size(), 0);
+    }
+
     public void testGroupActor() throws IOException {
         File testFile = TestFileUtils.getJsonTestFile("group-actor");
         ArrayNode diff = reserializeAndDiff(testFile, Statement.class);

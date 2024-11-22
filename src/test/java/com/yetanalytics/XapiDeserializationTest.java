@@ -66,6 +66,20 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(authority.getMbox(), "mailto:authority@yetanalytics.com");
     }
 
+    public void testAttachments() throws StreamReadException, DatabindException, IOException {
+        File testFile = TestFileUtils.getJsonTestFile("attachments");
+        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
+        assertEquals(stmt.getAttachments().size(), 1);
+        Attachment att1 = stmt.getAttachments().get(0);
+        assertEquals(att1.getUsageType(), "https://www.yetanalytics.com/usagetypes/1");
+        assertEquals(att1.getDisplay().get("en-us"), "Attachment 1");
+        assertEquals(att1.getDescription().get("en-us"), "The First Attachment");
+        assertEquals(att1.getContentType(), "application/json");
+        assertEquals(att1.getLength(), Integer.valueOf(450));
+        assertEquals(att1.getSha2(), "426cf3a8b2864dd91201b989ba5728181da52bfff9a0489670e54cd8ec8b3a50");
+        assertEquals(att1.getFileUrl(), "https://www.yetanalytics.com/files/file1.json");
+    }
+
     public void testExtensions() throws StreamReadException, DatabindException, IOException {
         File testFile = TestFileUtils.getJsonTestFile("extensions");
         Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
