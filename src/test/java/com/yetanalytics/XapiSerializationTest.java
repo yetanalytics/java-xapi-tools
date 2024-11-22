@@ -67,7 +67,7 @@ public class XapiSerializationTest extends TestCase {
         assertEquals(diff.size(), 0);
     }
 
-    public void testGroup() throws IOException {
+    public void testGroupActor() throws IOException {
         File testFile = TestFileUtils.getJsonTestFile("group-actor");
         ArrayNode diff = reserializeAndDiff(testFile, Statement.class);
         assertEquals(diff.size(), 0);
@@ -79,8 +79,8 @@ public class XapiSerializationTest extends TestCase {
         assertEquals(diff.size(), 0);
     }
 
-    public void testCmi() throws IOException {
-        File testFile = TestFileUtils.getJsonTestFile("cmi");
+    public void testInteractionActivity() throws IOException {
+        File testFile = TestFileUtils.getJsonTestFile("interaction-activity");
         ArrayNode diff = reserializeAndDiff(testFile, Statement.class);
         assertEquals(diff.size(), 0);
     }
