@@ -1,9 +1,9 @@
 {
-  "id": "6fbd600f-d17c-4c74-801a-2ec2e53231c8",
+  "id": "6fbd600f-d47c-4c74-801a-2ec2e53231c8",
   "actor": {
     "objectType": "Group",
     "name": "Relevant Group",
-    "mbox": "group@group.com",
+    "mbox": "mailto:group@group.com",
     "member": [
       {
         "name": "Cliff Casey",
@@ -31,7 +31,7 @@
   },
   "authority": {
     "name": "Yet Analytics Inc",
-    "mbox": "authority@yetanalytics.com"
+    "mbox": "mailto:authority@yetanalytics.com"
   },
   "stored": "2023-10-27T09:03:21.722Z",
   "timestamp": "2023-10-27T09:03:21.723Z"

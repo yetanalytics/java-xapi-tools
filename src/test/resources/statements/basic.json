@@ -1,5 +1,5 @@
 {
-  "id": "6fbd600f-d17c-4c74-801a-2ec2e53231c8",
+  "id": "6fbd600f-d87c-4c74-801a-2ec2e53231c8",
   "actor": {
     "name": "Cliff Casey",
     "account": {
@@ -24,7 +24,7 @@
   },
   "authority": {
     "name": "Yet Analytics Inc",
-    "mbox": "authority@yetanalytics.com"
+    "mbox": "mailto:authority@yetanalytics.com"
   },
   "version": "1.0.3",
   "stored": "2023-10-27T09:03:21.722Z",
