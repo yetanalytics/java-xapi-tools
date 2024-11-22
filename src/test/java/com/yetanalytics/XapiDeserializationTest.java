@@ -147,4 +147,15 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(choice.getId(), "a");
         assertEquals(choice.getDescription().get("en"), "A");
     }
+
+    public void testStatementResults() throws StreamReadException, DatabindException, IOException {
+        File testFile = TestFileUtils.getJsonTestFile("statementresults");
+        StatementResult stmtRes = Mapper.getMapper().readValue(testFile, StatementResult.class);
+        assertEquals(stmtRes.getMore(), "/xapi/statements?limit=2&from=6fbd600f-d17c-4c74-801a-2ec2e53231c9");
+
+        assertEquals(stmtRes.getStatements().get(0).getVerb().getId(),
+            "https://www.yetanalytics.com/profiles/thing/1.0/concepts/verbs/did");
+        Agent actor2 = (Agent) stmtRes.getStatements().get(1).getActor();
+        assertEquals(actor2.getName(), "Student User 2");
+    }
 }
