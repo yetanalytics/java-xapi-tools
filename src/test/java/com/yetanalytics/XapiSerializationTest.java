@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.File;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.flipkart.zjsonpatch.JsonDiff;
 import com.yetanalytics.util.TestFileUtils;
 import com.yetanalytics.xapi.model.*;
@@ -27,14 +29,15 @@ public class XapiSerializationTest extends TestCase {
     }
 
     public <T> ArrayNode reserializeAndDiff(File original, Class<T> toConvert) throws IOException {
+
+        ObjectMapper mapper = Mapper.getMapper();
         //Deserialize
-        T stmt = Mapper.getMapper().readValue(original, toConvert);
+        T stmt = mapper.readValue(original, toConvert);
         //Reserialize
-        String reserialized = Mapper.getMapper().writeValueAsString(stmt);
-        System.out.println(reserialized);
+        String reserialized = mapper.writeValueAsString(stmt);
         
-        JsonNode before = Mapper.getMapper().readTree(original);
-        JsonNode after = Mapper.getMapper().readTree(reserialized);
+        JsonNode before = mapper.readTree(original);
+        JsonNode after = mapper.readTree(reserialized);
         //Get Diff
         return (ArrayNode) JsonDiff.asJson(before, after);
     }
@@ -48,7 +51,14 @@ public class XapiSerializationTest extends TestCase {
     public void testContext() throws IOException {
         File testFile = TestFileUtils.getJsonTestFile("context");
         ArrayNode diff = reserializeAndDiff(testFile, Statement.class);
+
+        // Exception on equality for context activity category where it came in as
+        // a single object, not array, and came out as array
         assertEquals(diff.size(), 1);
+        ObjectNode diffNode = (ObjectNode) diff.get(0);
+        assertEquals(diffNode.get("op").toString(), "\"replace\"");
+        assertEquals(diffNode.get("path").toString(), "\"/context/contextActivities/category\"");
+        
     }
 
     public void testExtensions() throws IOException {
