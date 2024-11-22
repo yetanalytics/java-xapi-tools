@@ -14,7 +14,7 @@
   "object": {
     "id": "https://www.yetanalytics.com/activities/act1/question1",
     "definition": {
-      "type": "http://adlnet.gov/expapi/activities/cmi.interaction",
+      "type": "http://adlnet.gov/expapi/activities/cmi.interactin",
       "name": {
         "en": "Multichoice Question"
       },
