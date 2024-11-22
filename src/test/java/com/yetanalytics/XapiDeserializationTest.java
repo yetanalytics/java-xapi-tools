@@ -10,7 +10,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yetanalytics.util.TestFileUtils;
 import com.yetanalytics.xapi.model.*;
 import com.yetanalytics.xapi.util.Mapper;
 
@@ -18,46 +18,21 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/**
- * Unit test for simple App.
- */
 public class XapiDeserializationTest extends TestCase {
 
-    ObjectMapper mapper;
-
-    private ObjectMapper getMapper() {
-        if (mapper == null) {
-            mapper = Mapper.getMapper();
-        }
-        return mapper;
-    }
-
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
     public XapiDeserializationTest( String testName )
     {
         super( testName );
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
     public static Test suite()
     {
         return new TestSuite( XapiDeserializationTest.class );
     }
 
-    public static File getJsonTestFile(String filename){
-        String path = String.format("src/test/resources/statements/%s.json", filename);
-        return new File(path);
-    }
-
     public void testBasicStatement() throws StreamReadException, DatabindException, IOException {
-        File testFile = getJsonTestFile("basic");
-        Statement stmt = getMapper().readValue(testFile, Statement.class);
+        File testFile = TestFileUtils.getJsonTestFile("basic");
+        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
 
         assertEquals(stmt.getTimestamp().format(DateTimeFormatter.ISO_INSTANT), "2023-10-27T09:03:21.723Z");
         assertEquals(stmt.getStored().format(DateTimeFormatter.ISO_INSTANT), "2023-10-27T09:03:21.722Z");
@@ -84,8 +59,8 @@ public class XapiDeserializationTest extends TestCase {
     }
 
     public void testExtensions() throws StreamReadException, DatabindException, IOException {
-        File testFile = getJsonTestFile("extensions");
-        Statement stmt = getMapper().readValue(testFile, Statement.class);
+        File testFile = TestFileUtils.getJsonTestFile("extensions");
+        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
 
         Activity object = (Activity) stmt.getObject();
         assertEquals(object.getId(), "https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1");
@@ -117,8 +92,8 @@ public class XapiDeserializationTest extends TestCase {
     }
 
     public void testResult() throws StreamReadException, DatabindException, IOException {
-        File testFile = getJsonTestFile("result");
-        Statement stmt = getMapper().readValue(testFile, Statement.class);
+        File testFile = TestFileUtils.getJsonTestFile("result");
+        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
 
         Result res = stmt.getResult();
         assertTrue(res.getCompletion());
@@ -134,8 +109,8 @@ public class XapiDeserializationTest extends TestCase {
     }
 
     public void testContext() throws StreamReadException, DatabindException, IOException {
-        File testFile = getJsonTestFile("context");
-        Statement stmt = getMapper().readValue(testFile, Statement.class);
+        File testFile = TestFileUtils.getJsonTestFile("context");
+        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
 
         Context ctx = stmt.getContext();
         assertEquals(ctx.getRegistration(), UUID.fromString("6fbd600f-d17c-4c74-801a-2ec2e53231c7"));

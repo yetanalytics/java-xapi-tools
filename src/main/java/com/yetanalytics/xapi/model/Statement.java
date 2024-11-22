@@ -3,6 +3,8 @@ package com.yetanalytics.xapi.model;
 import java.util.UUID;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.yetanalytics.xapi.model.serializers.DateTimeSerializer;
 
 import java.time.ZonedDateTime;
 
@@ -23,8 +25,10 @@ public class Statement extends AbstractObject {
     
     private AbstractActor authority;
     
+    @JsonSerialize(using = DateTimeSerializer.class)
     private ZonedDateTime timestamp;
     
+    @JsonSerialize(using = DateTimeSerializer.class)
     private ZonedDateTime stored;
 
     private String version;

@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.ObjectTypeDeserializer;
 
@@ -17,7 +18,8 @@ public enum ObjectType {
         this.displayName = displayName;
     }
 
-    @Override 
+    @Override
+    @JsonValue
     public String toString() { return displayName; }
 
     public static ObjectType getByDisplayName(String name) {

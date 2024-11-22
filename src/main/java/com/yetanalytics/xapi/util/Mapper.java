@@ -1,13 +1,21 @@
 package com.yetanalytics.xapi.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class Mapper {
+public final class Mapper {
 
-    public static ObjectMapper getMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.findAndRegisterModules();
-        return mapper;
-    }
+    private static ObjectMapper INSTANCE;
     
+    private Mapper() {}
+    
+    public synchronized static ObjectMapper getMapper() {
+        if(INSTANCE == null) {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.findAndRegisterModules();
+            mapper.setSerializationInclusion(Include.NON_NULL);
+            INSTANCE = mapper;
+        }
+        return INSTANCE;
+    }
 }

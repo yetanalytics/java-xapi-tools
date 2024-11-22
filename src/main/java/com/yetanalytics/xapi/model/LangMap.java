@@ -1,12 +1,16 @@
 package com.yetanalytics.xapi.model;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
+import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
 
 @JsonDeserialize(using = LangMapDeserializer.class)
+@JsonSerialize(using = LangMapSerializer.class)
 public class LangMap {
 
     private HashMap<String,String> languageHashMap = new HashMap<String, String>();
@@ -29,5 +33,9 @@ public class LangMap {
 
     public Set<String> getLanguageCodes() {
         return languageHashMap.keySet();
+    }
+
+    public Map<String, String> getMap() {
+        return languageHashMap;
     }
 }

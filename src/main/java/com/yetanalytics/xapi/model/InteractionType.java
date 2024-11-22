@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.InteractionTypeDeserializer;
 
@@ -22,7 +23,8 @@ public enum InteractionType {
         this.displayName = displayName;
     }
 
-    @Override 
+    @Override
+    @JsonValue
     public String toString() { return displayName; }
 
     public static InteractionType getByDisplayName(String name) {
