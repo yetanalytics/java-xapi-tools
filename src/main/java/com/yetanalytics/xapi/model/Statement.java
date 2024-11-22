@@ -15,6 +15,10 @@ public class Statement extends AbstractObject {
 
     private Verb verb;
 
+    private Result result;
+
+    private Context context;
+
     private AbstractObject object;
     
     private AbstractActor authority;
@@ -22,6 +26,8 @@ public class Statement extends AbstractObject {
     private ZonedDateTime timestamp;
     
     private ZonedDateTime stored;
+
+    private String version;
     
     public UUID getId() {
         return id;
@@ -42,6 +48,20 @@ public class Statement extends AbstractObject {
     }
     public void setVerb(Verb verb) {
         this.verb = verb;
+    }
+
+    public Result getResult() {
+        return result;
+    }
+    public void setResult(Result result) {
+        this.result = result;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     public AbstractObject getObject() {
@@ -70,5 +90,11 @@ public class Statement extends AbstractObject {
     }
     public void setStored(ZonedDateTime stored) {
         this.stored = stored;
+    }
+    public String getVersion() {
+        return version;
+    }
+    public void setVersion(String version) {
+        this.version = version;
     }
 }

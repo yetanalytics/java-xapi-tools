@@ -1,0 +1,50 @@
+package com.yetanalytics.xapi.model;
+
+import java.time.Duration;
+
+public class Result {
+    
+    private Score score;
+    private Boolean success;
+    private Boolean completion;
+    private String response;
+    private Duration duration;
+    private Extensions extensions;
+    
+    public Score getScore() {
+        return score;
+    }
+    public void setScore(Score score) {
+        this.score = score;
+    }
+    public Boolean getSuccess() {
+        return success;
+    }
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+    public Boolean getCompletion() {
+        return completion;
+    }
+    public void setCompletion(Boolean completion) {
+        this.completion = completion;
+    }
+    public String getResponse() {
+        return response;
+    }
+    public void setResponse(String response) {
+        this.response = response;
+    }
+    public Duration getDuration() {
+        return duration;
+    }
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+    public Extensions getExtensions() {
+        return extensions;
+    }
+    public void setExtensions(Extensions extensions) {
+        this.extensions = extensions;
+    }
+}
