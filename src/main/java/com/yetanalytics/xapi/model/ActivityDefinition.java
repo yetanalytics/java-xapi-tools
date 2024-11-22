@@ -1,8 +1,96 @@
 package com.yetanalytics.xapi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ActivityDefinition {
 
+    private LangMap name;
+    private LangMap description;
+    private String type;
+    private String moreInfo;
+    private Extensions extensions;
+
+    //cmi.interaction specific properties
+    private InteractionType interactionType;
+    private List<String> correctResponsesPattern;
+
+    //cmi.interaction Components
+    private List<InteractionComponent> choices;
+    private List<InteractionComponent> scale;
+    private List<InteractionComponent> source;
+    private List<InteractionComponent> target;
+    private List<InteractionComponent> steps;
+    
+    public LangMap getName() {
+        return name;
+    }
+    public void setName(LangMap name) {
+        this.name = name;
+    }
+    public LangMap getDescription() {
+        return description;
+    }
+    public void setDescription(LangMap description) {
+        this.description = description;
+    }
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
+    public String getMoreInfo() {
+        return moreInfo;
+    }
+    public void setMoreInfo(String moreInfo) {
+        this.moreInfo = moreInfo;
+    }
+    public Extensions getExtensions() {
+        return extensions;
+    }
+    public void setExtensions(Extensions extensions) {
+        this.extensions = extensions;
+    }
+    public InteractionType getInteractionType() {
+        return interactionType;
+    }
+    public void setInteractionType(InteractionType interactionType) {
+        this.interactionType = interactionType;
+    }
+    public List<String> getCorrectResponsesPattern() {
+        return correctResponsesPattern;
+    }
+    public void setCorrectResponsesPattern(List<String> correctResponsesPattern) {
+        this.correctResponsesPattern = correctResponsesPattern;
+    }
+    public List<InteractionComponent> getChoices() {
+        return choices;
+    }
+    public void setChoices(List<InteractionComponent> choices) {
+        this.choices = choices;
+    }
+    public List<InteractionComponent> getScale() {
+        return scale;
+    }
+    public void setScale(List<InteractionComponent> scale) {
+        this.scale = scale;
+    }
+    public List<InteractionComponent> getSource() {
+        return source;
+    }
+    public void setSource(List<InteractionComponent> source) {
+        this.source = source;
+    }
+    public List<InteractionComponent> getTarget() {
+        return target;
+    }
+    public void setTarget(List<InteractionComponent> target) {
+        this.target = target;
+    }
+    public List<InteractionComponent> getSteps() {
+        return steps;
+    }
+    public void setSteps(List<InteractionComponent> steps) {
+        this.steps = steps;
+    }
 }

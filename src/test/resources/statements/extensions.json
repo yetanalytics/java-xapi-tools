@@ -19,6 +19,25 @@
       },
       "description": {
         "en-us": "The First Activity"
+      },
+      "extensions": {
+        "http://www.yetanalytics.com/profiles/thing/1.0/concepts/extensions/ext1": {
+          "singleString": "blah blah",
+          "embeddedObject": {"relevantKey": "relevantValue"},
+          "listOfThings": [
+            {
+              "name": "first thing",
+              "number": 1
+            },
+            {
+              "name": "second thing",
+              "number": 2
+            }
+          ],
+          "boolEntry": true,
+          "decimalEntry": 3.14159,
+          "nullEntry": null
+        }
       }
     }
   },
@@ -26,7 +45,6 @@
     "name": "Yet Analytics Inc",
     "mbox": "authority@yetanalytics.com"
   },
-  "version": "1.0.3",
   "stored": "2023-10-27T09:03:21.722Z",
   "timestamp": "2023-10-27T09:03:21.723Z"
 }

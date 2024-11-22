@@ -15,11 +15,11 @@
     ]
   },
   "verb": {
-    "id": "https://www.yetanalytics.com/profiles/va/1.0/concepts/verbs/set",
+    "id": "https://www.yetanalytics.com/profiles/thing/1.0/concepts/verbs/set",
     "display": { "en-us": "Set" }
   },
   "object": {
-    "id": "https://www.yetanalytics.com/profiles/va/1.0/concepts/activities/act1",
+    "id": "https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1",
     "definition": {
       "name": {
         "en-us": "Activity 1"

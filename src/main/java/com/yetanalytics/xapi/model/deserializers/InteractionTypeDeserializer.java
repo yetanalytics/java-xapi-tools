@@ -4,24 +4,24 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yetanalytics.xapi.model.ObjectType;
+import com.yetanalytics.xapi.model.InteractionType;
 import com.yetanalytics.xapi.util.Mapper;
 
-public class ObjectTypeDeserializer extends StdDeserializer<ObjectType> {
+public class InteractionTypeDeserializer extends StdDeserializer<InteractionType> {
     
-    public ObjectTypeDeserializer() {
+    public InteractionTypeDeserializer() {
         this(null);
     }
 
-    public ObjectTypeDeserializer(final Class<?> vc) {
+    public InteractionTypeDeserializer(final Class<?> vc) {
         super(vc);
     }
 
     @Override
-    public ObjectType deserialize(final JsonParser jp, final DeserializationContext context) {
+    public InteractionType deserialize(final JsonParser jp, final DeserializationContext context) {
         try {
             ObjectMapper mapper = Mapper.getMapper();
-            return ObjectType.getByDisplayName(mapper.readValue(jp, String.class));
+            return InteractionType.getByDisplayName(mapper.readValue(jp, String.class));
         } catch (Exception e) {
             e.printStackTrace();
             return null;

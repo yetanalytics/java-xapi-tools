@@ -26,7 +26,18 @@
     "name": "Yet Analytics Inc",
     "mbox": "authority@yetanalytics.com"
   },
-  "version": "1.0.3",
+  "result": {
+    "completion": true,
+    "success": false,
+    "response": "Eh",
+    "duration": "PT4H35M59.14S",
+    "score": {
+      "min": 0,
+      "max": 100,
+      "raw": 50,
+      "scaled": 0.0
+    }
+  },
   "stored": "2023-10-27T09:03:21.722Z",
   "timestamp": "2023-10-27T09:03:21.723Z"
 }
