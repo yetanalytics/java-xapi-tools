@@ -37,7 +37,9 @@ public class XapiDeserializationTest extends TestCase {
 
         assertEquals(stmt.getTimestamp().format(DateTimeFormatter.ISO_INSTANT), "2023-10-27T09:03:21.723Z");
         assertEquals(stmt.getStored().format(DateTimeFormatter.ISO_INSTANT), "2023-10-27T09:03:21.722Z");
-        
+        assertEquals(stmt.getId(), UUID.fromString("6fbd600f-d87c-4c74-801a-2ec2e53231c8"));
+        assertEquals(stmt.getVersion(), "1.0.3");
+
         Agent actor = (Agent) stmt.getActor();
         assertEquals(actor.getName(), "Cliff Casey");
         assertEquals(actor.getAccount().getName(), "23897525");
@@ -45,6 +47,7 @@ public class XapiDeserializationTest extends TestCase {
 
         Verb verb = stmt.getVerb();
         assertEquals(verb.getId(), "https://www.yetanalytics.com/profiles/thing/1.0/concepts/verbs/set");
+        assertEquals(verb.getDisplay().get("en-us"), "Set");
 
         Activity object = (Activity) stmt.getObject();
         assertEquals(object.getId(), "https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1");
@@ -57,6 +60,10 @@ public class XapiDeserializationTest extends TestCase {
         Set<String> descLangCodes = def.getDescription().getLanguageCodes();
         String descLangCode = descLangCodes.iterator().next();
         assertEquals(def.getDescription().get(descLangCode), "The First Activity");
+
+        AbstractActor authority = stmt.getAuthority();
+        assertEquals(authority.getName(), "Yet Analytics Inc");
+        assertEquals(authority.getMbox(), "mailto:authority@yetanalytics.com");
     }
 
     public void testExtensions() throws StreamReadException, DatabindException, IOException {
@@ -131,8 +138,8 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(ctxActs.getOther().get(0).getId(), "https://www.yetanalytics.com/activities/other1");
     }
 
-    public void testCmi() throws StreamReadException, DatabindException, IOException {
-        File testFile = TestFileUtils.getJsonTestFile("cmi");
+    public void testInteractionActivity() throws StreamReadException, DatabindException, IOException {
+        File testFile = TestFileUtils.getJsonTestFile("interaction-activity");
         Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
 
         Activity act = (Activity) stmt.getObject();
@@ -146,6 +153,17 @@ public class XapiDeserializationTest extends TestCase {
         InteractionComponent choice = def.getChoices().iterator().next();
         assertEquals(choice.getId(), "a");
         assertEquals(choice.getDescription().get("en"), "A");
+    }
+
+    public void testGroupActor() throws StreamReadException, DatabindException, IOException {
+        File testFile = TestFileUtils.getJsonTestFile("group-actor");
+        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
+
+        Group group = (Group) stmt.getActor();
+        assertEquals(group.getMbox(), "mailto:group@group.com");
+        assertEquals(group.getName(), "Relevant Group");
+        assertEquals(group.getMember().size(), 1);
+        assertEquals(group.getMember().get(0).getName(), "Cliff Casey");
     }
 
     public void testStatementResults() throws StreamReadException, DatabindException, IOException {
