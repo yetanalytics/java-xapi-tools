@@ -78,4 +78,10 @@ public class XapiSerializationTest extends TestCase {
         ArrayNode diff = reserializeAndDiff(testFile, Statement.class);
         assertEquals(diff.size(), 0);
     }
+
+    public void testCmi() throws IOException {
+        File testFile = TestFileUtils.getJsonTestFile("cmi");
+        ArrayNode diff = reserializeAndDiff(testFile, Statement.class);
+        assertEquals(diff.size(), 0);
+    }
 }

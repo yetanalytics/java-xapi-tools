@@ -130,4 +130,21 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(ctxActs.getCategory().get(0).getId(), "https://www.yetanalytics.com/activities/category1");
         assertEquals(ctxActs.getOther().get(0).getId(), "https://www.yetanalytics.com/activities/other1");
     }
+
+    public void testCmi() throws StreamReadException, DatabindException, IOException {
+        File testFile = TestFileUtils.getJsonTestFile("cmi");
+        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
+
+        Activity act = (Activity) stmt.getObject();
+        assertEquals(act.getId(), "https://www.yetanalytics.com/activities/act1/question1");
+        
+        ActivityDefinition def = act.getDefinition();
+        assertEquals(def.getType(), "http://adlnet.gov/expapi/activities/cmi.interaction");
+        assertEquals(def.getName().get("en"), "Multichoice Question");
+        assertEquals(def.getCorrectResponsesPattern().get(0), "a");
+        assertEquals(def.getInteractionType(), InteractionType.CHOICE);
+        InteractionComponent choice = def.getChoices().iterator().next();
+        assertEquals(choice.getId(), "a");
+        assertEquals(choice.getDescription().get("en"), "A");
+    }
 }

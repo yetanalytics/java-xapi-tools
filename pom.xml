@@ -2,14 +2,14 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.yetanalytics</groupId>
-  <artifactId>java-client-demo</artifactId>
+  <artifactId>xapi-serialization-model</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>java-client-demo</name>
+  <version>0.0.1</version>
+  <name>xAPI Serialization Model for Java</name>
   <url>http://maven.apache.org</url>
   <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
   </properties>
   <dependencies>
     <dependency>
@@ -51,8 +51,8 @@
       </configuration>
       <executions>
         <execution>
-          <id>make-assembly</id> <!-- this is used for inheritance merges -->
-          <phase>package</phase> <!-- bind to the packaging phase -->
+          <id>make-assembly</id>
+          <phase>package</phase>
           <goals>
             <goal>single</goal>
           </goals>

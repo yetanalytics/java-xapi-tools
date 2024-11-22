@@ -1,0 +1,119 @@
+{
+  "id": "6fbd600f-d17c-4c74-801a-2ec2e53231c8",
+  "actor": {
+    "name": "Cliff Casey",
+    "account": {
+      "homePage": "https://users.training.com",
+      "name": "23897525"
+    }
+  },
+  "verb": {
+    "id": "https://www.yetanalytics.com/profiles/thing/1.0/concepts/verbs/set",
+    "display": { "en-us": "Set" }
+  },
+  "object": {
+    "id": "https://www.yetanalytics.com/activities/act1/question1",
+    "definition": {
+      "type": "http://adlnet.gov/expapi/activities/cmi.interaction",
+      "name": {
+        "en": "Multichoice Question"
+      },
+      "description": {
+        "en": "Multichoice"
+      },
+      "interactionType": "choice",
+      "correctResponsesPattern": [
+        "a"
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "description": {
+            "en": "A"
+          }
+        },
+        {
+          "id": "b",
+          "description": {
+            "en": "B"
+          }
+        },
+        {
+          "id": "c",
+          "description": {
+            "en": "C"
+          }
+        }
+      ]
+    }
+  },
+  "authority": {
+    "name": "Yet Analytics Inc",
+    "mbox": "authority@yetanalytics.com"
+  },
+  "context": {
+    "registration": "6fbd600f-d17c-4c74-801a-2ec2e53231c7",
+    "instructor": {
+      "name": "Teach McLearney",
+      "mbox": "mailto:teach@mclearneyschool.com"
+    },
+    "team": {
+      "objectType": "Group",
+      "name": "Class B",
+      "mbox": "mailto:classb@mclearneyschool.com",
+      "member": [
+        {
+          "name": "Cliff Casey",
+          "account": {
+            "homePage": "https://users.training.com",
+            "name": "23897525"
+          }
+        },
+        {
+          "name": "Student Smith",
+          "account": {
+            "homePage": "https://users.training.com",
+            "name": "23897526"
+          }
+        }
+      ]
+    },
+    "contextActivities": {
+      "parent": [
+        {  
+          "id": "https://www.yetanalytics.com/activities/parent1"
+        },
+        {  
+          "id": "https://www.yetanalytics.com/activities/parent2"
+        }
+      ],
+      "grouping": [
+        {  
+          "id": "https://www.yetanalytics.com/activities/grouping1"
+        }
+      ],
+      "category": {  
+        "id": "https://www.yetanalytics.com/activities/category1"
+      },
+      "other": [
+        {  
+          "id": "https://www.yetanalytics.com/activities/other1"
+        }
+      ]
+    },
+    "revision": "v0.0.1",
+    "platform": "JUnit Testing",
+    "language": "en-us",
+    "statement": {
+      "objectType": "StatementRef",
+      "id": "6fbd600f-d17c-4c74-801a-2ec2e53231c6"
+    },
+    "extensions": {
+      "https://www.yetanalytics.com/extensions/ext3": {
+        "thing": "stuff"
+      }
+    }
+  },
+  "stored": "2023-10-27T09:03:21.722Z",
+  "timestamp": "2023-10-27T09:03:21.723Z"
+}
