@@ -6,12 +6,15 @@ import java.util.Set;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import com.yetanalytics.xapi.model.deserializers.ExtensionDeserializer;
+import com.yetanalytics.xapi.model.serializers.ExtensionSerializer;
 import com.yetanalytics.xapi.util.Mapper;
 
 @JsonDeserialize(using = ExtensionDeserializer.class)
+@JsonSerialize(using = ExtensionSerializer.class)
 public class Extensions {
 
     private Map<String,Object> extMap = new HashMap<String,Object>();
@@ -50,5 +53,9 @@ public class Extensions {
 
     public Set<String> getKeys() {
         return extMap.keySet();
+    }
+
+    public Map<String, Object> getMap() {
+        return extMap;
     }
 }
