@@ -34,4 +34,3 @@ public class LangMapDeserializer extends StdDeserializer<LangMap> {
         }
     }
 }
-

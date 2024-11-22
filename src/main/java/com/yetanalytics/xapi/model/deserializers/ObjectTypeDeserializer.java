@@ -28,5 +28,3 @@ public class ObjectTypeDeserializer extends StdDeserializer<ObjectType> {
         }
     }
 }
-
-
