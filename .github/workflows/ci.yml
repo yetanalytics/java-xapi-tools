@@ -12,5 +12,5 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-      - run: mvn clean install
+      - run: make ci
 
