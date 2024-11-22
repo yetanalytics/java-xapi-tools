@@ -1,14 +1,16 @@
 package com.yetanalytics.xapi.model;
 
-import java.time.Duration;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+@JsonInclude(Include.NON_NULL)
 public class Result {
     
     private Score score;
     private Boolean success;
     private Boolean completion;
     private String response;
-    private Duration duration;
+    private XapiDuration duration;
     private Extensions extensions;
     
     public Score getScore() {
@@ -35,10 +37,10 @@ public class Result {
     public void setResponse(String response) {
         this.response = response;
     }
-    public Duration getDuration() {
+    public XapiDuration getDuration() {
         return duration;
     }
-    public void setDuration(Duration duration) {
+    public void setDuration(XapiDuration duration) {
         this.duration = duration;
     }
     public Extensions getExtensions() {

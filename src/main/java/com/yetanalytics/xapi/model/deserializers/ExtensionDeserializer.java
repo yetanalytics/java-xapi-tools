@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.yetanalytics.xapi.model.Extensions;
+import com.yetanalytics.xapi.util.Mapper;
 
 public class ExtensionDeserializer extends StdDeserializer<Extensions> {
     
@@ -22,15 +23,13 @@ public class ExtensionDeserializer extends StdDeserializer<Extensions> {
 
     @Override
     public Extensions deserialize(final JsonParser jp, final DeserializationContext context) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
+        try {            
             TypeReference<HashMap<String, Object>> typeRef 
                 = new TypeReference<HashMap<String,Object>>() {};
 
-            JsonNode node = mapper.readTree(jp);
+            JsonNode node = Mapper.getMapper().readTree(jp);
 
-            
-            return new Extensions(mapper.convertValue(node, typeRef));
+            return new Extensions(Mapper.getMapper().convertValue(node, typeRef));
         } catch (Exception e) {
             e.printStackTrace();
             return null;

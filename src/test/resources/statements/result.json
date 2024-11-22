@@ -33,7 +33,7 @@
     "duration": "PT4H35M59.14S",
     "score": {
       "min": 0,
-      "max": 100,
+      "max": 100.010,
       "raw": 50,
       "scaled": 0.0
     }

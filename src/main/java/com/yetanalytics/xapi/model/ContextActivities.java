@@ -4,7 +4,10 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.ContextActivityListDeserializer;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+@JsonInclude(Include.NON_NULL)
 public class ContextActivities {
 
     @JsonDeserialize(using = ContextActivityListDeserializer.class)

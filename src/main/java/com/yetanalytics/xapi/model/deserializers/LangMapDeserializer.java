@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.yetanalytics.xapi.model.LangMap;
+import com.yetanalytics.xapi.util.Mapper;
 
 public class LangMapDeserializer extends StdDeserializer<LangMap> {
     
@@ -22,7 +23,7 @@ public class LangMapDeserializer extends StdDeserializer<LangMap> {
     @Override
     public LangMap deserialize(final JsonParser jp, final DeserializationContext context) {
         try {
-            ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = Mapper.getMapper();
             TypeReference<HashMap<String,String>> typeRef 
                 = new TypeReference<HashMap<String,String>>() {};
             

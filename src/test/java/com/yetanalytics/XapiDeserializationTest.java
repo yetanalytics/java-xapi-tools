@@ -1,6 +1,7 @@
 package com.yetanalytics;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.io.File;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -99,13 +100,13 @@ public class XapiDeserializationTest extends TestCase {
         assertTrue(res.getCompletion());
         assertFalse(res.getSuccess());
         assertEquals(res.getResponse(), "Eh");
-        assertEquals(res.getDuration().toMillis(), 16559140);
+        assertEquals(res.getDuration().getValue().toMillis(), 16559140);
 
         Score score = res.getScore();
-        assertEquals(score.getMin(), Double.valueOf(0));
-        assertEquals(score.getMax(), Double.valueOf(100));
-        assertEquals(score.getRaw(), Double.valueOf(50));
-        assertEquals(score.getScaled(), Double.valueOf(0));
+        assertEquals(score.getMin(), new BigDecimal("0"));
+        assertEquals(score.getMax(), new BigDecimal("100.010"));
+        assertEquals(score.getRaw(), new BigDecimal("50"));
+        assertEquals(score.getScaled(), new BigDecimal("0.0"));
     }
 
     public void testContext() throws StreamReadException, DatabindException, IOException {
