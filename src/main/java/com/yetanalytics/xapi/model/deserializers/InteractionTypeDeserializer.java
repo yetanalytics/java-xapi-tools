@@ -28,5 +28,3 @@ public class InteractionTypeDeserializer extends StdDeserializer<InteractionType
         }
     }
 }
-
-

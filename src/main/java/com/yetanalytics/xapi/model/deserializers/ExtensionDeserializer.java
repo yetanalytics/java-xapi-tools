@@ -35,4 +35,3 @@ public class ExtensionDeserializer extends StdDeserializer<Extensions> {
         }
     }
 }
-
