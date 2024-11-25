@@ -1,0 +1,43 @@
+{
+  "id": "6fbd600f-d37c-4c74-801a-2ec2e53231c8",
+  "actor": {
+    "name": "Cliff Casey",
+    "account": {
+      "homePage": "https://users.training.com",
+      "name": "23897525"
+    }
+  },
+  "verb": {
+    "id": "https://www.yetanalytics.com/profiles/thing/1.0/concepts/verbs/set",
+    "display": { "en-us": "Set" }
+  },
+  "object": {
+    "id": "https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1",
+    "definition": {
+      "name": {
+        "en-us": "Activity 1"
+      },
+      "description": {
+        "en-us": "The First Activity"
+      }
+    }
+  },
+  "authority": {
+    "name": "Yet Analytics Inc",
+    "mbox": "mailto:authority@yetanalytics.com"
+  },
+  "result": {
+    "completion": true,
+    "success": false,
+    "response": "Eh",
+    "duration": "PT4H35M59.14S",
+    "score": {
+      "min": 0,
+      "max": 100.010,
+      "raw": 50,
+      "scaled": 0.0
+    }
+  },
+  "stored": "2023-10-27T09:03:21.722Z",
+  "timestamp": "2023-10-27T09:03:21.723Z"
+}
