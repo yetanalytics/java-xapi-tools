@@ -75,7 +75,7 @@
     <repository>
       <id>github</id>
       <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/yetanalytics/xapi-tools</url>
+      <url>https://maven.pkg.github.com/yetanalytics/java-xapi-tools</url>
     </repository>
   </distributionManagement>
 </project>
