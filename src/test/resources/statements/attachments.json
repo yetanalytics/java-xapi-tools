@@ -1,0 +1,35 @@
+{
+  "id": "6fbd600f-d87c-4c74-801a-2ec2e53231c8",
+  "actor": {
+    "name": "Cliff Casey",
+    "account": {
+      "homePage": "https://users.training.com",
+      "name": "23897525"
+    }
+  },
+  "verb": {
+    "id": "https://www.yetanalytics.com/profiles/thing/1.0/concepts/verbs/set",
+    "display": { "en-us": "Set" }
+  },
+  "object": {
+    "id": "https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1"
+  },
+  "version": "1.0.3",
+  "stored": "2023-10-27T09:03:21.722Z",
+  "timestamp": "2023-10-27T09:03:21.723Z",
+  "attachments": [
+    {
+      "usageType": "https://www.yetanalytics.com/usagetypes/1",
+      "display": {
+        "en-us": "Attachment 1"
+      },
+      "description": {
+        "en-us": "The First Attachment"
+      },
+      "contentType": "application/json",
+      "length": 450,
+      "sha2": "426cf3a8b2864dd91201b989ba5728181da52bfff9a0489670e54cd8ec8b3a50",
+      "fileUrl": "https://www.yetanalytics.com/files/file1.json"
+    }
+  ]
+}
