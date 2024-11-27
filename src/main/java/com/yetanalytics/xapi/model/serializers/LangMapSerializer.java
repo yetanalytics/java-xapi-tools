@@ -9,6 +9,9 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.yetanalytics.xapi.model.LangMap;
 import com.yetanalytics.xapi.util.Mapper;
 
+/**
+* Custom serializer for the Language Map Wrapper
+*/
 public class LangMapSerializer extends StdSerializer<LangMap> {
     
     public LangMapSerializer() {

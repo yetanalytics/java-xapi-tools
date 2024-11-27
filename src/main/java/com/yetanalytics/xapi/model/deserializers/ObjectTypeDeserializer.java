@@ -7,6 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yetanalytics.xapi.model.ObjectType;
 import com.yetanalytics.xapi.util.Mapper;
 
+/**
+* Custom deserializer for ObjectType Enum
+*/
 public class ObjectTypeDeserializer extends StdDeserializer<ObjectType> {
     
     public ObjectTypeDeserializer() {

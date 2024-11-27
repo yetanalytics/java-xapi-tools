@@ -10,6 +10,9 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.yetanalytics.xapi.util.Mapper;
 
+/**
+* Custom serializer for ZonedDateTime
+*/
 public class DateTimeSerializer extends StdSerializer<ZonedDateTime> {
     
     public DateTimeSerializer() {

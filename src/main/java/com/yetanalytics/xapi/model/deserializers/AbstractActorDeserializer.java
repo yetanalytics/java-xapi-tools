@@ -13,6 +13,10 @@ import com.yetanalytics.xapi.model.Agent;
 import com.yetanalytics.xapi.model.ObjectType;
 import com.yetanalytics.xapi.util.Mapper;
 
+/**
+* Custom deserializer for xAPI Actors. Determines their type based on
+* component properties.
+*/
 public class AbstractActorDeserializer extends StdDeserializer<AbstractActor> {
     public AbstractActorDeserializer() {
         this(null);
