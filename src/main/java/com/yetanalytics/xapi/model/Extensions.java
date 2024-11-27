@@ -53,7 +53,7 @@ public class Extensions {
      * @param key The IRI key of the extension in which to perform the query
      * @param jsonPathExpression A JSONPath query to perform in the Extension data
      * @param typeKey The typereference for the type that the query is expecting to retrieve
-     * @param T The type that the query is expecting to convert the results to
+     * @param <T> The type that the query is expecting to convert the results to
      * @return Object of type T that is the result of deserialization from the query
      */
     @SuppressWarnings("unchecked")
