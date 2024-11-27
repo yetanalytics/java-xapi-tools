@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.yetanalytics.xapi.model"},{"l":"com.yetanalytics.xapi.model.deserializers"},{"l":"com.yetanalytics.xapi.model.serializers"},{"l":"com.yetanalytics.xapi.util"}]

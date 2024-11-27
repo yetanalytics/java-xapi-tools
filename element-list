@@ -1,0 +1,4 @@
+com.yetanalytics.xapi.model
+com.yetanalytics.xapi.model.deserializers
+com.yetanalytics.xapi.model.serializers
+com.yetanalytics.xapi.util
