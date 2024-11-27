@@ -24,14 +24,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.RELEASES_GPG_PASSPHRASE }}
           MAVEN_GPG_KEY: ${{ secrets.RELEASES_GPG_PRIVATE_KEY }}
-      - name: Debug directory
-        run: pwd
-      - name: Debug directory2
+      - name: Prep Docs
         run: | 
-          ls -a
           cd target
-          ls -a
-      - name: Deploy Documentation
+          export DOCZIP=$(ls | grep javadoc.jar$)
+          mkdir -p apidocs
+          unzip $DOCZIP -d apidocs
+      - name: Deploy Docs
         uses: JamesIves/github-pages-deploy-action@v4.6.4
         with:
           branch: gh-pages
