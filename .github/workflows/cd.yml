@@ -20,4 +20,9 @@ jobs:
         run: mvn --batch-mode deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy Documentation
+        uses: JamesIves/github-pages-deploy-action@v4.6.4
+        with:
+          branch: gh-pages
+          folder: target/apidocs
 

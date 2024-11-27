@@ -5,6 +5,10 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+* Class representation of the Activity Definition Component of the 
+* <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#activity-definition">9274.1.1 xAPI Specification</a>.
+*/
 @JsonInclude(Include.NON_NULL)
 public class ActivityDefinition {
 

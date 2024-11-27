@@ -13,6 +13,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.yetanalytics.xapi.model.Activity;
 import com.yetanalytics.xapi.util.Mapper;
 
+/**
+* Custom deserializer for the Activity Lists in ContextActivity.
+*/
 public class ContextActivityListDeserializer extends StdDeserializer<List<Activity>> {
     public ContextActivityListDeserializer() {
         this(null);

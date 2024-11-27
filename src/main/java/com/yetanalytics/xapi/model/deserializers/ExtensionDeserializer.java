@@ -10,6 +10,9 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.yetanalytics.xapi.model.Extensions;
 import com.yetanalytics.xapi.util.Mapper;
 
+/**
+* Custom deserializer for the Extension Map Wrapper
+*/
 public class ExtensionDeserializer extends StdDeserializer<Extensions> {
     
     public ExtensionDeserializer() {

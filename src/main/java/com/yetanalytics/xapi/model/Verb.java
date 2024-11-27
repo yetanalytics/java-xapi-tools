@@ -5,6 +5,10 @@ import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+* Class representation of the Verb component of the 
+* <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#statement-references">9274.1.1 xAPI Specification</a>.
+*/
 @JsonInclude(Include.NON_NULL)
 public class Verb {
 

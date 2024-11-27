@@ -9,6 +9,9 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.yetanalytics.xapi.model.Extensions;
 import com.yetanalytics.xapi.util.Mapper;
 
+/**
+* Custom serializer for the Extension Wrapper
+*/
 public class ExtensionSerializer extends StdSerializer<Extensions> {
     
     public ExtensionSerializer() {

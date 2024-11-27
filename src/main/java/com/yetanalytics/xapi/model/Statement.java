@@ -11,6 +11,9 @@ import java.time.ZonedDateTime;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+* Class representation of an Statement from the <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#24-statement-properties">9274.1.1 xAPI Specification</a>.
+*/
 @JsonInclude(Include.NON_NULL)
 @JsonDeserialize
 public class Statement extends AbstractObject {
