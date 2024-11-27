@@ -81,12 +81,14 @@ public class Extensions {
     }
 
     /**
-     * @return A Set of all IRI Extension keys
+     * Returns a set of all IRI Extension keys
+     * @return Set of IRI keys
      */
     public Set<String> getKeys() {
         return extMap.keySet();
     }
     /**
+     * Returns the full raw Extension Map as a HashMap&lt;String, Object&gt;
      * @return The raw Extensions Map
      */
     public Map<String, Object> getMap() {

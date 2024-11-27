@@ -17,7 +17,6 @@ public class Attachment {
     private Integer length;
     private String sha2;
     private String fileUrl;
-
     
     public String getUsageType() {
         return usageType;

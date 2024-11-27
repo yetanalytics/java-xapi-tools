@@ -35,6 +35,7 @@ public enum InteractionType {
     public String toString() { return displayName; }
 
     /**
+     * Retrieves the InteractionType forr a given displayName
      * @param name displayName to look up correct InteractionType
      * @return Appropriate InteractionType for the displayName
      */

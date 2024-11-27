@@ -23,6 +23,7 @@ public enum ObjectType {
     }
 
     /**
+     * 
      * @return Display name of the ObjectType (used in JSON/Serialization)
      */
     @Override
@@ -30,6 +31,7 @@ public enum ObjectType {
     public String toString() { return displayName; }
 
     /**
+     * Retrieves the ObjectType for a given displayName
      * @param name display name to look up correct ObjectType
      * @return Appropriate ObjectType for the displayName
      */

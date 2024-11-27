@@ -31,7 +31,8 @@ public class XapiDuration {
     private Duration duration;
 
     /**
-     * @return The original string version of the Duration
+     * Returns the original String version of the Duration
+     * @return Duration as a String
      */
     @JsonValue
     public String getOriginal() {
@@ -39,7 +40,8 @@ public class XapiDuration {
     }
 
     /** 
-     * @return The java.time.Duration version of the Duration
+     * Returns the java.time.Duration version of the Duration
+     * @return The Duration
      */
     public Duration getValue() {
         return duration;

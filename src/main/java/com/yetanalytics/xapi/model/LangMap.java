@@ -10,7 +10,8 @@ import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
 import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
 
 /**
- * Java wrapper object for the xAPI Language Map object.
+ * Java wrapper object for the 
+ * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#42-language-maps">xAPI Language Map object</a>.
  * The Language Map is a dictionary where the keys are 
  * <a href="http://tools.ietf.org/html/rfc5646">RFC 5646 Language Tags</a> and
  * the value is a String in the language specified by the tag.
@@ -56,14 +57,16 @@ public class LangMap {
     }
 
     /**
-     * @return A set of RFC 5646 Language Tags contained in the Map
+     * Retrieves the full set of RFC 5646 Language Tags contained in the Map
+     * @return A set RFC 5646 Language Tag Strings
      */
     public Set<String> getLanguageCodes() {
         return languageHashMap.keySet();
     }
 
     /**
-     * @return The full Language Map in the form of a HashMap
+     * Retrieves the full Language Map in the form of a HashMap&lt;String, String&gt;
+     * @return The full Language Map
      */
     public Map<String, String> getMap() {
         return languageHashMap;
