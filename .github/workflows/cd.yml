@@ -27,7 +27,10 @@ jobs:
       - name: Debug directory
         run: pwd
       - name: Debug directory2
-        run: ls -a
+        run: | 
+          ls -a
+          cd target
+          ls -a
       - name: Deploy Documentation
         uses: JamesIves/github-pages-deploy-action@v4.6.4
         with:
