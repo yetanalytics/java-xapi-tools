@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
-* Class representation of ISO 8601 Duration allowing for retrieval of the 
-* original String.
+* Class representation of <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#46-iso-8601-durations">ISO 8601 Duration</a> 
+* allowing for retrieval of the original String.
 */
 @JsonInclude(Include.NON_NULL)
 public class XapiDuration {
