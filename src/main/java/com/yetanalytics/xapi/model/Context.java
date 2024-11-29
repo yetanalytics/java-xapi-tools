@@ -4,6 +4,10 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+* Class representation of the Context Component of the 
+* <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#246-context">9274.1.1 xAPI Specification</a>.
+*/
 @JsonInclude(Include.NON_NULL)
 public class Context {
 

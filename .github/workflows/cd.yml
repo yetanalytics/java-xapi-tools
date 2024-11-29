@@ -1,0 +1,43 @@
+name: CD
+
+on:
+  push:
+    tags:
+      - 'v*.*.*' # Enforce Semantic Versioning
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+      - name: Publish package
+        run: mvn --batch-mode deploy -Dpublish=true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.RELEASES_GPG_PASSPHRASE }}
+          MAVEN_GPG_KEY: ${{ secrets.RELEASES_GPG_PRIVATE_KEY }}
+          MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_TOKEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_TOKEN_PASSWORD }}
+      - name: Prep Docs
+        run: | 
+          cd target
+          export DOCZIP=$(ls | grep javadoc.jar$)
+          mkdir -p apidocs
+          unzip $DOCZIP -d apidocs
+      - name: Deploy Docs
+        uses: JamesIves/github-pages-deploy-action@v4.6.4
+        with:
+          branch: gh-pages
+          folder: target/apidocs
+

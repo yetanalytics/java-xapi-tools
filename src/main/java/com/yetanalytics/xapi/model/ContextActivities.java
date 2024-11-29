@@ -7,6 +7,10 @@ import com.yetanalytics.xapi.model.deserializers.ContextActivityListDeserializer
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+* Class representation of the Context Activities Component of the 
+* <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#2462-contextactivities-property">9274.1.1 xAPI Specification</a>.
+*/
 @JsonInclude(Include.NON_NULL)
 public class ContextActivities {
 

@@ -10,6 +10,9 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.yetanalytics.xapi.model.LangMap;
 import com.yetanalytics.xapi.util.Mapper;
 
+/**
+* Custom deserializer for the Language Map Wrapper
+*/
 public class LangMapDeserializer extends StdDeserializer<LangMap> {
     
     public LangMapDeserializer() {

@@ -6,8 +6,13 @@
   <packaging>jar</packaging>
   <version>0.0.1</version>
   <name>xAPI Tools</name>
-  <description>xAPI Serialization Model and Tools for Java</description>
+  <description>Java Serialization Model and Tools for xAPI Standard (IEEE 9274.1.1)</description>
   <url>https://github.com/yetanalytics/java-xapi-tools</url>
+  <scm>
+    <url>https://github.com/yetanalytics/java-xapi-tools</url>
+    <connection>scm:git:https://github.com/yetanalytics/java-xapi-tools.git</connection>
+    <developerConnection>scm:git:https://github.com/yetanalytics/java-xapi-tools.git</developerConnection>
+  </scm>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -15,22 +20,32 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <developers>
+    <developer>
+      <organization>Yet Analytics Inc.</organization>
+      <organizationUrl>https://www.yetanalytics.com</organizationUrl>
+      <name>Cliff Casey</name>
+      <email>cliff@yetanalytics.com</email>
+      <url>https://github.com/cliffcaseyyet</url>
+    </developer>
+  </developers>
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <jackson.version>2.18.1</jackson.version>
   </properties>
   <dependencies>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.18.1</version>
+      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
-      <version>2.18.1</version>
+      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>com.jayway.jsonpath</groupId>
@@ -50,6 +65,47 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <profiles>
+    <profile>
+      <id>publish-build</id>
+      <activation>
+          <property>
+              <name>publish</name>
+              <value>true</value>
+          </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.7</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>install</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <configuration>
+                  <signer>bc</signer>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.6.0</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   <build>
     <plugins>
       <plugin>
@@ -68,7 +124,45 @@
             </goals>
           </execution>
         </executions>
+      </plugin>    
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.2</version>
+      </plugin>
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.3.1</version>
+          <executions>
+              <execution>
+                  <id>attach-sources</id>
+                  <goals>
+                      <goal>jar-no-fork</goal>
+                  </goals>
+              </execution>
+          </executions>
+      </plugin>
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.11.1</version>
+          <executions>
+              <execution>
+                  <id>attach-javadocs</id>
+                  <goals>
+                      <goal>jar</goal>
+                  </goals>
+              </execution>
+          </executions>
       </plugin>
     </plugins>
   </build>
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/yetanalytics/java-xapi-tools</url>
+    </repository>
+  </distributionManagement>
 </project>

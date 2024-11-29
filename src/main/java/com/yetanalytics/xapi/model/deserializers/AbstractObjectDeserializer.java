@@ -15,6 +15,10 @@ import com.yetanalytics.xapi.model.Statement;
 import com.yetanalytics.xapi.model.StatementRef;
 import com.yetanalytics.xapi.util.Mapper;
 
+/**
+* Custom deserializer for xAPI Objects. Determines their type based on
+* component properties.
+*/
 public class AbstractObjectDeserializer extends StdDeserializer<AbstractObject> {
 
     public AbstractObjectDeserializer() {

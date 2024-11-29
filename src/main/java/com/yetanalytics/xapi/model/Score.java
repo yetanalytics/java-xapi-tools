@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+* Class representation of the Score component of the 
+* <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#2451-score">9274.1.1 xAPI Specification</a>.
+*/
 @JsonInclude(Include.NON_NULL)
 public class Score {
 

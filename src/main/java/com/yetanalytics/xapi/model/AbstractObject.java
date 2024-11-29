@@ -3,6 +3,9 @@ package com.yetanalytics.xapi.model;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.AbstractObjectDeserializer;
 
+/**
+* Abstract Class for serialization and deserialization of xAPI Objects
+*/
 @JsonDeserialize(using = AbstractObjectDeserializer.class)
 public class AbstractObject {
 

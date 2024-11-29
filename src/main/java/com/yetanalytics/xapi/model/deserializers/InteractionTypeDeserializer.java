@@ -7,6 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yetanalytics.xapi.model.InteractionType;
 import com.yetanalytics.xapi.util.Mapper;
 
+/**
+* Custom deserializer for InteractionType Enum
+*/
 public class InteractionTypeDeserializer extends StdDeserializer<InteractionType> {
     
     public InteractionTypeDeserializer() {
