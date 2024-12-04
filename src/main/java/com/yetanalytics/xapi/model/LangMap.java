@@ -20,7 +20,7 @@ import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
 @JsonSerialize(using = LangMapSerializer.class)
 public class LangMap {
 
-    private HashMap<String,String> languageHashMap = new HashMap<String, String>();
+    private HashMap<String,String> languageHashMap = new HashMap<>();
 
     /**
      * Create a new langmap from a HashMap

@@ -24,7 +24,7 @@ import com.yetanalytics.xapi.util.Mapper;
 @JsonSerialize(using = ExtensionSerializer.class)
 public class Extensions {
 
-    private Map<String,Object> extMap = new HashMap<String,Object>();
+    private Map<String,Object> extMap = new HashMap<>();
 
     public Extensions(Map<String, Object> input) {
         extMap = input;
@@ -65,9 +65,11 @@ public class Extensions {
             return (T) JsonPath.read(json, jsonPathExpression);
         } catch (PathNotFoundException e) {
             //TODO: logging framework
-            e.printStackTrace();
+            System.err.println("Path not found");
+            // e.printStackTrace();
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            System.err.println("JSON cannot be processed");
+            // e.printStackTrace();
         }
         return null;
     }

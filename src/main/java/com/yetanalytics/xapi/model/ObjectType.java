@@ -16,7 +16,7 @@ public enum ObjectType {
     AGENT("Agent"),
     GROUP("Group");
 
-    private String displayName;
+    private final String displayName;
 
     ObjectType(String displayName) {
         this.displayName = displayName;
