@@ -64,6 +64,14 @@ public class GroupTest {
     }
 
     @Test
+    public void testInvalidAccount() {
+        Account account = new Account();
+        group.setAccount(account);
+        var violations = validator.validate(group);
+        assertEquals(2, violations.size());
+    }
+
+    @Test
     public void testNoIFI() { // No member array => identified group
         var violations = validator.validate(group);
         assertEquals(1, violations.size());

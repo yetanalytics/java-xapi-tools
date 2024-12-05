@@ -50,6 +50,14 @@ public class AgentTest {
     }
 
     @Test
+    public void testInvalidAccount() {
+        Account account = new Account();
+        agent.setAccount(account);
+        var violations = validator.validate(agent);
+        assertEquals(2, violations.size());
+    }
+
+    @Test
     public void testNoIFI() {
         var violations = validator.validate(agent);
         assertEquals(1, violations.size());
