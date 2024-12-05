@@ -1,9 +1,11 @@
 package com.yetanalytics.xapi.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
+
+import jakarta.validation.constraints.NotNull;
 
 /**
 * Class representation of the Verb component of the 
@@ -12,7 +14,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class Verb {
 
-    private String id;
+    public static final String VOIDING_VERB_IRI = "http://adlnet.gov/expapi/verbs/voided";
+    
+    @NotNull
+    private String id; // TODO: Validate id is an IRI
 
     @JsonDeserialize(using = LangMapDeserializer.class)
     private LangMap display;
@@ -31,6 +36,10 @@ public class Verb {
 
     public void setDisplay(LangMap display) {
         this.display = display;
+    }
+
+    public boolean isVoiding() {
+        return id == VOIDING_VERB_IRI;
     }
     
 }
