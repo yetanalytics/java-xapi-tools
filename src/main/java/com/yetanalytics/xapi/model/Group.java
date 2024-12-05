@@ -2,9 +2,11 @@ package com.yetanalytics.xapi.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import jakarta.validation.constraints.AssertTrue;
 
 /**
 * Class representation of the Group Component of the 

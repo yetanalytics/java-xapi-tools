@@ -1,8 +1,10 @@
 package com.yetanalytics.xapi.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import jakarta.validation.constraints.AssertTrue;
 
 /**
 * A concrete class representation of the Agent Component of the 
