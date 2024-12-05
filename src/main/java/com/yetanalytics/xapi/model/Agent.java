@@ -13,4 +13,15 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonDeserialize
 public class Agent extends AbstractActor {
 
+    // Validation
+
+    /**
+     * Assertion that the Agent has only 1 Inverse Functional Identifier (IFI).
+     * @return true if the Agent has exactly 1 IFI, false otherwise
+     */
+    @AssertTrue
+    public boolean isIdentifiedAgent() {
+        return countIFIs() == 1;
+    }
+
 }

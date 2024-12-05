@@ -11,12 +11,13 @@ public abstract class AbstractActor extends AbstractObject {
     
     private String name;
 
-    //IFI
+    // IFIs
     private String mbox;
     private String mbox_sha1sum;
     private String openid;
     private Account account;
     
+    // Getters and Setters
     public String getName() {
         return name;
     }
@@ -50,5 +51,23 @@ public abstract class AbstractActor extends AbstractObject {
     }
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    // Validation
+    protected int countIFIs() {
+        int notNullCount = 0;
+        if (mbox != null) {
+            ++notNullCount;
+        }
+        if (mbox_sha1sum != null) {
+            ++notNullCount;
+        }
+        if (openid != null) {
+            ++notNullCount;
+        }
+        if (account != null) {
+            ++notNullCount;
+        }
+        return notNullCount;
     }
 }
