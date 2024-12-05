@@ -24,5 +24,12 @@ public class Group extends AbstractActor {
         this.member = member;
     }
 
+    @AssertTrue
+    public boolean isAnonymousOrIdentifiedGroup() {
+        return (
+            (countIFIs() == 0 && member != null) ||
+            (countIFIs() == 1)
+        );
+    }
     
 }
