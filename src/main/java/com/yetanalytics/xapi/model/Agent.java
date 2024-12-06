@@ -1,8 +1,10 @@
 package com.yetanalytics.xapi.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import jakarta.validation.constraints.AssertTrue;
 
 /**
 * A concrete class representation of the Agent Component of the 
@@ -13,4 +15,19 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonDeserialize
 public class Agent extends AbstractActor {
 
+    // Validation
+
+    /**
+     * Assertion that the Agent has only 1 Inverse Functional Identifier (IFI).
+     * @return true if the Agent has exactly 1 IFI, false otherwise
+     */
+    @AssertTrue
+    public boolean isIdentifiedAgent() {
+        return countIFIs() == 1;
+    }
+
+    @Override
+    public boolean isValidAuthority() {
+        return true;
+    }
 }

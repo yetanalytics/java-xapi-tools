@@ -3,6 +3,8 @@ package com.yetanalytics.xapi.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import jakarta.validation.constraints.NotNull;
+
 /**
  * Class representation of the Attachment Component of the 
  * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#2411-attachments">9274.1.1 xAPI Specification</a>.
@@ -10,11 +12,16 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class Attachment {
 
+    @NotNull
     private String usageType;
+    @NotNull
     private LangMap display;
     private LangMap description;
+    @NotNull
     private String contentType;
+    @NotNull
     private Integer length;
+    @NotNull
     private String sha2;
     private String fileUrl;
     

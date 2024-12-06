@@ -1,8 +1,13 @@
 package com.yetanalytics.xapi.model;
+
 import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 
 /**
 * Class representation of the Score component of the 
@@ -14,6 +19,9 @@ public class Score {
     private BigDecimal raw;
     private BigDecimal min;
     private BigDecimal max;
+
+    @DecimalMax(value = "1.0")
+    @DecimalMin(value = "-1.0")
     private BigDecimal scaled;
 
     public BigDecimal getRaw() {
@@ -39,5 +47,34 @@ public class Score {
     }
     public void setScaled(BigDecimal scaled) {
         this.scaled = scaled;
+    }
+
+    // Validation
+
+    @AssertTrue
+    public boolean isMinLessThanRaw() {
+        if (raw != null && min != null) {
+            return min.compareTo(raw) < 0;
+        } else {
+            return true;
+        }
+    }
+
+    @AssertTrue
+    public boolean isRawLessThanMax() {
+        if (raw != null && max != null) {
+            return raw.compareTo(max) < 0;
+        } else {
+            return true;
+        }
+    }
+
+    @AssertTrue
+    public boolean isMinLessThanMax() {
+        if (min != null && max != null) {
+            return min.compareTo(max) < 0;
+        } else {
+            return true;
+        }
     }
 }
