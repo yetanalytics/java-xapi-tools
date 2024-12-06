@@ -3,6 +3,8 @@ package com.yetanalytics.xapi.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import jakarta.validation.Valid;
+
 /**
 * Class representation of the Result component of the 
 * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#245-result">9274.1.1 xAPI Specification</a>.
@@ -10,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class Result {
     
+    @Valid
     private Score score;
     private Boolean success;
     private Boolean completion;
