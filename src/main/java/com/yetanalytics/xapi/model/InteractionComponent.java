@@ -2,6 +2,8 @@ package com.yetanalytics.xapi.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import jakarta.validation.constraints.NotNull;
+
 /**
 * Class representation of the Interaction Component of the 
 * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#interaction-components">9274.1.1 xAPI Specification</a>.
@@ -9,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class InteractionComponent {
 
+    @NotNull
     private String id;
 
     private LangMap description;
