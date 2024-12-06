@@ -26,4 +26,8 @@ public class Agent extends AbstractActor {
         return countIFIs() == 1;
     }
 
+    @Override
+    public boolean isValidAuthority() {
+        return true;
+    }
 }

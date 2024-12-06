@@ -34,4 +34,18 @@ public class Group extends AbstractActor {
         );
     }
     
+    private boolean isValidConsumer(Agent consumer) {
+        return consumer.getAccount() != null;
+    }
+
+    @Override
+    public boolean isValidAuthority() {
+        return (
+            member.size() == 2 &&
+            (
+                isValidConsumer(member.get(0)) ||
+                isValidConsumer(member.get(1))
+            )
+        );
+    }
 }
