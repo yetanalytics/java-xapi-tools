@@ -26,14 +26,14 @@ public class ActivityTest {
         activity.setId("http://example.org/activity");
         ValidationUtils.assertValid(validator, activity);
 
-        // TODO: Enforce that definitions, as JSON objects, can't be empty
-        // For now we allow them though
         activity.setDefinition(definition);
+        definition.setMoreInfo("https://yetanalytics.com");
         ValidationUtils.assertValid(validator, activity);
     }
 
     @Test
     public void testEmptyActivity() {
-        ValidationUtils.assertInvalid(validator, activity);
+        // One error for empty object, one error for missing ID
+        ValidationUtils.assertInvalid(validator, activity, 2);
     }
 }

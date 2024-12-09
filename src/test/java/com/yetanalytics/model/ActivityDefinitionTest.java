@@ -43,7 +43,7 @@ public class ActivityDefinitionTest {
 
     @Test
     public void testEmptyDefinition() {
-        ValidationUtils.assertValid(validator, definition);
+        ValidationUtils.assertInvalid(validator, definition);
     }
 
     @Test

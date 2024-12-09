@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -24,5 +25,11 @@ public class StatementRef extends AbstractObject {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return id == null;
     }
 }

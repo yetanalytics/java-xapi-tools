@@ -2,6 +2,7 @@ package com.yetanalytics.xapi.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -9,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#interaction-components">9274.1.1 xAPI Specification</a>.
 */
 @JsonInclude(Include.NON_NULL)
-public class InteractionComponent {
+public class InteractionComponent implements JSONObject {
 
     @NotNull
     private String id;
@@ -32,5 +33,9 @@ public class InteractionComponent {
         this.description = description;
     }
 
-
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return id == null && description == null;
+    }
 }

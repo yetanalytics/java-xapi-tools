@@ -29,6 +29,7 @@ public class StatementRefTest {
 
     @Test
     public void testEmptyStatementRef() {
-        ValidationUtils.assertInvalid(validator, statementRef);
+        // One error for empty object, one error for missing ID
+        ValidationUtils.assertInvalid(validator, statementRef, 2);
     }
 }

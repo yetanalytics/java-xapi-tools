@@ -27,6 +27,6 @@ public class AccountTest {
 
     @Test
     public void testEmptyAccount() {
-        ValidationUtils.assertInvalid(validator, account, 2);
+        ValidationUtils.assertInvalid(validator, account, 3);
     }
 }

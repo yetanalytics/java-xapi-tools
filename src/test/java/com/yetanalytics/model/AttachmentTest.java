@@ -47,6 +47,7 @@ public class AttachmentTest {
 
     @Test
     public void testEmptyAttachment() {
-        ValidationUtils.assertInvalid(validator, attachment, 5);
+        // One error for empty attachment, one error each for null properties
+        ValidationUtils.assertInvalid(validator, attachment, 6);
     }
 }

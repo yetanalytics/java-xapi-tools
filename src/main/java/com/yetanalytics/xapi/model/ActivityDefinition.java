@@ -5,6 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.AssertTrue;
 
 /**
@@ -12,7 +13,7 @@ import jakarta.validation.constraints.AssertTrue;
 * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#activity-definition">9274.1.1 xAPI Specification</a>.
 */
 @JsonInclude(Include.NON_NULL)
-public class ActivityDefinition {
+public class ActivityDefinition implements JSONObject {
 
     private LangMap name;
     private LangMap description;
@@ -159,6 +160,16 @@ public class ActivityDefinition {
         return (
             isNoInteractionComponents() &&
             correctResponsesPattern == null
+        );
+    }
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return (
+            name == null && description == null &&
+            type == null && moreInfo == null && extensions == null &&
+            interactionType == null && isNoInteraction()
         );
     }
 

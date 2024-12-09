@@ -3,6 +3,7 @@ package com.yetanalytics.xapi.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -10,7 +11,7 @@ import jakarta.validation.constraints.NotNull;
  * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#2411-attachments">9274.1.1 xAPI Specification</a>.
  */
 @JsonInclude(Include.NON_NULL)
-public class Attachment {
+public class Attachment implements JSONObject {
 
     @NotNull
     private String usageType;
@@ -68,5 +69,17 @@ public class Attachment {
         this.fileUrl = fileUrl;
     }
 
-    
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return (
+            usageType == null &&
+            display == null &&
+            description == null &&
+            contentType == null &&
+            length == null &&
+            sha2 == null &&
+            fileUrl == null
+        );
+    }
 }

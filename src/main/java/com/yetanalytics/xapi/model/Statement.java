@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yetanalytics.xapi.model.serializers.DateTimeSerializer;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 
@@ -203,5 +204,23 @@ public class Statement extends AbstractObject {
         } else {
             return true;
         }
+    }
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return (
+            id == null &&
+            actor == null &&
+            verb == null &&
+            object == null &&
+            context == null &&
+            result == null &&
+            authority == null &&
+            timestamp == null &&
+            stored == null &&
+            version == null &&
+            attachments == null
+        );
     }
 }

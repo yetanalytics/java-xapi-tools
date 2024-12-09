@@ -51,12 +51,14 @@ public class AgentTest {
     public void testInvalidAccount() {
         Account account = new Account();
         agent.setAccount(account);
-        ValidationUtils.assertInvalid(validator, agent, 2);
+        // One error for empty account, one error each for missing properties
+        ValidationUtils.assertInvalid(validator, agent, 3);
     }
 
     @Test
     public void testNoIFI() {
-        ValidationUtils.assertInvalid(validator, agent);
+        // One error for empty agent, one error for missing IFI
+        ValidationUtils.assertInvalid(validator, agent, 2);
     }
     
     @Test

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.AssertTrue;
 
 /**
@@ -16,6 +17,12 @@ import jakarta.validation.constraints.AssertTrue;
 public class Agent extends AbstractActor {
 
     // Validation
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return super.isEmpty();
+    }
 
     /**
      * Assertion that the Agent has only 1 Inverse Functional Identifier (IFI).

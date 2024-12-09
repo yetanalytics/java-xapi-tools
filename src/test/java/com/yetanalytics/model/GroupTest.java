@@ -65,12 +65,14 @@ public class GroupTest {
     public void testInvalidAccount() {
         Account account = new Account();
         group.setAccount(account);
-        ValidationUtils.assertInvalid(validator, group, 2);
+        // One error for empty account, one error each for missing properties
+        ValidationUtils.assertInvalid(validator, group, 3);
     }
 
     @Test
     public void testNoIFI() { // No member array => identified group
-        ValidationUtils.assertInvalid(validator, group);
+        // One error for empty group object, one error for no IFI
+        ValidationUtils.assertInvalid(validator, group, 2);
     }
     
     @Test

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
@@ -14,7 +15,7 @@ import jakarta.validation.constraints.DecimalMin;
 * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#2451-score">9274.1.1 xAPI Specification</a>.
 */
 @JsonInclude(Include.NON_NULL)
-public class Score {
+public class Score implements JSONObject {
 
     private BigDecimal raw;
     private BigDecimal min;
@@ -76,5 +77,11 @@ public class Score {
         } else {
             return true;
         }
+    }
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return raw == null && min == null && max == null && scaled == null;
     }
 }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.AssertTrue;
 
 /**
@@ -47,5 +48,12 @@ public class Group extends AbstractActor {
                 isValidConsumer(member.get(1))
             )
         );
+    }
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        // zero-length member arrays still count as non-empty
+        return super.isEmpty() && member == null;
     }
 }

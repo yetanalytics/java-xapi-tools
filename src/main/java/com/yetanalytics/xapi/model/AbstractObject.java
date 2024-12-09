@@ -7,7 +7,7 @@ import com.yetanalytics.xapi.model.deserializers.AbstractObjectDeserializer;
 * Abstract Class for serialization and deserialization of xAPI Objects
 */
 @JsonDeserialize(using = AbstractObjectDeserializer.class)
-public class AbstractObject {
+public abstract class AbstractObject implements JSONObject {
 
     private ObjectType objectType;
 
@@ -18,4 +18,6 @@ public class AbstractObject {
         this.objectType = objectType;
     }
 
+    @Override
+    public abstract boolean isEmpty();
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -32,5 +33,11 @@ public class Activity extends AbstractObject {
     }
     public void setDefinition(ActivityDefinition definition) {
         this.definition = definition;
+    }
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return id == null && definition == null;
     }
 }

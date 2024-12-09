@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertFalse;
 
 /**
 * Class representation of the Result component of the 
 * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#245-result">9274.1.1 xAPI Specification</a>.
 */
 @JsonInclude(Include.NON_NULL)
-public class Result {
+public class Result implements JSONObject {
     
     @Valid
     private Score score;
@@ -55,5 +56,18 @@ public class Result {
     }
     public void setExtensions(Extensions extensions) {
         this.extensions = extensions;
+    }
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return (
+            score == null &&
+            success == null &&
+            completion == null &&
+            response == null &&
+            duration == null &&
+            extensions == null
+        );
     }
 }

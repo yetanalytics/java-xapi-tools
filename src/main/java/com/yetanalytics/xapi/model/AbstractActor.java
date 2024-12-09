@@ -79,4 +79,12 @@ public abstract class AbstractActor extends AbstractObject {
     }
 
     public abstract boolean isValidAuthority();
+
+    @Override
+    public boolean isEmpty() {
+        return (
+            mbox == null && mbox_sha1sum == null &&
+            openid == null && account == null
+        );
+    }
 }

@@ -33,6 +33,7 @@ public class VerbTest {
 
     @Test
     public void testEmptyVerb() {
-        ValidationUtils.assertInvalid(validator, verb);
+        // One error for empty verb, one error for missing ID
+        ValidationUtils.assertInvalid(validator, verb, 2);
     }
 }

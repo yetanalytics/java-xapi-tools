@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
 
+import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -12,7 +13,7 @@ import jakarta.validation.constraints.NotNull;
 * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#243-verb">9274.1.1 xAPI Specification</a>.
 */
 @JsonInclude(Include.NON_NULL)
-public class Verb {
+public class Verb implements JSONObject {
 
     public static final String VOIDING_VERB_IRI = "http://adlnet.gov/expapi/verbs/voided";
     
@@ -41,5 +42,10 @@ public class Verb {
     public boolean isVoiding() {
         return id == VOIDING_VERB_IRI;
     }
-    
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return id == null && display == null;
+    }
 }

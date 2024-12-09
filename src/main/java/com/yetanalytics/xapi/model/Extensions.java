@@ -13,6 +13,8 @@ import com.yetanalytics.xapi.model.deserializers.ExtensionDeserializer;
 import com.yetanalytics.xapi.model.serializers.ExtensionSerializer;
 import com.yetanalytics.xapi.util.Mapper;
 
+import jakarta.validation.constraints.AssertFalse;
+
 /**
  * A wrapper object for using <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#41-extensions">xAPI Extensions</a>.
  * 
@@ -22,7 +24,7 @@ import com.yetanalytics.xapi.util.Mapper;
  */
 @JsonDeserialize(using = ExtensionDeserializer.class)
 @JsonSerialize(using = ExtensionSerializer.class)
-public class Extensions {
+public class Extensions implements JSONObject {
 
     private Map<String,Object> extMap = new HashMap<>();
 
@@ -95,5 +97,11 @@ public class Extensions {
      */
     public Map<String, Object> getMap() {
         return extMap;
+    }
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return extMap.isEmpty();
     }
 }

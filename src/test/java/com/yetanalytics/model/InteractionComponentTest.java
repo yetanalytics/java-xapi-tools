@@ -32,6 +32,7 @@ public class InteractionComponentTest {
 
     @Test
     public void testEmpytInteractionComponent() {
-        ValidationUtils.assertInvalid(validator, interactionComponent);
+        // One error for empty component, one error for missing ID
+        ValidationUtils.assertInvalid(validator, interactionComponent, 2);
     }
 }

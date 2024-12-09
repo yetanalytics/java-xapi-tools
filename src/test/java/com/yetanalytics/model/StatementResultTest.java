@@ -50,6 +50,7 @@ public class StatementResultTest {
 
     @Test
     public void testEmptyStatementResult() {
-        ValidationUtils.assertInvalid(validator, statementResult);
+        // One error for empty statement res, one error for missing statement
+        ValidationUtils.assertInvalid(validator, statementResult, 2);
     }
 }

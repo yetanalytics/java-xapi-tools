@@ -22,13 +22,16 @@ public class ScoreTest {
 
     @Test
     public void testScore() {
-        ValidationUtils.assertValid(validator, score); // TODO: Make invalid
-
         score.setMin(new BigDecimal(0));
         score.setMax(new BigDecimal(100));
         score.setRaw(new BigDecimal(50));
         score.setScaled(new BigDecimal(0));
         ValidationUtils.assertValid(validator, score);
+    }
+
+    @Test
+    public void testEmptyScore() {
+        ValidationUtils.assertInvalid(validator, score);
     }
 
     @Test
