@@ -2,15 +2,13 @@ package com.yetanalytics.model;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.yetanalytics.util.ValidationUtils;
 import com.yetanalytics.xapi.model.Attachment;
 import com.yetanalytics.xapi.model.LangMap;
 
-import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 
 public class AttachmentTest {
@@ -18,8 +16,8 @@ public class AttachmentTest {
     private Attachment attachment;
 
     @Before
-    public void initValidator() {
-        validator = Validation.buildDefaultValidatorFactory().getValidator();
+    public void init() {
+        validator = ValidationUtils.getValidator();
         attachment = new Attachment();
     }
 
@@ -43,11 +41,12 @@ public class AttachmentTest {
         attachment.setLength(length);
         attachment.setSha2(sha2);
         attachment.setFileUrl(fileUrl);
-        assertTrue(validator.validate(attachment).isEmpty());
+
+        ValidationUtils.assertValid(validator, attachment);
     }
 
     @Test
     public void testEmptyAttachment() {
-        assertEquals(5, validator.validate(attachment).size());
+        ValidationUtils.assertInvalid(validator, attachment, 5);
     }
 }

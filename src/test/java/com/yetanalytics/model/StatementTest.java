@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.yetanalytics.util.ValidationUtils;
 import com.yetanalytics.xapi.model.Account;
 import com.yetanalytics.xapi.model.Activity;
 import com.yetanalytics.xapi.model.Agent;
@@ -18,7 +18,6 @@ import com.yetanalytics.xapi.model.Statement;
 import com.yetanalytics.xapi.model.StatementRef;
 import com.yetanalytics.xapi.model.Verb;
 
-import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 
 public class StatementTest {
@@ -33,8 +32,8 @@ public class StatementTest {
     }
 
     @Before
-    public void initStatement() {
-        validator = Validation.buildDefaultValidatorFactory().getValidator();
+    public void init() {
+        validator = ValidationUtils.getValidator();
         statement = new Statement();
 
         // Valid statement by default
@@ -54,7 +53,7 @@ public class StatementTest {
 
     @Test
     public void testStatement() {
-        assertTrue(validator.validate(statement).isEmpty());
+        ValidationUtils.assertValid(validator, statement);
     }
 
     @Test
@@ -62,7 +61,7 @@ public class StatementTest {
         statement.setActor(null);
         statement.setVerb(null);
         statement.setObject(null);
-        assertEquals(3, validator.validate(statement).size());
+        ValidationUtils.assertInvalid(validator, statement, 3);
     }
 
     @Test
@@ -71,12 +70,12 @@ public class StatementTest {
         voidingVerb.setId(Verb.VOIDING_VERB_IRI);
 
         statement.setVerb(voidingVerb);
-        assertEquals(1, validator.validate(statement).size());
+        ValidationUtils.assertInvalid(validator, statement);
 
         StatementRef statementRef = genericStatementRef();
         statement.setObject(statementRef);
 
-        assertTrue(validator.validate(statement).isEmpty());
+        ValidationUtils.assertValid(validator, statement);
     }
 
     @Test
@@ -84,12 +83,13 @@ public class StatementTest {
         Context context = new Context();
         context.setRevision("myRevision");
         statement.setContext(context);
+        ValidationUtils.assertValid(validator, statement);
         assertTrue(validator.validate(statement).isEmpty());
 
         StatementRef statementRef = genericStatementRef();
         statement.setObject(statementRef);
 
-        assertEquals(1, validator.validate(statement).size());
+        ValidationUtils.assertInvalid(validator, statement);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class StatementTest {
         StatementRef statementRef = genericStatementRef();
         statement.setObject(statementRef);
 
-        assertEquals(1, validator.validate(statement).size());
+        ValidationUtils.assertInvalid(validator, statement);
     }
 
     @Test
@@ -123,7 +123,7 @@ public class StatementTest {
         groupAuthMember.add(agentAuthority);
         groupAuthority.setMember(groupAuthMember);
         statement.setAuthority(groupAuthority);
-        assertEquals(1, validator.validate(statement).size());
+        ValidationUtils.assertInvalid(validator, statement);
 
         // Need to add second member
         Agent nonConsumer = new Agent();
@@ -133,12 +133,12 @@ public class StatementTest {
 
         // At least one member needs to have an Account
         groupAuthMember.set(0, nonConsumer);
-        assertEquals(1, validator.validate(statement).size());
+        ValidationUtils.assertInvalid(validator, statement);
 
         // Cannot have three (or more) members
         groupAuthMember.set(0, agentAuthority);
         groupAuthMember.add(nonConsumer);
-        assertEquals(1, validator.validate(statement).size());
+        ValidationUtils.assertInvalid(validator, statement);
     }
 
     @Test
@@ -159,20 +159,20 @@ public class StatementTest {
 
         UUID id = UUID.fromString("00000000-4000-8000-0000-000000000000");
         subStatement.setId(id);
-        assertEquals(1, validator.validate(statement).size());
+        ValidationUtils.assertInvalid(validator, statement);
 
         // TODO: test Stored presence
 
         String version = "1.0.3";
         subStatement.setId(null);
         subStatement.setVersion(version);
-        assertEquals(1, validator.validate(statement).size());
+        ValidationUtils.assertInvalid(validator, statement);
 
         Agent authority = new Agent();
         authority.setMbox("mailto:myauthority@example.com");
         subStatement.setVersion(null);
         subStatement.setAuthority(authority);
-        assertEquals(1, validator.validate(statement).size());
+        ValidationUtils.assertInvalid(validator, statement);
 
         Statement subSubStatement = new Statement();
         Agent actor2 = new Agent();
@@ -187,6 +187,6 @@ public class StatementTest {
         subStatement.setAuthority(null);
         subStatement.setObject(subStatement);
         // TODO: Dig deeper why this is 2 errors and not 1
-        assertEquals(2, validator.validate(statement).size());
+        ValidationUtils.assertInvalid(validator, statement, 2);
     }
 }

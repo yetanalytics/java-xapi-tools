@@ -3,16 +3,14 @@ package com.yetanalytics.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.yetanalytics.util.ValidationUtils;
 import com.yetanalytics.xapi.model.Account;
 import com.yetanalytics.xapi.model.Agent;
 import com.yetanalytics.xapi.model.Group;
 
-import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 
 public class GroupTest {
@@ -20,8 +18,8 @@ public class GroupTest {
     private Group group;
 
     @Before
-    public void initValidator() {
-        validator = Validation.buildDefaultValidatorFactory().getValidator();
+    public void init() {
+        validator = ValidationUtils.getValidator();
         group = new Group();
     }
 
@@ -32,25 +30,25 @@ public class GroupTest {
         memberAgent.setMbox("mailto:mem@example.com");
         member.add(memberAgent);
         group.setMember(member);
-        assertTrue(validator.validate(group).isEmpty());
+        ValidationUtils.assertValid(validator, group);
     }
 
     @Test
     public void testMbox() {
         group.setMbox("mailto:foo@example.com");
-        assertTrue(validator.validate(group).isEmpty());
+        ValidationUtils.assertValid(validator, group);
     }
 
     @Test
     public void testMboxSha1Sum() {
         group.setMbox_sha1sum("767e74eab7081c41e0b83630511139d130249666");
-        assertTrue(validator.validate(group).isEmpty());
+        ValidationUtils.assertValid(validator, group);
     }
 
     @Test
     public void testOpenid() {
         group.setOpenid("http://openid.example.com");
-        assertTrue(validator.validate(group).isEmpty());
+        ValidationUtils.assertValid(validator, group);
     }
 
     @Test
@@ -60,29 +58,25 @@ public class GroupTest {
         account.setName("My Account");
 
         group.setAccount(account);
-        assertTrue(validator.validate(group).isEmpty());
+        ValidationUtils.assertValid(validator, group);
     }
 
     @Test
     public void testInvalidAccount() {
         Account account = new Account();
         group.setAccount(account);
-        var violations = validator.validate(group);
-        assertEquals(2, violations.size());
+        ValidationUtils.assertInvalid(validator, group, 2);
     }
 
     @Test
     public void testNoIFI() { // No member array => identified group
-        var violations = validator.validate(group);
-        assertEquals(1, violations.size());
+        ValidationUtils.assertInvalid(validator, group);
     }
     
     @Test
     public void testMultiIFI() {
         group.setMbox("mailto:foo@example.com");
         group.setMbox_sha1sum("767e74eab7081c41e0b83630511139d130249666");
-        var violations = validator.validate(group);
-        assertEquals(1, violations.size());
+        ValidationUtils.assertInvalid(validator, group);
     }
-
 }

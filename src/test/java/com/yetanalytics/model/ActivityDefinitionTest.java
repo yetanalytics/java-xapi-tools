@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.yetanalytics.util.ValidationUtils;
 import com.yetanalytics.xapi.model.ActivityDefinition;
 import com.yetanalytics.xapi.model.Extensions;
 import com.yetanalytics.xapi.model.InteractionComponent;
 import com.yetanalytics.xapi.model.InteractionType;
 import com.yetanalytics.xapi.model.LangMap;
 
-import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 
 public class ActivityDefinitionTest {
@@ -37,14 +36,14 @@ public class ActivityDefinitionTest {
     }
 
     @Before
-    public void initValidator() {
-        validator = Validation.buildDefaultValidatorFactory().getValidator();
+    public void init() {
+        validator = ValidationUtils.getValidator();
         definition = new ActivityDefinition();
     }
 
     @Test
     public void testEmptyDefinition() {
-        assertTrue(validator.validate(definition).isEmpty());
+        ValidationUtils.assertValid(validator, definition);
     }
 
     @Test
@@ -68,6 +67,7 @@ public class ActivityDefinitionTest {
         definition.setMoreInfo(moreInfo);
         definition.setExtensions(ext);
 
+        ValidationUtils.assertValid(validator, definition);
         assertTrue(validator.validate(definition).isEmpty());
 
         List<InteractionComponent> choices = makeComp("component", "Interaction Component");
@@ -78,79 +78,73 @@ public class ActivityDefinitionTest {
         correctResponsesPattern.add("Response 2");
         definition.setCorrectResponsesPattern(correctResponsesPattern);
 
-        var violations = validator.validate(definition);
-        assertEquals(1, violations.size());
+        ValidationUtils.assertInvalid(validator, definition);
     }
 
     @Test
     public void testChoiceDefinition() {
         definition.setInteractionType(InteractionType.CHOICE);
-        assertTrue(validator.validate(definition).isEmpty());
+        ValidationUtils.assertValid(validator, definition);
 
         List<InteractionComponent> choices = makeComp("choice", "Choice");
         definition.setChoices(choices);
-        assertTrue(validator.validate(definition).isEmpty());
+        ValidationUtils.assertValid(validator, definition);
 
         definition.setInteractionType(InteractionType.TRUE_FALSE);
-        var violations = validator.validate(definition);
-        assertEquals(1, violations.size());
+        ValidationUtils.assertInvalid(validator, definition);
     }
 
     @Test
     public void testSequencingDefinition() {
         definition.setInteractionType(InteractionType.SEQUENCING);
-        assertTrue(validator.validate(definition).isEmpty());
+        ValidationUtils.assertValid(validator, definition);
 
         List<InteractionComponent> choices = makeComp("choice", "Choice");
         definition.setChoices(choices);
-        assertTrue(validator.validate(definition).isEmpty());
+        ValidationUtils.assertValid(validator, definition);
 
         definition.setInteractionType(InteractionType.FILL_IN);
-        var violations = validator.validate(definition);
-        assertEquals(1, violations.size());
+        ValidationUtils.assertInvalid(validator, definition);
     }
 
     @Test
     public void testLikertDefinition() {
         definition.setInteractionType(InteractionType.LIKERT);
-        assertTrue(validator.validate(definition).isEmpty());
+        ValidationUtils.assertValid(validator, definition);
 
         List<InteractionComponent> scale = makeComp("scale", "Scale");
         definition.setScale(scale);
-        assertTrue(validator.validate(definition).isEmpty());
+        ValidationUtils.assertValid(validator, definition);
 
         definition.setInteractionType(InteractionType.LONG_FILL_IN);
-        var violations = validator.validate(definition);
-        assertEquals(1, violations.size());
+        ValidationUtils.assertInvalid(validator, definition);
     }
 
     @Test
     public void testMatchingDefinition() {
         definition.setInteractionType(InteractionType.MATCHING);
-        assertTrue(validator.validate(definition).isEmpty());
+        ValidationUtils.assertValid(validator, definition);
 
         List<InteractionComponent> source = makeComp("source", "Source");
         List<InteractionComponent> target = makeComp("target", "Target");
         definition.setSource(source);
         definition.setTarget(target);
-        assertTrue(validator.validate(definition).isEmpty());
+        ValidationUtils.assertValid(validator, definition);
 
         definition.setInteractionType(InteractionType.NUMERIC);
-        var violations = validator.validate(definition);
-        assertEquals(1, violations.size());
+        ValidationUtils.assertInvalid(validator, definition);
     }
 
     @Test
     public void testPerformanceDefinition() {
         definition.setInteractionType(InteractionType.PERFORMANCE);
-        assertTrue(validator.validate(definition).isEmpty());
+        ValidationUtils.assertValid(validator, definition);
 
         List<InteractionComponent> steps = makeComp("steps", "Steps");
         definition.setSteps(steps);
-        assertTrue(validator.validate(definition).isEmpty());
+        ValidationUtils.assertValid(validator, definition);
 
         definition.setInteractionType(InteractionType.OTHER);
-        var violations = validator.validate(definition);
-        assertEquals(1, violations.size());
+        ValidationUtils.assertInvalid(validator, definition);
     }
 }

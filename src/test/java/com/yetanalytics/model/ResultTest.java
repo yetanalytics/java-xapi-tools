@@ -2,15 +2,13 @@ package com.yetanalytics.model;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.yetanalytics.util.ValidationUtils;
 import com.yetanalytics.xapi.model.Result;
 import com.yetanalytics.xapi.model.Score;
 
-import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 
 public class ResultTest {
@@ -19,8 +17,8 @@ public class ResultTest {
     private Score score;
 
     @Before
-    public void initValidator() {
-        validator = Validation.buildDefaultValidatorFactory().getValidator();
+    public void init() {
+        validator = ValidationUtils.getValidator();
         score = new Score();
         result = new Result();
     }
@@ -35,14 +33,13 @@ public class ResultTest {
         // TODO: setExtensions
         // TODO: setDuration
 
-        assertTrue(validator.validate(result).isEmpty());
+        ValidationUtils.assertValid(validator, result);
     }
 
     @Test
     public void testInvalidScore() {
         score.setScaled(new BigDecimal(3.0));
         result.setScore(score);
-        assertEquals(1, validator.validate(result).size());
+        ValidationUtils.assertInvalid(validator, result);
     }
-
 }

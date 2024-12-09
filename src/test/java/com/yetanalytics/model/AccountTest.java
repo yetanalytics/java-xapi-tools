@@ -1,13 +1,11 @@
 package com.yetanalytics.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.yetanalytics.util.ValidationUtils;
 import com.yetanalytics.xapi.model.Account;
 
-import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 
 public class AccountTest {
@@ -15,8 +13,8 @@ public class AccountTest {
     private Account account;
 
     @Before
-    public void initValidator() {
-        validator = Validation.buildDefaultValidatorFactory().getValidator();
+    public void init() {
+        validator = ValidationUtils.getValidator();
         account = new Account();
     }
 
@@ -24,13 +22,11 @@ public class AccountTest {
     public void testValidAccount() {
         account.setHomePage("http://examplehomepage.com");
         account.setName("My Account");
-        assertTrue(validator.validate(account).isEmpty());
+        ValidationUtils.assertValid(validator, account);
     }
 
     @Test
     public void testEmptyAccount() {
-        var violations = validator.validate(account);
-        assertEquals(2, violations.size());
+        ValidationUtils.assertInvalid(validator, account, 2);
     }
-
 }
