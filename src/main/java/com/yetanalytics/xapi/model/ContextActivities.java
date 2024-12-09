@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.ContextActivityListDeserializer;
+
+import jakarta.validation.constraints.AssertFalse;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -12,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#2462-contextactivities-property">9274.1.1 xAPI Specification</a>.
 */
 @JsonInclude(Include.NON_NULL)
-public class ContextActivities {
+public class ContextActivities implements JSONObject {
 
     @JsonDeserialize(using = ContextActivityListDeserializer.class)
     private List<Activity> parent;
@@ -48,4 +51,12 @@ public class ContextActivities {
         this.other = other;
     }
 
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return (
+            parent == null && grouping == null &&
+            category == null && other == null
+        );
+    }
 }

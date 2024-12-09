@@ -1,8 +1,12 @@
 package com.yetanalytics.xapi.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertFalse;
+import jakarta.validation.constraints.NotNull;
 
 /**
 * Class representation of the Activity Object Type of the 
@@ -11,8 +15,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 @JsonDeserialize
 public class Activity extends AbstractObject {
+    @NotNull
     private String id;
 
+    @Valid
     private ActivityDefinition definition;
 
     public String getId() {
@@ -27,5 +33,11 @@ public class Activity extends AbstractObject {
     }
     public void setDefinition(ActivityDefinition definition) {
         this.definition = definition;
+    }
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return id == null && definition == null;
     }
 }

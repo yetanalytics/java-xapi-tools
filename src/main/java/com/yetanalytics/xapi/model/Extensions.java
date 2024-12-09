@@ -13,6 +13,8 @@ import com.yetanalytics.xapi.model.deserializers.ExtensionDeserializer;
 import com.yetanalytics.xapi.model.serializers.ExtensionSerializer;
 import com.yetanalytics.xapi.util.Mapper;
 
+import jakarta.validation.constraints.AssertFalse;
+
 /**
  * A wrapper object for using <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#41-extensions">xAPI Extensions</a>.
  * 
@@ -22,9 +24,9 @@ import com.yetanalytics.xapi.util.Mapper;
  */
 @JsonDeserialize(using = ExtensionDeserializer.class)
 @JsonSerialize(using = ExtensionSerializer.class)
-public class Extensions {
+public class Extensions implements JSONObject {
 
-    private Map<String,Object> extMap = new HashMap<String,Object>();
+    private Map<String,Object> extMap = new HashMap<>();
 
     public Extensions(Map<String, Object> input) {
         extMap = input;
@@ -65,9 +67,11 @@ public class Extensions {
             return (T) JsonPath.read(json, jsonPathExpression);
         } catch (PathNotFoundException e) {
             //TODO: logging framework
-            e.printStackTrace();
+            System.err.println("Path not found");
+            // e.printStackTrace();
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            System.err.println("JSON cannot be processed");
+            // e.printStackTrace();
         }
         return null;
     }
@@ -93,5 +97,11 @@ public class Extensions {
      */
     public Map<String, Object> getMap() {
         return extMap;
+    }
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return extMap.isEmpty();
     }
 }

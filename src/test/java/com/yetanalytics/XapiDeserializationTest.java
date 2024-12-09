@@ -1,8 +1,8 @@
 package com.yetanalytics;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.io.File;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -12,7 +12,22 @@ import java.util.UUID;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.yetanalytics.util.TestFileUtils;
-import com.yetanalytics.xapi.model.*;
+import com.yetanalytics.xapi.model.AbstractActor;
+import com.yetanalytics.xapi.model.Activity;
+import com.yetanalytics.xapi.model.ActivityDefinition;
+import com.yetanalytics.xapi.model.Agent;
+import com.yetanalytics.xapi.model.Attachment;
+import com.yetanalytics.xapi.model.Context;
+import com.yetanalytics.xapi.model.ContextActivities;
+import com.yetanalytics.xapi.model.Extensions;
+import com.yetanalytics.xapi.model.Group;
+import com.yetanalytics.xapi.model.InteractionComponent;
+import com.yetanalytics.xapi.model.InteractionType;
+import com.yetanalytics.xapi.model.Result;
+import com.yetanalytics.xapi.model.Score;
+import com.yetanalytics.xapi.model.Statement;
+import com.yetanalytics.xapi.model.StatementResult;
+import com.yetanalytics.xapi.model.Verb;
 import com.yetanalytics.xapi.util.Mapper;
 
 import junit.framework.Test;
@@ -102,7 +117,7 @@ public class XapiDeserializationTest extends TestCase {
         Integer elementNumber = ext.read(extKey, "$.listOfThings[1].number", Integer.class);
         assertEquals(elementNumber, Integer.valueOf(2));
         Double decimalEntry = ext.read(extKey, "$.decimalEntry", Double.class);
-        assertEquals(decimalEntry, Double.valueOf(3.14159));
+        assertEquals(decimalEntry, 3.14159);
         Boolean boolEntry = ext.read(extKey, "$.boolEntry", Boolean.class);
         assertEquals(boolEntry, Boolean.TRUE);
         String nullEntry = ext.read(extKey, "$.nullEntry", String.class);

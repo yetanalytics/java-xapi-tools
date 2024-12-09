@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
 import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
 
+import jakarta.validation.constraints.AssertFalse;
+
 /**
  * Java wrapper object for the 
  * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#42-language-maps">xAPI Language Map object</a>.
@@ -18,9 +20,9 @@ import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
  */
 @JsonDeserialize(using = LangMapDeserializer.class)
 @JsonSerialize(using = LangMapSerializer.class)
-public class LangMap {
+public class LangMap implements JSONObject {
 
-    private HashMap<String,String> languageHashMap = new HashMap<String, String>();
+    private HashMap<String,String> languageHashMap = new HashMap<>();
 
     /**
      * Create a new langmap from a HashMap
@@ -70,5 +72,11 @@ public class LangMap {
      */
     public Map<String, String> getMap() {
         return languageHashMap;
+    }
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        return languageHashMap.isEmpty();
     }
 }

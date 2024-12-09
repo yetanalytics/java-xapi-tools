@@ -2,9 +2,12 @@ package com.yetanalytics.xapi.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import jakarta.validation.constraints.AssertFalse;
+import jakarta.validation.constraints.AssertTrue;
 
 /**
 * Class representation of the Group Component of the 
@@ -24,5 +27,33 @@ public class Group extends AbstractActor {
         this.member = member;
     }
 
+    @AssertTrue
+    public boolean isAnonymousOrIdentifiedGroup() {
+        return (
+            (countIFIs() == 0 && member != null) ||
+            (countIFIs() == 1)
+        );
+    }
     
+    private boolean isValidConsumer(Agent consumer) {
+        return consumer.getAccount() != null;
+    }
+
+    @Override
+    public boolean isValidAuthority() {
+        return (
+            member.size() == 2 &&
+            (
+                isValidConsumer(member.get(0)) ||
+                isValidConsumer(member.get(1))
+            )
+        );
+    }
+
+    @Override
+    @AssertFalse
+    public boolean isEmpty() {
+        // zero-length member arrays still count as non-empty
+        return super.isEmpty() && member == null;
+    }
 }
