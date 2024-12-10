@@ -32,4 +32,23 @@ public class LangTag {
     public String toString() {
         return getString();
     }
+
+    @Override
+    public boolean equals(Object langTag) {
+        if (langTag instanceof LangTag) {
+            return languageTagString.equals(((LangTag) langTag).getString());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return languageTagString.hashCode();
+    }
+
+    // Equivalent to URI.create(String string)
+    public static LangTag create(String langTag) {
+        return new LangTag(langTag);
+    }
 }

@@ -24,6 +24,7 @@ import com.yetanalytics.xapi.model.Extensions;
 import com.yetanalytics.xapi.model.Group;
 import com.yetanalytics.xapi.model.InteractionComponent;
 import com.yetanalytics.xapi.model.InteractionType;
+import com.yetanalytics.xapi.model.LangTag;
 import com.yetanalytics.xapi.model.Result;
 import com.yetanalytics.xapi.model.Score;
 import com.yetanalytics.xapi.model.Statement;
@@ -63,18 +64,18 @@ public class XapiDeserializationTest extends TestCase {
 
         Verb verb = stmt.getVerb();
         assertEquals(verb.getId(), URI.create("https://www.yetanalytics.com/profiles/thing/1.0/concepts/verbs/set"));
-        assertEquals(verb.getDisplay().get("en-us"), "Set");
+        assertEquals(verb.getDisplay().get(LangTag.create("en-us")), "Set");
 
         Activity object = (Activity) stmt.getObject();
         assertEquals(object.getId(), URI.create("https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1"));
 
         ActivityDefinition def = object.getDefinition();
-        Set<String> nameLangCodes = def.getName().getLanguageCodes();
-        String nameLangCode = nameLangCodes.iterator().next();
+        Set<LangTag> nameLangCodes = def.getName().getLanguageCodes();
+        LangTag nameLangCode = nameLangCodes.iterator().next();
         assertEquals(def.getName().get(nameLangCode), "Activity 1");
 
-        Set<String> descLangCodes = def.getDescription().getLanguageCodes();
-        String descLangCode = descLangCodes.iterator().next();
+        Set<LangTag> descLangCodes = def.getDescription().getLanguageCodes();
+        LangTag descLangCode = descLangCodes.iterator().next();
         assertEquals(def.getDescription().get(descLangCode), "The First Activity");
 
         AbstractActor authority = stmt.getAuthority();
@@ -88,8 +89,8 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(stmt.getAttachments().size(), 1);
         Attachment att1 = stmt.getAttachments().get(0);
         assertEquals(att1.getUsageType(), URI.create("https://www.yetanalytics.com/usagetypes/1"));
-        assertEquals(att1.getDisplay().get("en-us"), "Attachment 1");
-        assertEquals(att1.getDescription().get("en-us"), "The First Attachment");
+        assertEquals(att1.getDisplay().get(LangTag.create("en-us")), "Attachment 1");
+        assertEquals(att1.getDescription().get(LangTag.create("en-us")), "The First Attachment");
         assertEquals(att1.getContentType(), "application/json");
         assertEquals(att1.getLength(), Integer.valueOf(450));
         assertEquals(att1.getSha2(), "426cf3a8b2864dd91201b989ba5728181da52bfff9a0489670e54cd8ec8b3a50");
@@ -179,12 +180,12 @@ public class XapiDeserializationTest extends TestCase {
         
         ActivityDefinition def = act.getDefinition();
         assertEquals(def.getType(), URI.create("http://adlnet.gov/expapi/activities/cmi.interaction"));
-        assertEquals(def.getName().get("en"), "Multichoice Question");
+        assertEquals(def.getName().get(LangTag.create("en")), "Multichoice Question");
         assertEquals(def.getCorrectResponsesPattern().get(0), "a");
         assertEquals(def.getInteractionType(), InteractionType.CHOICE);
         InteractionComponent choice = def.getChoices().iterator().next();
         assertEquals(choice.getId(), "a");
-        assertEquals(choice.getDescription().get("en"), "A");
+        assertEquals(choice.getDescription().get(LangTag.create("en")), "A");
     }
 
     public void testGroupActor() throws StreamReadException, DatabindException, IOException {

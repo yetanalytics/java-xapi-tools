@@ -20,13 +20,13 @@ import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
 @JsonSerialize(using = LangMapSerializer.class)
 public class LangMap {
 
-    private HashMap<String,String> languageHashMap = new HashMap<String, String>();
+    private HashMap<LangTag,String> languageHashMap = new HashMap<>();
 
     /**
      * Create a new langmap from a HashMap
      * @param input a HashMap of RFC5646 Language Tags, and corresponding value strings
      */
-    public LangMap(HashMap<String,String> input) {
+    public LangMap(HashMap<LangTag, String> input) {
         languageHashMap = input;
     }
 
@@ -35,7 +35,7 @@ public class LangMap {
      * @param languageCode the RFC 5646 Language Tag of the specified Language
      * @param value a string in the language specified by languageCode
      */
-    public void put(String languageCode, String value) {
+    public void put(LangTag languageCode, String value) {
         languageHashMap.put(languageCode, value);
     }
 
@@ -44,7 +44,7 @@ public class LangMap {
      * @param languageCode RFC 5646 Language Tag
      * @return The value in the language specified by the tag.
      */
-    public String get(String languageCode) {
+    public String get(LangTag languageCode) {
         return languageHashMap.get(languageCode);
     }
 
@@ -52,7 +52,7 @@ public class LangMap {
      * Remove an Entry from the Language Map
      * @param languageCode RFC 5646 Language Tag
      */
-    public void remove(String languageCode) {
+    public void remove(LangTag languageCode) {
         languageHashMap.remove(languageCode);
     }
 
@@ -60,7 +60,7 @@ public class LangMap {
      * Retrieves the full set of RFC 5646 Language Tags contained in the Map
      * @return A set RFC 5646 Language Tag Strings
      */
-    public Set<String> getLanguageCodes() {
+    public Set<LangTag> getLanguageCodes() {
         return languageHashMap.keySet();
     }
 
@@ -68,7 +68,7 @@ public class LangMap {
      * Retrieves the full Language Map in the form of a HashMap&lt;String, String&gt;
      * @return The full Language Map
      */
-    public Map<String, String> getMap() {
+    public Map<LangTag, String> getMap() {
         return languageHashMap;
     }
 }
