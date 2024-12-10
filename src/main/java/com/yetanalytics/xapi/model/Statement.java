@@ -186,6 +186,16 @@ public class Statement extends AbstractObject {
         return authority == null || authority.isValidAuthority();
     }
 
+    private boolean isValidSubStmt() {
+        return (
+            id == null &&
+            stored == null &&
+            version == null &&
+            authority == null &&
+            !(object instanceof Statement)
+        );
+    }
+
     // TODO: Validate this on the SubStatement itself
     // (e.g. setting the objectType field)
     @AssertTrue
@@ -194,13 +204,7 @@ public class Statement extends AbstractObject {
         // TODO: If object is true...
         if (object instanceof Statement) {
             Statement subStatement = (Statement) object;
-            return (
-                subStatement.getId() == null &&
-                subStatement.getStored() == null &&
-                subStatement.getVersion() == null &&
-                subStatement.getAuthority() == null &&
-                !(subStatement.getObject() instanceof Statement)
-            );
+            return subStatement.isValidSubStmt();
         } else {
             return true;
         }
