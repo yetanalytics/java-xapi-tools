@@ -27,12 +27,11 @@ public class LangTag {
      */
     @JsonCreator
     public LangTag(String langTag) throws IllformedLocaleException {
-        Locale.getISOLanguages();
-        Builder builder = new Builder();
         if (langTag == null || langTag.isEmpty()) {
             String errMsg = "Cannot parse null or empty language tag String!";
             throw new IllformedLocaleException(errMsg);
         } else {
+            Builder builder = new Builder();
             languageTagLocale = builder.setLanguageTag(langTag).build();
             languageTagString = langTag;
         }
