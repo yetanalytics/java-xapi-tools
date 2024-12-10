@@ -1,7 +1,10 @@
 package com.yetanalytics.xapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.AbstractActorDeserializer;
+
+import jakarta.validation.Valid;
 
 /**
 * Abstract Class for serialization and deserialization of xAPI Actors
@@ -11,12 +14,18 @@ public abstract class AbstractActor extends AbstractObject {
     
     private String name;
 
-    //IFI
+    // IFIs
+
+    // TODO: Validate mbox is a valid mailto IRI
     private String mbox;
+    // TODO: Validate mbox_sha1sum is a valid hash string
     private String mbox_sha1sum;
+    // TODO: Validate openid is a valid IRI
     private String openid;
+    @Valid
     private Account account;
     
+    // Getters and Setters
     public String getName() {
         return name;
     }
@@ -50,5 +59,34 @@ public abstract class AbstractActor extends AbstractObject {
     }
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    // Validation
+    protected int countIFIs() {
+        int notNullCount = 0;
+        if (mbox != null) {
+            ++notNullCount;
+        }
+        if (mbox_sha1sum != null) {
+            ++notNullCount;
+        }
+        if (openid != null) {
+            ++notNullCount;
+        }
+        if (account != null) {
+            ++notNullCount;
+        }
+        return notNullCount;
+    }
+
+    public abstract boolean isValidAuthority();
+
+    @Override
+    @JsonIgnore
+    public boolean isEmpty() {
+        return (
+            mbox == null && mbox_sha1sum == null &&
+            openid == null && account == null
+        );
     }
 }

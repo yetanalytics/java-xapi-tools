@@ -1,7 +1,7 @@
 package com.yetanalytics;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +9,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.flipkart.zjsonpatch.JsonDiff;
 import com.yetanalytics.util.TestFileUtils;
-import com.yetanalytics.xapi.model.*;
+import com.yetanalytics.xapi.model.Statement;
+import com.yetanalytics.xapi.model.StatementResult;
 import com.yetanalytics.xapi.util.Mapper;
 
 import junit.framework.Test;

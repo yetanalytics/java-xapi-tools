@@ -1,20 +1,29 @@
 package com.yetanalytics.xapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import jakarta.validation.constraints.AssertFalse;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Class representation of the Attachment Component of the 
  * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#2411-attachments">9274.1.1 xAPI Specification</a>.
  */
 @JsonInclude(Include.NON_NULL)
-public class Attachment {
+public class Attachment implements JSONObject {
 
+    @NotNull
     private String usageType;
+    @NotNull
     private LangMap display;
     private LangMap description;
+    @NotNull
     private String contentType;
+    @NotNull
     private Integer length;
+    @NotNull
     private String sha2;
     private String fileUrl;
     
@@ -61,5 +70,20 @@ public class Attachment {
         this.fileUrl = fileUrl;
     }
 
-    
+    // Validation
+
+    @Override
+    @JsonIgnore
+    @AssertFalse
+    public boolean isEmpty() {
+        return (
+            usageType == null &&
+            display == null &&
+            description == null &&
+            contentType == null &&
+            length == null &&
+            sha2 == null &&
+            fileUrl == null
+        );
+    }
 }
