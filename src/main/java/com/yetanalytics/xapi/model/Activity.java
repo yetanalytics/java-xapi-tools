@@ -1,8 +1,10 @@
 package com.yetanalytics.xapi.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.net.URI;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
 * Class representation of the Activity Object Type of the 
@@ -11,14 +13,14 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 @JsonDeserialize
 public class Activity extends AbstractObject {
-    private String id;
+    private URI id;
 
     private ActivityDefinition definition;
 
-    public String getId() {
+    public URI getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(URI id) {
         this.id = id;
     }
 

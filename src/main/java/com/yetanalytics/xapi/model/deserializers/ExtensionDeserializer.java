@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model.deserializers;
 
+import java.net.URI;
 import java.util.HashMap;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -26,8 +27,8 @@ public class ExtensionDeserializer extends StdDeserializer<Extensions> {
     @Override
     public Extensions deserialize(final JsonParser jp, final DeserializationContext context) {
         try {            
-            TypeReference<HashMap<String, Object>> typeRef 
-                = new TypeReference<HashMap<String,Object>>() {};
+            TypeReference<HashMap<URI, Object>> typeRef 
+                = new TypeReference<HashMap<URI,Object>>() {};
 
             JsonNode node = Mapper.getMapper().readTree(jp);
 

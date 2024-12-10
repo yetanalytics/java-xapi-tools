@@ -1,9 +1,11 @@
 package com.yetanalytics.xapi.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
+import java.net.URI;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
 
 /**
 * Class representation of the Verb component of the 
@@ -12,16 +14,16 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class Verb {
 
-    private String id;
+    private URI id;
 
     @JsonDeserialize(using = LangMapDeserializer.class)
     private LangMap display;
 
-    public String getId() {
+    public URI getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(URI id) {
         this.id = id;
     }
 

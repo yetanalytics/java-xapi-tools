@@ -1,5 +1,7 @@
 package com.yetanalytics.xapi.model;
 
+import java.net.URI;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -10,18 +12,18 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class Attachment {
 
-    private String usageType;
+    private URI usageType;
     private LangMap display;
     private LangMap description;
     private String contentType;
     private Integer length;
     private String sha2;
-    private String fileUrl;
+    private URI fileUrl;
     
-    public String getUsageType() {
+    public URI getUsageType() {
         return usageType;
     }
-    public void setUsageType(String usageType) {
+    public void setUsageType(URI usageType) {
         this.usageType = usageType;
     }
     public LangMap getDisplay() {
@@ -54,10 +56,10 @@ public class Attachment {
     public void setSha2(String sha2) {
         this.sha2 = sha2;
     }
-    public String getFileUrl() {
+    public URI getFileUrl() {
         return fileUrl;
     }
-    public void setFileUrl(String fileUrl) {
+    public void setFileUrl(URI fileUrl) {
         this.fileUrl = fileUrl;
     }
 
