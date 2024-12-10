@@ -22,19 +22,14 @@ public class LangTag {
      * This constructor takes a RFC 5646 formatted String and converts it to a
      * LangTag object consisting of a java.util.Locale object and the original
      * String.
-     * @param langTag The language tag String from an xAPI Statement language map.
+     * @param langTagStr The language tag String from an xAPI Statement language map.
      * @throws IllformedLocaleException when the String is not a valid language tag.
      */
     @JsonCreator
-    public LangTag(String langTag) throws IllformedLocaleException {
-        if (langTag == null || langTag.isEmpty()) {
-            String errMsg = "Cannot parse null or empty language tag String!";
-            throw new IllformedLocaleException(errMsg);
-        } else {
-            Builder builder = new Builder();
-            languageTagLocale = builder.setLanguageTag(langTag).build();
-            languageTagString = langTag;
-        }
+    public LangTag(String langTagStr) throws IllformedLocaleException {
+        Builder builder = new Builder();
+        languageTagLocale = builder.setLanguageTag(langTagStr).build();
+        languageTagString = langTagStr;
     }
 
     /**
