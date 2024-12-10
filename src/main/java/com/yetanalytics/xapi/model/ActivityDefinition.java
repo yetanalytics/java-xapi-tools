@@ -2,6 +2,7 @@ package com.yetanalytics.xapi.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -164,6 +165,7 @@ public class ActivityDefinition implements JSONObject {
     }
 
     @Override
+    @JsonIgnore
     @AssertFalse
     public boolean isEmpty() {
         return (
@@ -173,6 +175,7 @@ public class ActivityDefinition implements JSONObject {
         );
     }
 
+    @JsonIgnore
     @AssertTrue
     public boolean isValidInteractionActivity() {
         if (interactionType == null) {

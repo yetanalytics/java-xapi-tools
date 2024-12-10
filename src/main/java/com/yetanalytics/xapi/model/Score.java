@@ -2,6 +2,7 @@ package com.yetanalytics.xapi.model;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -52,6 +53,7 @@ public class Score implements JSONObject {
 
     // Validation
 
+    @JsonIgnore
     @AssertTrue
     public boolean isMinLessThanRaw() {
         if (raw != null && min != null) {
@@ -61,6 +63,7 @@ public class Score implements JSONObject {
         }
     }
 
+    @JsonIgnore
     @AssertTrue
     public boolean isRawLessThanMax() {
         if (raw != null && max != null) {
@@ -70,6 +73,7 @@ public class Score implements JSONObject {
         }
     }
 
+    @JsonIgnore
     @AssertTrue
     public boolean isMinLessThanMax() {
         if (min != null && max != null) {
@@ -80,6 +84,7 @@ public class Score implements JSONObject {
     }
 
     @Override
+    @JsonIgnore
     @AssertFalse
     public boolean isEmpty() {
         return raw == null && min == null && max == null && scaled == null;

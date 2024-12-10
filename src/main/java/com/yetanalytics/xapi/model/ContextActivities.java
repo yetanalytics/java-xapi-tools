@@ -2,13 +2,13 @@ package com.yetanalytics.xapi.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.ContextActivityListDeserializer;
 
 import jakarta.validation.constraints.AssertFalse;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
 * Class representation of the Context Activities Component of the 
@@ -52,6 +52,7 @@ public class ContextActivities implements JSONObject {
     }
 
     @Override
+    @JsonIgnore
     @AssertFalse
     public boolean isEmpty() {
         return (

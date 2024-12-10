@@ -2,6 +2,7 @@ package com.yetanalytics.xapi.model;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -80,6 +81,7 @@ public class Context implements JSONObject {
     }
 
     @Override
+    @JsonIgnore
     @AssertFalse
     public boolean isEmpty() {
         return (

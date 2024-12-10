@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
@@ -75,6 +76,7 @@ public class LangMap implements JSONObject {
     }
 
     @Override
+    @JsonIgnore
     @AssertFalse
     public boolean isEmpty() {
         return languageHashMap.isEmpty();

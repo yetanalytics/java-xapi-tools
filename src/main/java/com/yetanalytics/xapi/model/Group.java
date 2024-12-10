@@ -2,6 +2,7 @@ package com.yetanalytics.xapi.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -27,6 +28,7 @@ public class Group extends AbstractActor {
         this.member = member;
     }
 
+    @JsonIgnore
     @AssertTrue
     public boolean isAnonymousOrIdentifiedGroup() {
         return (
@@ -40,6 +42,7 @@ public class Group extends AbstractActor {
     }
 
     @Override
+    @JsonIgnore
     public boolean isValidAuthority() {
         return (
             member.size() == 2 &&
@@ -51,6 +54,7 @@ public class Group extends AbstractActor {
     }
 
     @Override
+    @JsonIgnore
     @AssertFalse
     public boolean isEmpty() {
         // zero-length member arrays still count as non-empty

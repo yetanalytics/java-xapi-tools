@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -39,11 +40,15 @@ public class Verb implements JSONObject {
         this.display = display;
     }
 
+    // Validation
+
+    @JsonIgnore
     public boolean isVoiding() {
         return id == VOIDING_VERB_IRI;
     }
 
     @Override
+    @JsonIgnore
     @AssertFalse
     public boolean isEmpty() {
         return id == null && display == null;

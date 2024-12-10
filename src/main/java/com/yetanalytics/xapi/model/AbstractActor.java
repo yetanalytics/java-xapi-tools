@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.AbstractActorDeserializer;
 
@@ -81,6 +82,7 @@ public abstract class AbstractActor extends AbstractObject {
     public abstract boolean isValidAuthority();
 
     @Override
+    @JsonIgnore
     public boolean isEmpty() {
         return (
             mbox == null && mbox_sha1sum == null &&

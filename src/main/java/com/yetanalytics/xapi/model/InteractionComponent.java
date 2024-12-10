@@ -1,4 +1,5 @@
 package com.yetanalytics.xapi.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -33,7 +34,10 @@ public class InteractionComponent implements JSONObject {
         this.description = description;
     }
 
+    // Validation
+
     @Override
+    @JsonIgnore
     @AssertFalse
     public boolean isEmpty() {
         return id == null && description == null;

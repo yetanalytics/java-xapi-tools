@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -145,6 +146,7 @@ public class Statement extends AbstractObject {
 
     // Validation
 
+    @JsonIgnore
     @AssertTrue
     public boolean isValidVoidingStatement() {
         if (verb != null && verb.isVoiding()) {
@@ -162,6 +164,7 @@ public class Statement extends AbstractObject {
         }
     }
 
+    @JsonIgnore
     @AssertTrue
     public boolean isValidContextRevision() {
         return (
@@ -171,6 +174,7 @@ public class Statement extends AbstractObject {
         );
     }
 
+    @JsonIgnore
     @AssertTrue
     public boolean isValidContextPlatform() {
         return (
@@ -181,6 +185,7 @@ public class Statement extends AbstractObject {
     }
 
     // TODO: Somehow validate this on the Authority object itself
+    @JsonIgnore
     @AssertTrue
     public boolean isValidAuthority() {
         return authority == null || authority.isValidAuthority();
@@ -198,6 +203,7 @@ public class Statement extends AbstractObject {
 
     // TODO: Validate this on the SubStatement itself
     // (e.g. setting the objectType field)
+    @JsonIgnore
     @AssertTrue
     public boolean isValidSubStatement() {
         // System.out.println("Object is Statement: " + (object instanceof Statement));
@@ -211,6 +217,7 @@ public class Statement extends AbstractObject {
     }
 
     @Override
+    @JsonIgnore
     @AssertFalse
     public boolean isEmpty() {
         return (
