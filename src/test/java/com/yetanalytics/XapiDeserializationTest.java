@@ -104,7 +104,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(object.getId(), URI.create("https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1"));
 
         Extensions ext = object.getDefinition().getExtensions();
-        String extKey = "http://www.yetanalytics.com/profiles/thing/1.0/concepts/extensions/ext1";
+        URI extKey = URI.create("http://www.yetanalytics.com/profiles/thing/1.0/concepts/extensions/ext1");
         
         //collections API
         @SuppressWarnings("unchecked")
@@ -125,8 +125,9 @@ public class XapiDeserializationTest extends TestCase {
         assertNull(nullEntry);
         String miss = ext.read(extKey, "$.miss", String.class);
         assertNull(miss);
-        String badKey = ext.read("badKey", "$.doesnt.matter", String.class);
-        assertNull(badKey);
+        URI badKey = URI.create("http://bad.key");
+        String badKeyMiss = ext.read(badKey, "$.doesnt.matter", String.class);
+        assertNull(badKeyMiss);
     }
 
     public void testResult() throws StreamReadException, DatabindException, IOException {
@@ -159,7 +160,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(ctx.getLanguage(), "en-us");
         assertEquals(ctx.getPlatform(), "JUnit Testing");
         assertEquals(ctx.getStatement().getId(), UUID.fromString("6fbd600f-d17c-4c74-801a-2ec2e53231c6"));
-        String extKey = "https://www.yetanalytics.com/extensions/ext3";
+        URI extKey = URI.create("https://www.yetanalytics.com/extensions/ext3");
         assertEquals(ctx.getExtensions().read(extKey, "$.thing", String.class), "stuff");
         ContextActivities ctxActs = ctx.getContextActivities();
         assertEquals(ctxActs.getParent().get(1).getId(), URI.create("https://www.yetanalytics.com/activities/parent2"));
