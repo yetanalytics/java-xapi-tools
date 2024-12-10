@@ -1,8 +1,9 @@
 package com.yetanalytics;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.io.File;
+import java.net.URI;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -12,7 +13,22 @@ import java.util.UUID;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.yetanalytics.util.TestFileUtils;
-import com.yetanalytics.xapi.model.*;
+import com.yetanalytics.xapi.model.AbstractActor;
+import com.yetanalytics.xapi.model.Activity;
+import com.yetanalytics.xapi.model.ActivityDefinition;
+import com.yetanalytics.xapi.model.Agent;
+import com.yetanalytics.xapi.model.Attachment;
+import com.yetanalytics.xapi.model.Context;
+import com.yetanalytics.xapi.model.ContextActivities;
+import com.yetanalytics.xapi.model.Extensions;
+import com.yetanalytics.xapi.model.Group;
+import com.yetanalytics.xapi.model.InteractionComponent;
+import com.yetanalytics.xapi.model.InteractionType;
+import com.yetanalytics.xapi.model.Result;
+import com.yetanalytics.xapi.model.Score;
+import com.yetanalytics.xapi.model.Statement;
+import com.yetanalytics.xapi.model.StatementResult;
+import com.yetanalytics.xapi.model.Verb;
 import com.yetanalytics.xapi.util.Mapper;
 
 import junit.framework.Test;
@@ -43,14 +59,14 @@ public class XapiDeserializationTest extends TestCase {
         Agent actor = (Agent) stmt.getActor();
         assertEquals(actor.getName(), "Cliff Casey");
         assertEquals(actor.getAccount().getName(), "23897525");
-        assertEquals(actor.getAccount().getHomePage(), "https://users.training.com");
+        assertEquals(actor.getAccount().getHomePage(), URI.create("https://users.training.com"));
 
         Verb verb = stmt.getVerb();
-        assertEquals(verb.getId(), "https://www.yetanalytics.com/profiles/thing/1.0/concepts/verbs/set");
+        assertEquals(verb.getId(), URI.create("https://www.yetanalytics.com/profiles/thing/1.0/concepts/verbs/set"));
         assertEquals(verb.getDisplay().get("en-us"), "Set");
 
         Activity object = (Activity) stmt.getObject();
-        assertEquals(object.getId(), "https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1");
+        assertEquals(object.getId(), URI.create("https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1"));
 
         ActivityDefinition def = object.getDefinition();
         Set<String> nameLangCodes = def.getName().getLanguageCodes();
@@ -63,7 +79,7 @@ public class XapiDeserializationTest extends TestCase {
 
         AbstractActor authority = stmt.getAuthority();
         assertEquals(authority.getName(), "Yet Analytics Inc");
-        assertEquals(authority.getMbox(), "mailto:authority@yetanalytics.com");
+        assertEquals(authority.getMbox(), URI.create("mailto:authority@yetanalytics.com"));
     }
 
     public void testAttachments() throws StreamReadException, DatabindException, IOException {
@@ -71,13 +87,13 @@ public class XapiDeserializationTest extends TestCase {
         Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
         assertEquals(stmt.getAttachments().size(), 1);
         Attachment att1 = stmt.getAttachments().get(0);
-        assertEquals(att1.getUsageType(), "https://www.yetanalytics.com/usagetypes/1");
+        assertEquals(att1.getUsageType(), URI.create("https://www.yetanalytics.com/usagetypes/1"));
         assertEquals(att1.getDisplay().get("en-us"), "Attachment 1");
         assertEquals(att1.getDescription().get("en-us"), "The First Attachment");
         assertEquals(att1.getContentType(), "application/json");
         assertEquals(att1.getLength(), Integer.valueOf(450));
         assertEquals(att1.getSha2(), "426cf3a8b2864dd91201b989ba5728181da52bfff9a0489670e54cd8ec8b3a50");
-        assertEquals(att1.getFileUrl(), "https://www.yetanalytics.com/files/file1.json");
+        assertEquals(att1.getFileUrl(), URI.create("https://www.yetanalytics.com/files/file1.json"));
     }
 
     public void testExtensions() throws StreamReadException, DatabindException, IOException {
@@ -85,7 +101,7 @@ public class XapiDeserializationTest extends TestCase {
         Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
 
         Activity object = (Activity) stmt.getObject();
-        assertEquals(object.getId(), "https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1");
+        assertEquals(object.getId(), URI.create("https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1"));
 
         Extensions ext = object.getDefinition().getExtensions();
         String extKey = "http://www.yetanalytics.com/profiles/thing/1.0/concepts/extensions/ext1";
@@ -146,11 +162,11 @@ public class XapiDeserializationTest extends TestCase {
         String extKey = "https://www.yetanalytics.com/extensions/ext3";
         assertEquals(ctx.getExtensions().read(extKey, "$.thing", String.class), "stuff");
         ContextActivities ctxActs = ctx.getContextActivities();
-        assertEquals(ctxActs.getParent().get(1).getId(), "https://www.yetanalytics.com/activities/parent2");
+        assertEquals(ctxActs.getParent().get(1).getId(), URI.create("https://www.yetanalytics.com/activities/parent2"));
         //grouping came in as a single activity and was converted to a list
-        assertEquals(ctxActs.getGrouping().get(0).getId(), "https://www.yetanalytics.com/activities/grouping1");
-        assertEquals(ctxActs.getCategory().get(0).getId(), "https://www.yetanalytics.com/activities/category1");
-        assertEquals(ctxActs.getOther().get(0).getId(), "https://www.yetanalytics.com/activities/other1");
+        assertEquals(ctxActs.getGrouping().get(0).getId(), URI.create("https://www.yetanalytics.com/activities/grouping1"));
+        assertEquals(ctxActs.getCategory().get(0).getId(), URI.create("https://www.yetanalytics.com/activities/category1"));
+        assertEquals(ctxActs.getOther().get(0).getId(), URI.create("https://www.yetanalytics.com/activities/other1"));
     }
 
     public void testInteractionActivity() throws StreamReadException, DatabindException, IOException {
@@ -158,10 +174,10 @@ public class XapiDeserializationTest extends TestCase {
         Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
 
         Activity act = (Activity) stmt.getObject();
-        assertEquals(act.getId(), "https://www.yetanalytics.com/activities/act1/question1");
+        assertEquals(act.getId(), URI.create("https://www.yetanalytics.com/activities/act1/question1"));
         
         ActivityDefinition def = act.getDefinition();
-        assertEquals(def.getType(), "http://adlnet.gov/expapi/activities/cmi.interaction");
+        assertEquals(def.getType(), URI.create("http://adlnet.gov/expapi/activities/cmi.interaction"));
         assertEquals(def.getName().get("en"), "Multichoice Question");
         assertEquals(def.getCorrectResponsesPattern().get(0), "a");
         assertEquals(def.getInteractionType(), InteractionType.CHOICE);
@@ -175,7 +191,7 @@ public class XapiDeserializationTest extends TestCase {
         Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
 
         Group group = (Group) stmt.getActor();
-        assertEquals(group.getMbox(), "mailto:group@group.com");
+        assertEquals(group.getMbox(), URI.create("mailto:group@group.com"));
         assertEquals(group.getName(), "Relevant Group");
         assertEquals(group.getMember().size(), 1);
         assertEquals(group.getMember().get(0).getName(), "Cliff Casey");
@@ -184,10 +200,10 @@ public class XapiDeserializationTest extends TestCase {
     public void testStatementResults() throws StreamReadException, DatabindException, IOException {
         File testFile = TestFileUtils.getJsonTestFile("statementresults");
         StatementResult stmtRes = Mapper.getMapper().readValue(testFile, StatementResult.class);
-        assertEquals(stmtRes.getMore(), "/xapi/statements?limit=2&from=6fbd600f-d17c-4c74-801a-2ec2e53231c9");
+        assertEquals(stmtRes.getMore(), URI.create("/xapi/statements?limit=2&from=6fbd600f-d17c-4c74-801a-2ec2e53231c9"));
 
         assertEquals(stmtRes.getStatements().get(0).getVerb().getId(),
-            "https://www.yetanalytics.com/profiles/thing/1.0/concepts/verbs/did");
+            URI.create("https://www.yetanalytics.com/profiles/thing/1.0/concepts/verbs/did"));
         Agent actor2 = (Agent) stmtRes.getStatements().get(1).getActor();
         assertEquals(actor2.getName(), "Student User 2");
     }

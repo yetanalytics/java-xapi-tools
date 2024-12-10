@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model;
 
+import java.net.URI;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -14,8 +15,8 @@ public class ActivityDefinition {
 
     private LangMap name;
     private LangMap description;
-    private String type;
-    private String moreInfo;
+    private URI type;
+    private URI moreInfo;
     private Extensions extensions;
 
     //cmi.interaction specific properties
@@ -41,16 +42,16 @@ public class ActivityDefinition {
     public void setDescription(LangMap description) {
         this.description = description;
     }
-    public String getType() {
+    public URI getType() {
         return type;
     }
-    public void setType(String type) {
+    public void setType(URI type) {
         this.type = type;
     }
-    public String getMoreInfo() {
+    public URI getMoreInfo() {
         return moreInfo;
     }
-    public void setMoreInfo(String moreInfo) {
+    public void setMoreInfo(URI moreInfo) {
         this.moreInfo = moreInfo;
     }
     public Extensions getExtensions() {
