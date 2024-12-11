@@ -158,7 +158,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(ctx.getTeam().getName(), "Class B");
         assertEquals(ctx.getTeam().getMember().get(1).getName(), "Student Smith");
         assertEquals(ctx.getRevision(), "v0.0.1");
-        assertEquals(ctx.getLanguage(), "en-us");
+        assertEquals(ctx.getLanguage().toString(), "en-us");
         assertEquals(ctx.getPlatform(), "JUnit Testing");
         assertEquals(ctx.getStatement().getId(), UUID.fromString("6fbd600f-d17c-4c74-801a-2ec2e53231c6"));
         URI extKey = URI.create("https://www.yetanalytics.com/extensions/ext3");
