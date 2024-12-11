@@ -91,7 +91,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(att1.getUsageType(), URI.create("https://www.yetanalytics.com/usagetypes/1"));
         assertEquals(att1.getDisplay().get(LangTag.parse("en-us")), "Attachment 1");
         assertEquals(att1.getDescription().get(LangTag.parse("en-us")), "The First Attachment");
-        assertEquals(att1.getContentType(), "application/json");
+        assertEquals(att1.getContentType().toString(), "application/json");
         assertEquals(att1.getLength(), Integer.valueOf(450));
         assertEquals(att1.getSha2(), "426cf3a8b2864dd91201b989ba5728181da52bfff9a0489670e54cd8ec8b3a50");
         assertEquals(att1.getFileUrl(), URI.create("https://www.yetanalytics.com/files/file1.json"));

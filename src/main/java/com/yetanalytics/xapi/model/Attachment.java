@@ -4,6 +4,12 @@ import java.net.URI;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.yetanalytics.xapi.model.deserializers.MimeTypeDeserializer;
+
+import jakarta.activation.MimeType;
 
 /**
  * Class representation of the Attachment Component of the 
@@ -15,7 +21,9 @@ public class Attachment {
     private URI usageType;
     private LangMap display;
     private LangMap description;
-    private String contentType;
+    @JsonDeserialize(using = MimeTypeDeserializer.class)
+    @JsonSerialize(using = ToStringSerializer.class)
+    private MimeType contentType;
     private Integer length;
     private String sha2;
     private URI fileUrl;
@@ -38,10 +46,10 @@ public class Attachment {
     public void setDescription(LangMap description) {
         this.description = description;
     }
-    public String getContentType() {
+    public MimeType getContentType() {
         return contentType;
     }
-    public void setContentType(String contentType) {
+    public void setContentType(MimeType contentType) {
         this.contentType = contentType;
     }
     public Integer getLength() {
