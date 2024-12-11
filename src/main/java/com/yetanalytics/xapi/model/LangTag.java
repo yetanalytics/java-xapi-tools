@@ -33,6 +33,16 @@ public class LangTag {
     }
 
     /**
+     * Static method to create a LangTag instance from the langTag string.
+     * @param langTag - The String language tag.
+     * @return The new LangTag instance.
+     * @see java.util.Locale#forLanguageTag(String str)
+     */
+    public static LangTag parse(String langTag) {
+        return new LangTag(langTag);
+    }
+
+    /**
      * Returns the original String version of the LangTag.
      * @return LangTag as a String.
      */
@@ -79,16 +89,5 @@ public class LangTag {
     @Override
     public int hashCode() {
         return languageTagString.hashCode();
-    }
-
-    /**
-     * Static method to create a LangTag instance from the langTag string.
-     * See also to URI.create(String uriString)
-     * @param langTag - The String language tag.
-     * @return The new LangTag instance.
-     * @see java.util.URI#create(String str)
-     */
-    public static LangTag create(String langTag) {
-        return new LangTag(langTag);
     }
 }
