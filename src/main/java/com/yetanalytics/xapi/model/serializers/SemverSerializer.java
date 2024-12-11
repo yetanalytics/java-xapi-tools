@@ -10,6 +10,9 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.yetanalytics.xapi.util.Mapper;
 
+/**
+* Custom serializer for Semver4j Semver class.
+*/
 public class SemverSerializer extends StdSerializer<Semver> {
     public SemverSerializer() {
         this(null);

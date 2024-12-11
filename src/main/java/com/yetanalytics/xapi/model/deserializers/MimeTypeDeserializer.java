@@ -9,6 +9,9 @@ import com.yetanalytics.xapi.util.Mapper;
 import jakarta.activation.MimeType;
 import jakarta.activation.MimeTypeParseException;
 
+/**
+* Custom serializer for the Jakart Activation MIME types.
+*/
 public class MimeTypeDeserializer extends StdDeserializer<MimeType> {
     
     public MimeTypeDeserializer() {
