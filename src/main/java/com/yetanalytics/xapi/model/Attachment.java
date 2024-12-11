@@ -25,6 +25,7 @@ public class Attachment {
     @JsonSerialize(using = ToStringSerializer.class)
     private MimeType contentType;
     private Integer length;
+    // TODO: Validate that sha2 is a SHA256, 64-char hex string
     private String sha2;
     private URI fileUrl;
     
