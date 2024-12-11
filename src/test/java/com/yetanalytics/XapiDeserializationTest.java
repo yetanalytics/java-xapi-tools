@@ -55,7 +55,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(stmt.getTimestamp().format(DateTimeFormatter.ISO_INSTANT), "2023-10-27T09:03:21.723Z");
         assertEquals(stmt.getStored().format(DateTimeFormatter.ISO_INSTANT), "2023-10-27T09:03:21.722Z");
         assertEquals(stmt.getId(), UUID.fromString("6fbd600f-d87c-4c74-801a-2ec2e53231c8"));
-        assertEquals(stmt.getVersion(), "1.0.3");
+        assertEquals(stmt.getVersion().toString(), "1.0.3");
 
         Agent actor = (Agent) stmt.getActor();
         assertEquals(actor.getName(), "Cliff Casey");
