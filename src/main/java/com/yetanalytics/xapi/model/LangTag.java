@@ -46,27 +46,21 @@ public class LangTag {
      * Returns the original String version of the LangTag.
      * @return LangTag as a String.
      */
+    @Override
     @JsonValue
-    public String getString() {
+    public String toString() {
         return languageTagString;
     }
 
     /** 
-     * Returns the java.util.Locale version of the LangTag.
+     * Returns the java.util.Locale instance corresponding to the LangTag.
      * @return The Locale.
      */
-    public Locale getLocale() {
+    public Locale toLocale() {
         return languageTagLocale;
     }
 
-    /**
-     * Alias of getString.
-     * @return LangTag as a String.
-     */
-    @Override
-    public String toString() {
-        return getString();
-    }
+    // Needed due to the fact that LangTags are keys for LangMaps.
 
     /**
      * Checks that this LangTag is equal to the langTag based on the orignal
@@ -76,7 +70,7 @@ public class LangTag {
     @Override
     public boolean equals(Object langTag) {
         if (langTag instanceof LangTag) {
-            return languageTagString.equals(((LangTag) langTag).getString());
+            return languageTagString.equals(((LangTag) langTag).toString());
         } else {
             return false;
         }

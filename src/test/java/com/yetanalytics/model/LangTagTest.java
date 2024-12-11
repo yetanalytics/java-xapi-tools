@@ -14,16 +14,16 @@ public class LangTagTest {
     @Test
     public void testLanguageTag() {
         LangTag langTag = new LangTag("en-WK");
-        assertEquals("en-WK", langTag.getString());
-        assertEquals("en-WK", langTag.getLocale().toLanguageTag());
+        assertEquals("en-WK", langTag.toString());
+        assertEquals("en-WK", langTag.toLocale().toLanguageTag());
 
         LangTag langTag2 = new LangTag("en-wk");
-        assertEquals("en-wk", langTag2.getString());
-        assertEquals("en-WK", langTag2.getLocale().toLanguageTag());
+        assertEquals("en-wk", langTag2.toString());
+        assertEquals("en-WK", langTag2.toLocale().toLanguageTag());
 
         LangTag langTag3 = new LangTag("yu-555");
-        assertEquals("yu-555", langTag3.getString());
-        assertEquals("yu-555", langTag3.getLocale().toLanguageTag());
+        assertEquals("yu-555", langTag3.toString());
+        assertEquals("yu-555", langTag3.toLocale().toLanguageTag());
     }
 
     @Test
