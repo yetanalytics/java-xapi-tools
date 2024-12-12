@@ -32,7 +32,6 @@ public class ValueSerializationTest extends TestCase {
         T value = mapper.readValue(original, toConvert);
         // Reserialize
         String reserialized = mapper.writeValueAsString(value);
-        System.out.println(reserialized);
 
         JsonNode before = mapper.readTree(original);
         JsonNode after = mapper.readTree(reserialized);
