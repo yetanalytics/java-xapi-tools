@@ -19,7 +19,7 @@ import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
  */
 @JsonDeserialize(using = LangMapDeserializer.class)
 @JsonSerialize(using = LangMapSerializer.class)
-public class LangMap {
+public class LangMap implements IFreeMap<LangTag, String> {
 
     private HashMap<LangTag,String> languageHashMap = new HashMap<>();
 
@@ -36,6 +36,7 @@ public class LangMap {
      * @param languageCode the RFC 5646 LangTag of the specified Language
      * @param value a string in the language specified by languageCode
      */
+    @Override
     public void put(LangTag languageCode, String value) {
         languageHashMap.put(languageCode, value);
     }
@@ -46,6 +47,7 @@ public class LangMap {
      * @param value a string in the language specified by languageCode
      * @throws IllformedLocaleException
      */
+    @Override
     public void put(String languageCode, String value) throws IllformedLocaleException {
         put(LangTag.parse(languageCode), value);
     }
@@ -55,6 +57,7 @@ public class LangMap {
      * @param languageCode RFC 5646 LangTag
      * @return The value in the language specified by the tag.
      */
+    @Override
     public String get(LangTag languageCode) {
         return languageHashMap.get(languageCode);
     }
@@ -65,6 +68,7 @@ public class LangMap {
      * @return The value in the language specified by the tag
      * @throws IllformedLocaleException
      */
+    @Override
     public String get(String languageCode) throws IllformedLocaleException {
         return get(LangTag.parse(languageCode));
     }
@@ -73,6 +77,7 @@ public class LangMap {
      * Remove an entry from the Language Map
      * @param languageCode RFC 5646 LangTag
      */
+    @Override
     public void remove(LangTag languageCode) {
         languageHashMap.remove(languageCode);
     }
@@ -82,15 +87,17 @@ public class LangMap {
      * @param languageCode RFC 5646 language tag String
      * @throws IllformedLocaleException
      */
+    @Override
     public void remove(String languageCode) throws IllformedLocaleException {
         remove(LangTag.parse(languageCode));
     }
 
     /**
      * Retrieves the full set of RFC 5646 Language Tags contained in the Map
-     * @return A set RFC 5646 LangTag instances
+     * @return A set of RFC 5646 LangTag instances
      */
-    public Set<LangTag> getLanguageCodes() {
+    @Override
+    public Set<LangTag> getKeys() {
         return languageHashMap.keySet();
     }
 
@@ -98,6 +105,7 @@ public class LangMap {
      * Retrieves the full Language Map in the form of a HashMap&lt;String, String&gt;
      * @return The full Language Map
      */
+    @Override
     public Map<LangTag, String> getMap() {
         return languageHashMap;
     }

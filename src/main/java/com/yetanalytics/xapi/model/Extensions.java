@@ -23,7 +23,7 @@ import com.yetanalytics.xapi.util.Mapper;
  */
 @JsonDeserialize(using = ExtensionDeserializer.class)
 @JsonSerialize(using = ExtensionSerializer.class)
-public class Extensions {
+public class Extensions implements IFreeMap<URI, Object>{
 
     private Map<URI, Object> extMap = new HashMap<>();
 
@@ -36,6 +36,7 @@ public class Extensions {
      * @param key the URI key of the extension
      * @param value The Collections API representation of the JSON Data
      */
+    @Override
     public void put(URI key, Object value) {
         extMap.put(key, value);
     }
@@ -46,6 +47,7 @@ public class Extensions {
      * @param value The Collections API representation of the JSON Data
      * @throws IllegalArgumentException
      */
+    @Override
     public void put(String key, Object value) throws IllegalArgumentException {
         put(URI.create(key), value);
     }
@@ -55,6 +57,7 @@ public class Extensions {
      * @param key The URI key of the extension
      * @return The Collections API representation of the JSON Data
      */
+    @Override
     public Object get(URI key) {
         return extMap.get(key);
     }
@@ -65,6 +68,7 @@ public class Extensions {
      * @return The Collections API representation of the JSON Data
      * @throws IllegalArgumentException
      */
+    @Override
     public Object get(String key) throws IllegalArgumentException {
         return get(URI.create(key));
     }
@@ -110,6 +114,7 @@ public class Extensions {
      * Remove an extension by IRI key
      * @param key the URI key of the extension to remove
      */
+    @Override
     public void remove(URI key) {
         extMap.remove(key);
     }
@@ -119,6 +124,7 @@ public class Extensions {
      * @param key the IRI String key of the extension to remove
      * @throws IllegalArgumentException
      */
+    @Override
     public void remove(String key) throws IllegalArgumentException {
         remove(URI.create(key));        
     }
@@ -127,13 +133,16 @@ public class Extensions {
      * Returns a set of all IRI Extension keys
      * @return Set of IRI keys
      */
+    @Override
     public Set<URI> getKeys() {
         return extMap.keySet();
     }
+    
     /**
      * Returns the full raw Extension Map as a HashMap&lt;URI, Object&gt;
      * @return The raw Extensions Map
      */
+    @Override
     public Map<URI, Object> getMap() {
         return extMap;
     }

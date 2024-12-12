@@ -70,11 +70,11 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(object.getId(), URI.create("https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1"));
 
         ActivityDefinition def = object.getDefinition();
-        Set<LangTag> nameLangCodes = def.getName().getLanguageCodes();
+        Set<LangTag> nameLangCodes = def.getName().getKeys();
         LangTag nameLangCode = nameLangCodes.iterator().next();
         assertEquals(def.getName().get(nameLangCode), "Activity 1");
 
-        Set<LangTag> descLangCodes = def.getDescription().getLanguageCodes();
+        Set<LangTag> descLangCodes = def.getDescription().getKeys();
         LangTag descLangCode = descLangCodes.iterator().next();
         assertEquals(def.getDescription().get(descLangCode), "The First Activity");
 
