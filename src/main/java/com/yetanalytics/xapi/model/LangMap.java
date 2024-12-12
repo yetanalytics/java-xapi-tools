@@ -1,13 +1,14 @@
 package com.yetanalytics.xapi.model;
 
 import java.util.HashMap;
+import java.util.IllformedLocaleException;
 import java.util.Map;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
-import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
+import com.yetanalytics.xapi.model.serializers.FreeMapSerializer;
 
 /**
  * Java wrapper object for the 
@@ -17,50 +18,86 @@ import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
  * the value is a String in the language specified by the tag.
  */
 @JsonDeserialize(using = LangMapDeserializer.class)
-@JsonSerialize(using = LangMapSerializer.class)
-public class LangMap {
+@JsonSerialize(using = FreeMapSerializer.class)
+public class LangMap implements IFreeMap<LangTag, String> {
 
-    private HashMap<String,String> languageHashMap = new HashMap<String, String>();
+    private HashMap<LangTag,String> languageHashMap = new HashMap<>();
 
     /**
      * Create a new langmap from a HashMap
      * @param input a HashMap of RFC5646 Language Tags, and corresponding value strings
      */
-    public LangMap(HashMap<String,String> input) {
+    public LangMap(HashMap<LangTag, String> input) {
         languageHashMap = input;
     }
 
     /**
      * Sets an entry in the Language Map
-     * @param languageCode the RFC 5646 Language Tag of the specified Language
+     * @param languageCode the RFC 5646 LangTag of the specified Language
      * @param value a string in the language specified by languageCode
      */
-    public void put(String languageCode, String value) {
+    @Override
+    public void put(LangTag languageCode, String value) {
         languageHashMap.put(languageCode, value);
     }
 
     /**
+     * Sets an entry in the Language Map
+     * @param languageCode the RFC 5646 language tag String of the specified language
+     * @param value a string in the language specified by languageCode
+     * @throws IllformedLocaleException
+     */
+    @Override
+    public void put(String languageCode, String value) throws IllformedLocaleException {
+        put(LangTag.parse(languageCode), value);
+    }
+
+    /**
      * Retrieve the value for a specific language.
-     * @param languageCode RFC 5646 Language Tag
+     * @param languageCode RFC 5646 LangTag
      * @return The value in the language specified by the tag.
      */
-    public String get(String languageCode) {
+    @Override
+    public String get(LangTag languageCode) {
         return languageHashMap.get(languageCode);
     }
 
     /**
-     * Remove an Entry from the Language Map
-     * @param languageCode RFC 5646 Language Tag
+     * Retrieve the value for a specific language.
+     * @param languageCode RFC 5646 language tag String
+     * @return The value in the language specified by the tag
+     * @throws IllformedLocaleException
      */
-    public void remove(String languageCode) {
+    @Override
+    public String get(String languageCode) throws IllformedLocaleException {
+        return get(LangTag.parse(languageCode));
+    }
+
+    /**
+     * Remove an entry from the Language Map
+     * @param languageCode RFC 5646 LangTag
+     */
+    @Override
+    public void remove(LangTag languageCode) {
         languageHashMap.remove(languageCode);
     }
 
     /**
-     * Retrieves the full set of RFC 5646 Language Tags contained in the Map
-     * @return A set RFC 5646 Language Tag Strings
+     * Remove an entry from the Language Map
+     * @param languageCode RFC 5646 language tag String
+     * @throws IllformedLocaleException
      */
-    public Set<String> getLanguageCodes() {
+    @Override
+    public void remove(String languageCode) throws IllformedLocaleException {
+        remove(LangTag.parse(languageCode));
+    }
+
+    /**
+     * Retrieves the full set of RFC 5646 Language Tags contained in the Map
+     * @return A set of RFC 5646 LangTag instances
+     */
+    @Override
+    public Set<LangTag> getKeys() {
         return languageHashMap.keySet();
     }
 
@@ -68,7 +105,8 @@ public class LangMap {
      * Retrieves the full Language Map in the form of a HashMap&lt;String, String&gt;
      * @return The full Language Map
      */
-    public Map<String, String> getMap() {
+    @Override
+    public Map<LangTag, String> getMap() {
         return languageHashMap;
     }
 }
