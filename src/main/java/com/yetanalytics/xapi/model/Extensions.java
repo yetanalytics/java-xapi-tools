@@ -33,7 +33,7 @@ public class Extensions {
 
     /**
      * Sets an entry in the Extensions Map
-     * @param key the IRI key of the extension
+     * @param key the URI key of the extension
      * @param value The Collections API representation of the JSON Data
      */
     public void put(URI key, Object value) {
@@ -41,8 +41,18 @@ public class Extensions {
     }
 
     /**
+     * Sets an entry in the Extensions Map
+     * @param key the IRI String key of the extension
+     * @param value The Collections API representation of the JSON Data
+     * @throws IllegalArgumentException
+     */
+    public void put(String key, Object value) throws IllegalArgumentException {
+        put(URI.create(key), value);
+    }
+
+    /**
      * Retrieve extension data
-     * @param key The IRI of the extension
+     * @param key The URI key of the extension
      * @return The Collections API representation of the JSON Data
      */
     public Object get(URI key) {
@@ -50,8 +60,18 @@ public class Extensions {
     }
 
     /**
+     * Retrieve extension data
+     * @param key The IRI string key of the extension
+     * @return The Collections API representation of the JSON Data
+     * @throws IllegalArgumentException
+     */
+    public Object get(String key) throws IllegalArgumentException {
+        return get(URI.create(key));
+    }
+
+    /**
      * Attempt a JSONPath query of the Extension data.
-     * @param key The IRI key of the extension in which to perform the query
+     * @param key The URI key of the extension in which to perform the query
      * @param jsonPathExpression A JSONPath query to perform in the Extension data
      * @param typeKey The typereference for the type that the query is expecting to retrieve
      * @param <T> The type that the query is expecting to convert the results to
@@ -74,11 +94,33 @@ public class Extensions {
     }
 
     /**
+     * Attempt a JSONPath query of the Extension data.
+     * @param key The IRI String key of the extension in which to perform the query
+     * @param jsonPathExpression A JSONPath query to perform in the Extension data
+     * @param typeKey The typereference for the type that the query is expecting to retrieve
+     * @param <T> The type that the query is expecting to convert the results to
+     * @return Object of type T that is the result of deserialization from the query
+     * @throws IllegalArgumentException
+     */
+    public <T> T read(String key, String jsonPathExpression, Class<T> typeKey) throws IllegalArgumentException {
+        return read(URI.create(key), jsonPathExpression, typeKey);
+    }
+
+    /**
      * Remove an extension by IRI key
-     * @param key the IRI of the extension to remove
+     * @param key the URI key of the extension to remove
      */
     public void remove(URI key) {
         extMap.remove(key);
+    }
+
+    /**
+     * Remove an extension by IRI key
+     * @param key the IRI String key of the extension to remove
+     * @throws IllegalArgumentException
+     */
+    public void remove(String key) throws IllegalArgumentException {
+        remove(URI.create(key));        
     }
 
     /**
