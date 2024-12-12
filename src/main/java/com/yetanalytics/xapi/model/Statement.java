@@ -1,15 +1,17 @@
 package com.yetanalytics.xapi.model;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import org.semver4j.Semver;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yetanalytics.xapi.model.serializers.DateTimeSerializer;
-
-import java.time.ZonedDateTime;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.yetanalytics.xapi.model.serializers.SemverSerializer;
 
 /**
 * Class representation of an Statement from the <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#24-statement-properties">9274.1.1 xAPI Specification</a>.
@@ -38,7 +40,8 @@ public class Statement extends AbstractObject {
     @JsonSerialize(using = DateTimeSerializer.class)
     private ZonedDateTime stored;
 
-    private String version;
+    @JsonSerialize(using = SemverSerializer.class)
+    private Semver version;
 
     private List<Attachment> attachments;
 
@@ -114,11 +117,11 @@ public class Statement extends AbstractObject {
         this.stored = stored;
     }
 
-    public String getVersion() {
+    public Semver getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(Semver version) {
         this.version = version;
     }
 

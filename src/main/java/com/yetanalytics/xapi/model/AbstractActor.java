@@ -15,6 +15,7 @@ public abstract class AbstractActor extends AbstractObject {
 
     //IFI
     private URI mbox;
+    // TODO: Validate that mbox_sha1sum is a SHA1, 40-char hex string
     private String mbox_sha1sum;
     private URI openid;
     private Account account;
