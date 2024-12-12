@@ -1,6 +1,7 @@
 package com.yetanalytics.xapi.model;
 
 import java.util.HashMap;
+import java.util.IllformedLocaleException;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public class LangMap {
 
     /**
      * Sets an entry in the Language Map
-     * @param languageCode the RFC 5646 Language Tag of the specified Language
+     * @param languageCode the RFC 5646 LangTag of the specified Language
      * @param value a string in the language specified by languageCode
      */
     public void put(LangTag languageCode, String value) {
@@ -40,8 +41,18 @@ public class LangMap {
     }
 
     /**
+     * Sets an entry in the Language Map
+     * @param languageCode the RFC 5646 language tag String of the specified language
+     * @param value a string in the language specified by languageCode
+     * @throws IllformedLocaleException
+     */
+    public void put(String languageCode, String value) throws IllformedLocaleException {
+        put(LangTag.parse(languageCode), value);
+    }
+
+    /**
      * Retrieve the value for a specific language.
-     * @param languageCode RFC 5646 Language Tag
+     * @param languageCode RFC 5646 LangTag
      * @return The value in the language specified by the tag.
      */
     public String get(LangTag languageCode) {
@@ -49,16 +60,35 @@ public class LangMap {
     }
 
     /**
-     * Remove an Entry from the Language Map
-     * @param languageCode RFC 5646 Language Tag
+     * Retrieve the value for a specific language.
+     * @param languageCode RFC 5646 language tag String
+     * @return The value in the language specified by the tag
+     * @throws IllformedLocaleException
+     */
+    public String get(String languageCode) throws IllformedLocaleException {
+        return get(LangTag.parse(languageCode));
+    }
+
+    /**
+     * Remove an entry from the Language Map
+     * @param languageCode RFC 5646 LangTag
      */
     public void remove(LangTag languageCode) {
         languageHashMap.remove(languageCode);
     }
 
     /**
+     * Remove an entry from the Language Map
+     * @param languageCode RFC 5646 language tag String
+     * @throws IllformedLocaleException
+     */
+    public void remove(String languageCode) throws IllformedLocaleException {
+        remove(LangTag.parse(languageCode));
+    }
+
+    /**
      * Retrieves the full set of RFC 5646 Language Tags contained in the Map
-     * @return A set RFC 5646 Language Tag Strings
+     * @return A set RFC 5646 LangTag instances
      */
     public Set<LangTag> getLanguageCodes() {
         return languageHashMap.keySet();
