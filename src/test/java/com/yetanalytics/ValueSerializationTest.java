@@ -55,6 +55,12 @@ public class ValueSerializationTest extends TestCase {
         assertEquals(0, diff.size());
     }
 
+    public void testUri2() throws JsonProcessingException {
+        String uriStr = "{\"id\": \"http://你好世界.com\"}";
+        ArrayNode diff = reserializeAndDiff(uriStr, Verb.class);
+        assertEquals(0, diff.size());
+    }
+
     public void testTimestamp() throws JsonProcessingException {
         String timestampStr = "{\"timestamp\": \"2023-10-27T09:03:21.722Z\"}";
         ArrayNode diff = reserializeAndDiff(timestampStr, Statement.class);
