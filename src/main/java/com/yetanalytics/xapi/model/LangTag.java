@@ -27,8 +27,7 @@ public class LangTag {
      */
     @JsonCreator
     public LangTag(String langTagStr) throws IllformedLocaleException {
-        Builder builder = new Builder();
-        languageTagLocale = builder.setLanguageTag(langTagStr).build();
+        languageTagLocale = Locale.forLanguageTag(langTagStr);
         languageTagString = langTagStr;
     }
 
