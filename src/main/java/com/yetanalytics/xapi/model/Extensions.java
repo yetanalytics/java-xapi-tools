@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import com.yetanalytics.xapi.model.deserializers.ExtensionDeserializer;
-import com.yetanalytics.xapi.model.serializers.ExtensionSerializer;
+import com.yetanalytics.xapi.model.serializers.FreeMapSerializer;
 import com.yetanalytics.xapi.util.Mapper;
 
 /**
@@ -22,7 +22,7 @@ import com.yetanalytics.xapi.util.Mapper;
  * or through a JSONPath API.
  */
 @JsonDeserialize(using = ExtensionDeserializer.class)
-@JsonSerialize(using = ExtensionSerializer.class)
+@JsonSerialize(using = FreeMapSerializer.class)
 public class Extensions implements IFreeMap<URI, Object>{
 
     private Map<URI, Object> extMap = new HashMap<>();
@@ -137,7 +137,7 @@ public class Extensions implements IFreeMap<URI, Object>{
     public Set<URI> getKeys() {
         return extMap.keySet();
     }
-    
+
     /**
      * Returns the full raw Extension Map as a HashMap&lt;URI, Object&gt;
      * @return The raw Extensions Map

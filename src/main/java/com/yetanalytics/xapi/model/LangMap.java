@@ -8,7 +8,7 @@ import java.util.Set;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
-import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
+import com.yetanalytics.xapi.model.serializers.FreeMapSerializer;
 
 /**
  * Java wrapper object for the 
@@ -18,7 +18,7 @@ import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
  * the value is a String in the language specified by the tag.
  */
 @JsonDeserialize(using = LangMapDeserializer.class)
-@JsonSerialize(using = LangMapSerializer.class)
+@JsonSerialize(using = FreeMapSerializer.class)
 public class LangMap implements IFreeMap<LangTag, String> {
 
     private HashMap<LangTag,String> languageHashMap = new HashMap<>();
