@@ -41,7 +41,7 @@ public enum ObjectType {
                 return t;
             }
         }
-        throw new IllegalArgumentException("Bad ObjectType Value");
+        throw new IllegalArgumentException("Invalid ObjectType value: " + name);
     }
 
     /**

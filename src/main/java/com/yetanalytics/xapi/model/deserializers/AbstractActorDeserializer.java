@@ -1,15 +1,15 @@
 package com.yetanalytics.xapi.model.deserializers;
 
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-
-import com.yetanalytics.xapi.model.Group;
+import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.yetanalytics.xapi.model.AbstractActor;
 import com.yetanalytics.xapi.model.Agent;
+import com.yetanalytics.xapi.model.Group;
 import com.yetanalytics.xapi.model.ObjectType;
 import com.yetanalytics.xapi.util.Mapper;
 
@@ -27,17 +27,15 @@ public class AbstractActorDeserializer extends StdDeserializer<AbstractActor> {
     }
 
     @Override
-    public AbstractActor deserialize(final JsonParser jp, final DeserializationContext context) {
-        try {
-            ObjectMapper mapper = Mapper.getMapper();
-            JsonNode node = mapper.readTree(jp);
-            String objType = node.has("objectType") ? node.get("objectType").asText() : null;
-            Class<? extends AbstractActor> instanceClass = 
-                ObjectType.GROUP.matches(objType) ? Group.class : Agent.class;
-            return mapper.convertValue(node, instanceClass);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public AbstractActor deserialize(final JsonParser jp, final DeserializationContext context) throws IOException {
+        ObjectMapper mapper = Mapper.getMapper();
+        JsonNode node = mapper.readTree(jp);
+        String objType = node.has("objectType")
+            ? node.get("objectType").asText()
+            : null;
+        Class<? extends AbstractActor> instClass = ObjectType.GROUP.matches(objType)
+            ? Group.class
+            : Agent.class;
+        return mapper.convertValue(node, instClass);
     }
 }

@@ -4,10 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
-import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
 
 /**
  * Java wrapper object for the 
@@ -17,7 +16,7 @@ import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
  * the value is a String in the language specified by the tag.
  */
 @JsonDeserialize(using = LangMapDeserializer.class)
-@JsonSerialize(using = LangMapSerializer.class)
+// @JsonSerialize(using = LangMapSerializer.class)
 public class LangMap {
 
     private HashMap<LangTag,String> languageHashMap = new HashMap<>();
@@ -68,6 +67,7 @@ public class LangMap {
      * Retrieves the full Language Map in the form of a HashMap&lt;String, String&gt;
      * @return The full Language Map
      */
+    @JsonValue
     public Map<LangTag, String> getMap() {
         return languageHashMap;
     }

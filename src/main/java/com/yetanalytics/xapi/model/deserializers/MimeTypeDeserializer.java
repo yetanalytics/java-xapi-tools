@@ -1,5 +1,7 @@
 package com.yetanalytics.xapi.model.deserializers;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +25,7 @@ public class MimeTypeDeserializer extends StdDeserializer<MimeType> {
     }
 
     @Override
-    public MimeType deserialize(final JsonParser jp, final DeserializationContext context) {
+    public MimeType deserialize(final JsonParser jp, final DeserializationContext context) throws IOException {
         try {
             ObjectMapper mapper = Mapper.getMapper();
             return new MimeType(mapper.readValue(jp, String.class));
@@ -31,9 +33,6 @@ public class MimeTypeDeserializer extends StdDeserializer<MimeType> {
             // Need special case since MimeTypeParseException does not
             // extend RuntimeException, so it angers the compiler.
             throw new IllegalArgumentException(e);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 }
