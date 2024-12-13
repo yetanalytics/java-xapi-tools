@@ -30,13 +30,13 @@ public class ContextActivityListDeserializer extends StdDeserializer<List<Activi
     public List<Activity> deserialize(final JsonParser jp, final DeserializationContext context) throws IOException {
         ObjectMapper mapper = Mapper.getMapper();
         JsonNode node = mapper.readTree(jp);
-        //Sometimes a contextactivity list is actually a single entry, but
-        //should be converted to a list
+        // Sometimes a contextactivity list is actually a single entry, but
+        // should be converted to a list
         if (node instanceof ArrayNode){
             TypeReference<List<Activity>> typeRef = new TypeReference<List<Activity>>() {};
             return mapper.convertValue(node, typeRef);
         } else {
-            ArrayList<Activity> ctxActList = new ArrayList<Activity>();
+            ArrayList<Activity> ctxActList = new ArrayList<>();
             ctxActList.add(mapper.convertValue(node, Activity.class));
             return ctxActList;
         }

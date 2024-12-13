@@ -29,9 +29,8 @@ public class ExtensionDeserializer extends StdDeserializer<Extensions> {
     public Extensions deserialize(final JsonParser jp, final DeserializationContext context) throws IOException {
         TypeReference<HashMap<URI, Object>> typeRef 
             = new TypeReference<HashMap<URI,Object>>() {};
-
         JsonNode node = Mapper.getMapper().readTree(jp);
-
-        return new Extensions(Mapper.getMapper().convertValue(node, typeRef));
+        HashMap<URI, Object> m = Mapper.getMapper().convertValue(node, typeRef);
+        return new Extensions(m);
     }
 }

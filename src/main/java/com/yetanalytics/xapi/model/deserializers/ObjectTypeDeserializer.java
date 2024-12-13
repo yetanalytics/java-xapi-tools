@@ -25,6 +25,7 @@ public class ObjectTypeDeserializer extends StdDeserializer<ObjectType> {
     @Override
     public ObjectType deserialize(final JsonParser jp, final DeserializationContext context) throws IOException {
         ObjectMapper mapper = Mapper.getMapper();
-        return ObjectType.getByDisplayName(mapper.readValue(jp, String.class));
+        String objType = mapper.readValue(jp, String.class);
+        return ObjectType.getByDisplayName(objType);
     }
 }

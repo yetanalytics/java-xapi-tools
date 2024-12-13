@@ -30,9 +30,12 @@ public class AbstractActorDeserializer extends StdDeserializer<AbstractActor> {
     public AbstractActor deserialize(final JsonParser jp, final DeserializationContext context) throws IOException {
         ObjectMapper mapper = Mapper.getMapper();
         JsonNode node = mapper.readTree(jp);
-        String objType = node.has("objectType") ? node.get("objectType").asText() : null;
-        Class<? extends AbstractActor> instanceClass = 
-            ObjectType.GROUP.matches(objType) ? Group.class : Agent.class;
-        return mapper.convertValue(node, instanceClass);
+        String objType = node.has("objectType")
+            ? node.get("objectType").asText()
+            : null;
+        Class<? extends AbstractActor> instClass = ObjectType.GROUP.matches(objType)
+            ? Group.class
+            : Agent.class;
+        return mapper.convertValue(node, instClass);
     }
 }

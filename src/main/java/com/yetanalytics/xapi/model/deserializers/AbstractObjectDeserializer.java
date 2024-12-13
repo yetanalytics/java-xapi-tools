@@ -30,15 +30,17 @@ public class AbstractObjectDeserializer extends StdDeserializer<AbstractObject> 
     }
 
     private Class<? extends AbstractObject> getObjectType(JsonNode n) {
-        String objType = n.has("objectType") ? n.get("objectType").asText() : null;
+        String objType = n.has("objectType")
+            ? n.get("objectType").asText()
+            : null;
         boolean hasActor = n.has("actor");
         boolean hasId = n.has("id");
 
-        if (ObjectType.GROUP.toString().equals(objType)){
+        if (ObjectType.GROUP.toString().equals(objType)) {
             return Group.class;
         } else if (ObjectType.STATEMENT_REF.matches(objType)) {
             return StatementRef.class;
-        } else if (ObjectType.AGENT.matches(objType) || (objType == null && !hasId)){
+        } else if (ObjectType.AGENT.matches(objType) || (objType == null && !hasId)) {
             return Agent.class;
         } else if (ObjectType.SUB_STATEMENT.matches(objType) 
                 || (objType == null && hasActor)) {

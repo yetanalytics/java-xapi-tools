@@ -30,7 +30,7 @@ public class LangMapDeserializer extends StdDeserializer<LangMap> {
         ObjectMapper mapper = Mapper.getMapper();
         TypeReference<HashMap<LangTag, String>> typeRef 
             = new TypeReference<HashMap<LangTag, String>>() {};
-        
-        return new LangMap(mapper.readValue(jp, typeRef));
+        HashMap<LangTag, String> map = mapper.readValue(jp, typeRef);
+        return new LangMap(map);
     }
 }

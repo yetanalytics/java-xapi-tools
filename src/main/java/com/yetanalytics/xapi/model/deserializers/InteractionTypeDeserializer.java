@@ -25,6 +25,7 @@ public class InteractionTypeDeserializer extends StdDeserializer<InteractionType
     @Override
     public InteractionType deserialize(final JsonParser jp, final DeserializationContext context) throws IOException {
         ObjectMapper mapper = Mapper.getMapper();
-        return InteractionType.getByDisplayName(mapper.readValue(jp, String.class));
+        String intType = mapper.readValue(jp, String.class);
+        return InteractionType.getByDisplayName(intType);
     }
 }
