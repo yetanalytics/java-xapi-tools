@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model.deserializers;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -25,16 +26,11 @@ public class LangMapDeserializer extends StdDeserializer<LangMap> {
     }
 
     @Override
-    public LangMap deserialize(final JsonParser jp, final DeserializationContext context) {
-        try {
-            ObjectMapper mapper = Mapper.getMapper();
-            TypeReference<HashMap<LangTag, String>> typeRef 
-                = new TypeReference<HashMap<LangTag, String>>() {};
-            
-            return new LangMap(mapper.readValue(jp, typeRef));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public LangMap deserialize(final JsonParser jp, final DeserializationContext context) throws IOException {
+        ObjectMapper mapper = Mapper.getMapper();
+        TypeReference<HashMap<LangTag, String>> typeRef 
+            = new TypeReference<HashMap<LangTag, String>>() {};
+        
+        return new LangMap(mapper.readValue(jp, typeRef));
     }
 }

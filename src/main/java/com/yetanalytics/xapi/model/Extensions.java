@@ -5,13 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import com.yetanalytics.xapi.model.deserializers.ExtensionDeserializer;
-import com.yetanalytics.xapi.model.serializers.ExtensionSerializer;
 import com.yetanalytics.xapi.util.Mapper;
 
 /**
@@ -22,7 +21,7 @@ import com.yetanalytics.xapi.util.Mapper;
  * or through a JSONPath API.
  */
 @JsonDeserialize(using = ExtensionDeserializer.class)
-@JsonSerialize(using = ExtensionSerializer.class)
+// @JsonSerialize(using = ExtensionSerializer.class)
 public class Extensions {
 
     private Map<URI, Object> extMap = new HashMap<>();
@@ -92,6 +91,7 @@ public class Extensions {
      * Returns the full raw Extension Map as a HashMap&lt;URI, Object&gt;
      * @return The raw Extensions Map
      */
+    @JsonValue
     public Map<URI, Object> getMap() {
         return extMap;
     }

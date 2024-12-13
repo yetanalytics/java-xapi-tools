@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model.deserializers;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 
@@ -25,17 +26,12 @@ public class ExtensionDeserializer extends StdDeserializer<Extensions> {
     }
 
     @Override
-    public Extensions deserialize(final JsonParser jp, final DeserializationContext context) {
-        try {            
-            TypeReference<HashMap<URI, Object>> typeRef 
-                = new TypeReference<HashMap<URI,Object>>() {};
+    public Extensions deserialize(final JsonParser jp, final DeserializationContext context) throws IOException {
+        TypeReference<HashMap<URI, Object>> typeRef 
+            = new TypeReference<HashMap<URI,Object>>() {};
 
-            JsonNode node = Mapper.getMapper().readTree(jp);
+        JsonNode node = Mapper.getMapper().readTree(jp);
 
-            return new Extensions(Mapper.getMapper().convertValue(node, typeRef));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return new Extensions(Mapper.getMapper().convertValue(node, typeRef));
     }
 }

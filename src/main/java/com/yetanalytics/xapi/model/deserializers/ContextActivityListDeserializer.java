@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model.deserializers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,23 +27,18 @@ public class ContextActivityListDeserializer extends StdDeserializer<List<Activi
     }
 
     @Override
-    public List<Activity> deserialize(final JsonParser jp, final DeserializationContext context) {
-        try {
-            ObjectMapper mapper = Mapper.getMapper();
-            JsonNode node = mapper.readTree(jp);
-            //Sometimes a contextactivity list is actually a single entry, but
-            //should be converted to a list
-            if (node instanceof ArrayNode){
-                TypeReference<List<Activity>> typeRef = new TypeReference<List<Activity>>() {};
-                return mapper.convertValue(node, typeRef);
-            } else {
-                ArrayList<Activity> ctxActList = new ArrayList<Activity>();
-                ctxActList.add(mapper.convertValue(node, Activity.class));
-                return ctxActList;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+    public List<Activity> deserialize(final JsonParser jp, final DeserializationContext context) throws IOException {
+        ObjectMapper mapper = Mapper.getMapper();
+        JsonNode node = mapper.readTree(jp);
+        //Sometimes a contextactivity list is actually a single entry, but
+        //should be converted to a list
+        if (node instanceof ArrayNode){
+            TypeReference<List<Activity>> typeRef = new TypeReference<List<Activity>>() {};
+            return mapper.convertValue(node, typeRef);
+        } else {
+            ArrayList<Activity> ctxActList = new ArrayList<Activity>();
+            ctxActList.add(mapper.convertValue(node, Activity.class));
+            return ctxActList;
         }
     }
 }
