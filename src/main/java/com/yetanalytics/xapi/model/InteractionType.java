@@ -45,7 +45,7 @@ public enum InteractionType {
                 return t;
             }
         }
-        throw new IllegalArgumentException("Bad InteractionType Value");
+        throw new IllegalArgumentException("Invalid InteractionType value: " + name);
     }
 
     /**

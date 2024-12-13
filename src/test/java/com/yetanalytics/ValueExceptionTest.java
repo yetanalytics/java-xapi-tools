@@ -107,7 +107,7 @@ public class ValueExceptionTest extends TestCase {
 
     public void testInvalidObjectType() {
         String objTypeStr = "{\"objectType\": \"Person\"}";
-        String errMsg = "Bad ObjectType Value";
+        String errMsg = "Invalid ObjectType value: Person";
         JsonProcessingException exception = assertThrows(JsonProcessingException.class,
             () -> Mapper.getMapper().readValue(objTypeStr, Agent.class));
         assertEquals(errMsg, exception.getOriginalMessage());
@@ -115,7 +115,7 @@ public class ValueExceptionTest extends TestCase {
 
     public void testinvalidInteractiontype() {
         String intTypeStr = "{\"interactionType\": \"unknown\"}";
-        String errMsg = "Bad InteractionType Value";
+        String errMsg = "Invalid InteractionType value: unknown";
         JsonProcessingException exception = assertThrows(JsonProcessingException.class,
             () -> Mapper.getMapper().readValue(intTypeStr, ActivityDefinition.class));
         assertEquals(errMsg, exception.getOriginalMessage());
