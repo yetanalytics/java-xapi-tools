@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThrows;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yetanalytics.xapi.model.ActivityDefinition;
+import com.yetanalytics.xapi.model.Agent;
 import com.yetanalytics.xapi.model.Attachment;
 import com.yetanalytics.xapi.model.Result;
 import com.yetanalytics.xapi.model.Statement;
@@ -50,6 +51,15 @@ public class ValueExceptionTest extends TestCase {
         assertEquals(errMsg, exception.getOriginalMessage());
     }
 
+    public void testInvalidUri2() {
+        // Same test as above except as Extension key
+        String uriStr = "{\"extensions\": {\"{http://example.com}\": 2}";
+        String errMsg = "Cannot deserialize Map key of type `java.net.URI` from String \"{http://example.com}\": not a valid representation, problem: (com.fasterxml.jackson.databind.exc.InvalidFormatException) Cannot deserialize Map key of type `java.net.URI` from String \"{http://example.com}\": problem: Illegal character in scheme name at index 0: {http://example.com}\n at [Source: UNKNOWN; byte offset: #UNKNOWN]";
+        JsonProcessingException exception = assertThrows(JsonProcessingException.class,
+            () -> Mapper.getMapper().readValue(uriStr, ActivityDefinition.class));
+        assertEquals(errMsg, exception.getOriginalMessage());
+    }
+
     public void testInvalidTimestamp() {
         // Spaces in timestamp
         String timestampStr = "{\"timestamp\": \"2023 10 27T09:03:21.722Z\"}";
@@ -90,6 +100,24 @@ public class ValueExceptionTest extends TestCase {
         String errMsg = "Cannot construct instance of `org.semver4j.Semver`, problem: Version [1-0-0] is not valid semver.";
         JsonProcessingException exception = assertThrows(JsonProcessingException.class,
             () -> Mapper.getMapper().readValue(versionStr, Statement.class));
+        assertEquals(errMsg, exception.getOriginalMessage());
+    }
+
+    // Enums
+
+    public void testInvalidObjectType() {
+        String objTypeStr = "{\"objectType\": \"Person\"}";
+        String errMsg = "Bad ObjectType Value";
+        JsonProcessingException exception = assertThrows(JsonProcessingException.class,
+            () -> Mapper.getMapper().readValue(objTypeStr, Agent.class));
+        assertEquals(errMsg, exception.getOriginalMessage());
+    }
+
+    public void testinvalidInteractiontype() {
+        String intTypeStr = "{\"interactionType\": \"unknown\"}";
+        String errMsg = "Bad InteractionType Value";
+        JsonProcessingException exception = assertThrows(JsonProcessingException.class,
+            () -> Mapper.getMapper().readValue(intTypeStr, ActivityDefinition.class));
         assertEquals(errMsg, exception.getOriginalMessage());
     }
 }
