@@ -1,8 +1,8 @@
 package com.yetanalytics;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.io.File;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -12,8 +12,23 @@ import java.util.UUID;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.yetanalytics.util.TestFileUtils;
-import com.yetanalytics.xapi.model.*;
-import com.yetanalytics.xapi.util.Mapper;
+import com.yetanalytics.xapi.Deserializer;
+import com.yetanalytics.xapi.model.AbstractActor;
+import com.yetanalytics.xapi.model.Activity;
+import com.yetanalytics.xapi.model.ActivityDefinition;
+import com.yetanalytics.xapi.model.Agent;
+import com.yetanalytics.xapi.model.Attachment;
+import com.yetanalytics.xapi.model.Context;
+import com.yetanalytics.xapi.model.ContextActivities;
+import com.yetanalytics.xapi.model.Extensions;
+import com.yetanalytics.xapi.model.Group;
+import com.yetanalytics.xapi.model.InteractionComponent;
+import com.yetanalytics.xapi.model.InteractionType;
+import com.yetanalytics.xapi.model.Result;
+import com.yetanalytics.xapi.model.Score;
+import com.yetanalytics.xapi.model.Statement;
+import com.yetanalytics.xapi.model.StatementResult;
+import com.yetanalytics.xapi.model.Verb;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -32,8 +47,9 @@ public class XapiDeserializationTest extends TestCase {
     }
 
     public void testBasicStatement() throws StreamReadException, DatabindException, IOException {
+        Deserializer deserializer = new Deserializer();
         File testFile = TestFileUtils.getJsonTestFile("basic");
-        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
+        Statement stmt = deserializer.deserialize(testFile, Statement.class);
 
         assertEquals(stmt.getTimestamp().format(DateTimeFormatter.ISO_INSTANT), "2023-10-27T09:03:21.723Z");
         assertEquals(stmt.getStored().format(DateTimeFormatter.ISO_INSTANT), "2023-10-27T09:03:21.722Z");
@@ -67,8 +83,10 @@ public class XapiDeserializationTest extends TestCase {
     }
 
     public void testAttachments() throws StreamReadException, DatabindException, IOException {
+        Deserializer deserializer = new Deserializer();
         File testFile = TestFileUtils.getJsonTestFile("attachments");
-        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
+        Statement stmt = deserializer.deserialize(testFile, Statement.class);
+       
         assertEquals(stmt.getAttachments().size(), 1);
         Attachment att1 = stmt.getAttachments().get(0);
         assertEquals(att1.getUsageType(), "https://www.yetanalytics.com/usagetypes/1");
@@ -81,8 +99,9 @@ public class XapiDeserializationTest extends TestCase {
     }
 
     public void testExtensions() throws StreamReadException, DatabindException, IOException {
+        Deserializer deserializer = new Deserializer();
         File testFile = TestFileUtils.getJsonTestFile("extensions");
-        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
+        Statement stmt = deserializer.deserialize(testFile, Statement.class);
 
         Activity object = (Activity) stmt.getObject();
         assertEquals(object.getId(), "https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1");
@@ -114,8 +133,9 @@ public class XapiDeserializationTest extends TestCase {
     }
 
     public void testResult() throws StreamReadException, DatabindException, IOException {
+        Deserializer deserializer = new Deserializer();
         File testFile = TestFileUtils.getJsonTestFile("result");
-        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
+        Statement stmt = deserializer.deserialize(testFile, Statement.class);
 
         Result res = stmt.getResult();
         assertTrue(res.getCompletion());
@@ -131,8 +151,9 @@ public class XapiDeserializationTest extends TestCase {
     }
 
     public void testContext() throws StreamReadException, DatabindException, IOException {
+        Deserializer deserializer = new Deserializer();
         File testFile = TestFileUtils.getJsonTestFile("context");
-        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
+        Statement stmt = deserializer.deserialize(testFile, Statement.class);
 
         Context ctx = stmt.getContext();
         assertEquals(ctx.getRegistration(), UUID.fromString("6fbd600f-d17c-4c74-801a-2ec2e53231c7"));
@@ -154,8 +175,9 @@ public class XapiDeserializationTest extends TestCase {
     }
 
     public void testInteractionActivity() throws StreamReadException, DatabindException, IOException {
+        Deserializer deserializer = new Deserializer();
         File testFile = TestFileUtils.getJsonTestFile("interaction-activity");
-        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
+        Statement stmt = deserializer.deserialize(testFile, Statement.class);
 
         Activity act = (Activity) stmt.getObject();
         assertEquals(act.getId(), "https://www.yetanalytics.com/activities/act1/question1");
@@ -171,8 +193,9 @@ public class XapiDeserializationTest extends TestCase {
     }
 
     public void testGroupActor() throws StreamReadException, DatabindException, IOException {
+        Deserializer deserializer = new Deserializer();
         File testFile = TestFileUtils.getJsonTestFile("group-actor");
-        Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
+        Statement stmt = deserializer.deserialize(testFile, Statement.class);
 
         Group group = (Group) stmt.getActor();
         assertEquals(group.getMbox(), "mailto:group@group.com");
@@ -182,8 +205,10 @@ public class XapiDeserializationTest extends TestCase {
     }
 
     public void testStatementResults() throws StreamReadException, DatabindException, IOException {
+        Deserializer deserializer = new Deserializer();
         File testFile = TestFileUtils.getJsonTestFile("statementresults");
-        StatementResult stmtRes = Mapper.getMapper().readValue(testFile, StatementResult.class);
+        StatementResult stmtRes = deserializer.deserialize(testFile, StatementResult.class);
+        
         assertEquals(stmtRes.getMore(), "/xapi/statements?limit=2&from=6fbd600f-d17c-4c74-801a-2ec2e53231c9");
 
         assertEquals(stmtRes.getStatements().get(0).getVerb().getId(),
