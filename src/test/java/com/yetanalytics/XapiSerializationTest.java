@@ -1,7 +1,7 @@
 package com.yetanalytics;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +9,10 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.flipkart.zjsonpatch.JsonDiff;
 import com.yetanalytics.util.TestFileUtils;
-import com.yetanalytics.xapi.model.*;
+import com.yetanalytics.xapi.Deserializer;
+import com.yetanalytics.xapi.Serializer;
+import com.yetanalytics.xapi.model.Statement;
+import com.yetanalytics.xapi.model.StatementResult;
 import com.yetanalytics.xapi.util.Mapper;
 
 import junit.framework.Test;
@@ -31,10 +34,12 @@ public class XapiSerializationTest extends TestCase {
     public <T> ArrayNode reserializeAndDiff(File original, Class<T> toConvert) throws IOException {
 
         ObjectMapper mapper = Mapper.getMapper();
+        Deserializer deserializer = new Deserializer();
+        Serializer serializer = new Serializer();
         //Deserialize
-        T stmt = mapper.readValue(original, toConvert);
+        T stmt = deserializer.deserialize(original, toConvert);
         //Reserialize
-        String reserialized = mapper.writeValueAsString(stmt);
+        String reserialized = serializer.serialize(stmt);
         
         JsonNode before = mapper.readTree(original);
         JsonNode after = mapper.readTree(reserialized);
