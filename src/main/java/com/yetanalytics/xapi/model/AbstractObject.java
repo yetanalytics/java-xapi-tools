@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.AbstractObjectDeserializer;
 
@@ -7,7 +8,7 @@ import com.yetanalytics.xapi.model.deserializers.AbstractObjectDeserializer;
 * Abstract Class for serialization and deserialization of xAPI Objects
 */
 @JsonDeserialize(using = AbstractObjectDeserializer.class)
-public class AbstractObject {
+public abstract class AbstractObject implements JSONObject {
 
     private ObjectType objectType;
 
@@ -18,4 +19,7 @@ public class AbstractObject {
         this.objectType = objectType;
     }
 
+    @Override
+    @JsonIgnore
+    public abstract boolean isEmpty();
 }

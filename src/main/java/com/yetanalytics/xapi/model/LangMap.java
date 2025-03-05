@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
 import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
+
+import jakarta.validation.constraints.AssertFalse;
 
 /**
  * Java wrapper object for the 
@@ -18,9 +21,9 @@ import com.yetanalytics.xapi.model.serializers.LangMapSerializer;
  */
 @JsonDeserialize(using = LangMapDeserializer.class)
 @JsonSerialize(using = LangMapSerializer.class)
-public class LangMap {
+public class LangMap implements JSONObject {
 
-    private HashMap<String,String> languageHashMap = new HashMap<String, String>();
+    private HashMap<String,String> languageHashMap = new HashMap<>();
 
     /**
      * Create a new langmap from a HashMap
@@ -70,5 +73,12 @@ public class LangMap {
      */
     public Map<String, String> getMap() {
         return languageHashMap;
+    }
+
+    @Override
+    @JsonIgnore
+    @AssertFalse
+    public boolean isEmpty() {
+        return languageHashMap.isEmpty();
     }
 }

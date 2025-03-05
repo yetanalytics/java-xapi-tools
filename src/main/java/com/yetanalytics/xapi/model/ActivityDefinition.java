@@ -2,15 +2,19 @@ package com.yetanalytics.xapi.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import jakarta.validation.constraints.AssertFalse;
+import jakarta.validation.constraints.AssertTrue;
 
 /**
 * Class representation of the Activity Definition Component of the 
 * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#activity-definition">9274.1.1 xAPI Specification</a>.
 */
 @JsonInclude(Include.NON_NULL)
-public class ActivityDefinition {
+public class ActivityDefinition implements JSONObject {
 
     private LangMap name;
     private LangMap description;
@@ -100,5 +104,96 @@ public class ActivityDefinition {
     }
     public void setSteps(List<InteractionComponent> steps) {
         this.steps = steps;
+    }
+
+    // Validation
+
+    private boolean isChoices() {
+        return (
+            // choices is allowed
+            scale == null &&
+            source == null &&
+            target == null &&
+            steps == null
+        );
+    }
+
+    private boolean isScale() {
+        return (
+            // scale is allowed
+            choices == null &&
+            source == null &&
+            target == null &&
+            steps == null
+        );
+    }
+
+    private boolean isSourceTarget() {
+        return (
+            // source and target are allowed
+            choices == null &&
+            scale == null &&
+            steps == null
+        );
+    }
+
+    private boolean isSteps() {
+        return (
+            // steps is allowed
+            choices == null &&
+            scale == null &&
+            source == null &&
+            target == null
+        );
+    }
+
+    private boolean isNoInteractionComponents() {
+        return (
+            choices == null &&
+            scale == null &&
+            source == null &&
+            target == null &&
+            steps == null
+        );
+    }
+
+    private boolean isNoInteraction() {
+        return (
+            isNoInteractionComponents() &&
+            correctResponsesPattern == null
+        );
+    }
+
+    @Override
+    @JsonIgnore
+    @AssertFalse
+    public boolean isEmpty() {
+        return (
+            name == null && description == null &&
+            type == null && moreInfo == null && extensions == null &&
+            interactionType == null && isNoInteraction()
+        );
+    }
+
+    @JsonIgnore
+    @AssertTrue
+    public boolean isValidInteractionActivity() {
+        if (interactionType == null) {
+            return isNoInteraction();
+        }
+        switch (interactionType) {
+            case CHOICE:
+                return isChoices();
+            case SEQUENCING:
+                return isChoices();
+            case LIKERT:
+                return isScale();
+            case MATCHING:
+                return isSourceTarget();
+            case PERFORMANCE:
+                return isSteps();
+            default:
+                return isNoInteractionComponents();
+        }
     }
 }
