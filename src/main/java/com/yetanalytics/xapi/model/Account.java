@@ -1,5 +1,7 @@
 package com.yetanalytics.xapi.model;
 
+import java.net.URI;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -10,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class Account {
     
-    private String homePage;
+    private URI homePage;
     
     private String name;
     
-    public String getHomePage() {
+    public URI getHomePage() {
         return homePage;
     }
-    public void setHomePage(String homePage) {
+    public void setHomePage(URI homePage) {
         this.homePage = homePage;
     }
     
