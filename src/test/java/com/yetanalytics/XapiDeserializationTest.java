@@ -55,7 +55,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(stmt.getTimestamp().format(DateTimeFormatter.ISO_INSTANT), "2023-10-27T09:03:21.723Z");
         assertEquals(stmt.getStored().format(DateTimeFormatter.ISO_INSTANT), "2023-10-27T09:03:21.722Z");
         assertEquals(stmt.getId(), UUID.fromString("6fbd600f-d87c-4c74-801a-2ec2e53231c8"));
-        assertEquals(stmt.getVersion(), "1.0.3");
+        assertEquals(stmt.getVersion().toString(), "1.0.3");
 
         Agent actor = (Agent) stmt.getActor();
         assertEquals(actor.getName(), "Cliff Casey");
@@ -91,7 +91,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(att1.getUsageType(), URI.create("https://www.yetanalytics.com/usagetypes/1"));
         assertEquals(att1.getDisplay().get("en-us"), "Attachment 1");
         assertEquals(att1.getDescription().get("en-us"), "The First Attachment");
-        assertEquals(att1.getContentType(), "application/json");
+        assertEquals(att1.getContentType().toString(), "application/json");
         assertEquals(att1.getLength(), Integer.valueOf(450));
         assertEquals(att1.getSha2(), "426cf3a8b2864dd91201b989ba5728181da52bfff9a0489670e54cd8ec8b3a50");
         assertEquals(att1.getFileUrl(), URI.create("https://www.yetanalytics.com/files/file1.json"));
