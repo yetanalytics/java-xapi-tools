@@ -2,6 +2,7 @@ package com.yetanalytics.xapi.model;
 
 import java.util.IllformedLocaleException;
 import java.util.Locale;
+import java.util.Locale.Builder;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -26,7 +27,8 @@ public class LangTag {
      */
     @JsonCreator
     public LangTag(String langTagStr) throws IllformedLocaleException {
-        languageTagLocale = Locale.forLanguageTag(langTagStr);
+        Builder builder = new Builder();
+        languageTagLocale = builder.setLanguageTag(langTagStr).build();
         languageTagString = langTagStr;
     }
 
