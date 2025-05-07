@@ -36,9 +36,10 @@ public class LangTag {
      * Static method to create a LangTag instance from the langTag string.
      * @param langTag - The String language tag.
      * @return The new LangTag instance.
+     * @throws IllformedLocaleException when the String is not a valid language tag.
      * @see java.util.Locale#forLanguageTag(String str)
      */
-    public static LangTag parse(String langTag) {
+    public static LangTag parse(String langTag) throws IllformedLocaleException {
         return new LangTag(langTag);
     }
 

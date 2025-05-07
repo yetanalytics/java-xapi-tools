@@ -24,6 +24,8 @@ public class LangTagTest {
         LangTag langTag3 = new LangTag("yu-555");
         assertEquals("yu-555", langTag3.toString());
         assertEquals("yu-555", langTag3.toLocale().toLanguageTag());
+        assertEquals("yu", langTag3.toLocale().getLanguage());
+        assertEquals("555", langTag3.toLocale().getCountry());
     }
 
     @Test

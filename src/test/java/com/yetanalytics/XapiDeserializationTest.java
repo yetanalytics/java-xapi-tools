@@ -64,17 +64,17 @@ public class XapiDeserializationTest extends TestCase {
 
         Verb verb = stmt.getVerb();
         assertEquals(verb.getId(), URI.create("https://www.yetanalytics.com/profiles/thing/1.0/concepts/verbs/set"));
-        assertEquals(verb.getDisplay().get(LangTag.parse("en-us")), "Set");
+        assertEquals(verb.getDisplay().get("en-us"), "Set");
 
         Activity object = (Activity) stmt.getObject();
         assertEquals(object.getId(), URI.create("https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1"));
 
         ActivityDefinition def = object.getDefinition();
-        Set<LangTag> nameLangCodes = def.getName().getLanguageCodes();
+        Set<LangTag> nameLangCodes = def.getName().getKeys();
         LangTag nameLangCode = nameLangCodes.iterator().next();
         assertEquals(def.getName().get(nameLangCode), "Activity 1");
 
-        Set<LangTag> descLangCodes = def.getDescription().getLanguageCodes();
+        Set<LangTag> descLangCodes = def.getDescription().getKeys();
         LangTag descLangCode = descLangCodes.iterator().next();
         assertEquals(def.getDescription().get(descLangCode), "The First Activity");
 
@@ -89,8 +89,8 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(stmt.getAttachments().size(), 1);
         Attachment att1 = stmt.getAttachments().get(0);
         assertEquals(att1.getUsageType(), URI.create("https://www.yetanalytics.com/usagetypes/1"));
-        assertEquals(att1.getDisplay().get(LangTag.parse("en-us")), "Attachment 1");
-        assertEquals(att1.getDescription().get(LangTag.parse("en-us")), "The First Attachment");
+        assertEquals(att1.getDisplay().get("en-us"), "Attachment 1");
+        assertEquals(att1.getDescription().get("en-us"), "The First Attachment");
         assertEquals(att1.getContentType().toString(), "application/json");
         assertEquals(att1.getLength(), Integer.valueOf(450));
         assertEquals(att1.getSha2(), "426cf3a8b2864dd91201b989ba5728181da52bfff9a0489670e54cd8ec8b3a50");
@@ -158,10 +158,10 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(ctx.getTeam().getName(), "Class B");
         assertEquals(ctx.getTeam().getMember().get(1).getName(), "Student Smith");
         assertEquals(ctx.getRevision(), "v0.0.1");
-        assertEquals(ctx.getLanguage(), "en-us");
+        assertEquals(ctx.getLanguage().toString(), "en-us");
         assertEquals(ctx.getPlatform(), "JUnit Testing");
         assertEquals(ctx.getStatement().getId(), UUID.fromString("6fbd600f-d17c-4c74-801a-2ec2e53231c6"));
-        URI extKey = URI.create("https://www.yetanalytics.com/extensions/ext3");
+        String extKey = "https://www.yetanalytics.com/extensions/ext3";
         assertEquals(ctx.getExtensions().read(extKey, "$.thing", String.class), "stuff");
         ContextActivities ctxActs = ctx.getContextActivities();
         assertEquals(ctxActs.getParent().get(1).getId(), URI.create("https://www.yetanalytics.com/activities/parent2"));
@@ -180,12 +180,12 @@ public class XapiDeserializationTest extends TestCase {
         
         ActivityDefinition def = act.getDefinition();
         assertEquals(def.getType(), URI.create("http://adlnet.gov/expapi/activities/cmi.interaction"));
-        assertEquals(def.getName().get(LangTag.parse("en")), "Multichoice Question");
+        assertEquals(def.getName().get("en"), "Multichoice Question");
         assertEquals(def.getCorrectResponsesPattern().get(0), "a");
         assertEquals(def.getInteractionType(), InteractionType.CHOICE);
         InteractionComponent choice = def.getChoices().iterator().next();
         assertEquals(choice.getId(), "a");
-        assertEquals(choice.getDescription().get(LangTag.parse("en")), "A");
+        assertEquals(choice.getDescription().get("en"), "A");
     }
 
     public void testGroupActor() throws StreamReadException, DatabindException, IOException {
