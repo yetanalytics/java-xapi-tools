@@ -24,6 +24,7 @@ import com.yetanalytics.xapi.model.Extensions;
 import com.yetanalytics.xapi.model.Group;
 import com.yetanalytics.xapi.model.InteractionComponent;
 import com.yetanalytics.xapi.model.InteractionType;
+import com.yetanalytics.xapi.model.LangTag;
 import com.yetanalytics.xapi.model.Result;
 import com.yetanalytics.xapi.model.Score;
 import com.yetanalytics.xapi.model.Statement;
@@ -54,7 +55,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(stmt.getTimestamp().format(DateTimeFormatter.ISO_INSTANT), "2023-10-27T09:03:21.723Z");
         assertEquals(stmt.getStored().format(DateTimeFormatter.ISO_INSTANT), "2023-10-27T09:03:21.722Z");
         assertEquals(stmt.getId(), UUID.fromString("6fbd600f-d87c-4c74-801a-2ec2e53231c8"));
-        assertEquals(stmt.getVersion(), "1.0.3");
+        assertEquals(stmt.getVersion().toString(), "1.0.3");
 
         Agent actor = (Agent) stmt.getActor();
         assertEquals(actor.getName(), "Cliff Casey");
@@ -69,12 +70,12 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(object.getId(), URI.create("https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1"));
 
         ActivityDefinition def = object.getDefinition();
-        Set<String> nameLangCodes = def.getName().getLanguageCodes();
-        String nameLangCode = nameLangCodes.iterator().next();
+        Set<LangTag> nameLangCodes = def.getName().getKeys();
+        LangTag nameLangCode = nameLangCodes.iterator().next();
         assertEquals(def.getName().get(nameLangCode), "Activity 1");
 
-        Set<String> descLangCodes = def.getDescription().getLanguageCodes();
-        String descLangCode = descLangCodes.iterator().next();
+        Set<LangTag> descLangCodes = def.getDescription().getKeys();
+        LangTag descLangCode = descLangCodes.iterator().next();
         assertEquals(def.getDescription().get(descLangCode), "The First Activity");
 
         AbstractActor authority = stmt.getAuthority();
@@ -90,7 +91,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(att1.getUsageType(), URI.create("https://www.yetanalytics.com/usagetypes/1"));
         assertEquals(att1.getDisplay().get("en-us"), "Attachment 1");
         assertEquals(att1.getDescription().get("en-us"), "The First Attachment");
-        assertEquals(att1.getContentType(), "application/json");
+        assertEquals(att1.getContentType().toString(), "application/json");
         assertEquals(att1.getLength(), Integer.valueOf(450));
         assertEquals(att1.getSha2(), "426cf3a8b2864dd91201b989ba5728181da52bfff9a0489670e54cd8ec8b3a50");
         assertEquals(att1.getFileUrl(), URI.create("https://www.yetanalytics.com/files/file1.json"));
@@ -157,10 +158,10 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(ctx.getTeam().getName(), "Class B");
         assertEquals(ctx.getTeam().getMember().get(1).getName(), "Student Smith");
         assertEquals(ctx.getRevision(), "v0.0.1");
-        assertEquals(ctx.getLanguage(), "en-us");
+        assertEquals(ctx.getLanguage().toString(), "en-us");
         assertEquals(ctx.getPlatform(), "JUnit Testing");
         assertEquals(ctx.getStatement().getId(), UUID.fromString("6fbd600f-d17c-4c74-801a-2ec2e53231c6"));
-        URI extKey = URI.create("https://www.yetanalytics.com/extensions/ext3");
+        String extKey = "https://www.yetanalytics.com/extensions/ext3";
         assertEquals(ctx.getExtensions().read(extKey, "$.thing", String.class), "stuff");
         ContextActivities ctxActs = ctx.getContextActivities();
         assertEquals(ctxActs.getParent().get(1).getId(), URI.create("https://www.yetanalytics.com/activities/parent2"));
