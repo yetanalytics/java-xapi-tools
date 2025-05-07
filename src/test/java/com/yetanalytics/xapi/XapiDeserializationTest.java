@@ -1,4 +1,4 @@
-package com.yetanalytics;
+package com.yetanalytics.xapi;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,6 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
-import com.yetanalytics.util.TestFileUtils;
 import com.yetanalytics.xapi.model.AbstractActor;
 import com.yetanalytics.xapi.model.Activity;
 import com.yetanalytics.xapi.model.ActivityDefinition;
@@ -31,6 +30,7 @@ import com.yetanalytics.xapi.model.Statement;
 import com.yetanalytics.xapi.model.StatementResult;
 import com.yetanalytics.xapi.model.Verb;
 import com.yetanalytics.xapi.util.Mapper;
+import com.yetanalytics.xapi.util.TestFileUtils;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
