@@ -30,6 +30,10 @@ public class LRS {
         }
     }
 
+    public LRS (String host, String key, String secret){
+        this(host, key, secret, null);
+    }
+
     private URI host;
 
     private String key;

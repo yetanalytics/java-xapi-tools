@@ -10,4 +10,5 @@ ci:
 	mvn test
 
 ci-integration:	
+	export TESTCONTAINERS_HOST_OVERRIDE=localhost
 	mvn -Dlrs.integration.tests=true test
