@@ -1,13 +1,11 @@
-package com.yetanalytics.model;
+package com.yetanalytics.xapi.model;
 
 import java.util.IllformedLocaleException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
-import org.junit.Test;
-
-import com.yetanalytics.xapi.model.LangTag;
+import org.junit.jupiter.api.Test;
 
 public class LangTagTest {
 
