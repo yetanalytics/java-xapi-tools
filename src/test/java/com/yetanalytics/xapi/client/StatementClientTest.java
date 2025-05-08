@@ -12,13 +12,15 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.GenericContainer;
+
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.yetanalytics.xapi.client.filters.StatementFilters;
-import com.yetanalytics.xapi.model.AbstractActor;
 import com.yetanalytics.xapi.model.Agent;
 import com.yetanalytics.xapi.model.Statement;
 import com.yetanalytics.xapi.util.Mapper;
@@ -49,6 +51,7 @@ public class StatementClientTest {
             .withExposedPorts(8333);
 
     @Test
+    @EnabledIfSystemProperty(named = "lrs.integration.tests", matches = "true")
     public void testSinglePostAndGet() 
             throws StreamReadException, DatabindException, IOException {
         UUID testId = UUID.randomUUID();
@@ -72,6 +75,7 @@ public class StatementClientTest {
     }
 
     @Test
+    @EnabledIfSystemProperty(named = "lrs.integration.tests", matches = "true")
     public void testBatchPost() throws StreamReadException, DatabindException, IOException {
         
         UUID testId1 = UUID.randomUUID();
@@ -100,6 +104,7 @@ public class StatementClientTest {
     }
 
     @Test
+    @EnabledIfSystemProperty(named = "lrs.integration.tests", matches = "true")
     public void testLargeBatchPost() throws StreamReadException, DatabindException, IOException {
         File testFile = TestFileUtils.getJsonTestFile("context");
         List<UUID> ids = new ArrayList<UUID>();

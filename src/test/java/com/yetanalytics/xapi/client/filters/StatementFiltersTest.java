@@ -7,7 +7,7 @@ import java.net.URI;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.yetanalytics.xapi.model.Agent;
@@ -17,7 +17,7 @@ public class StatementFiltersTest {
 
     private static final String BASE_URI = "http://localhost:8080/xapi/statements";
 
-    @Test
+    @Test    
     public void testStatementFiltersBuilder() throws JsonProcessingException{
         UUID reg = UUID.fromString("23a0652e-9365-4c14-b9bd-4d83fbb701e5");
         UUID statementId = UUID.fromString("23a0652e-9365-4c14-b9bd-4d83fbb701e6");
