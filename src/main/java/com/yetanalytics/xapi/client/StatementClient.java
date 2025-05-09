@@ -70,7 +70,7 @@ public class StatementClient {
                 new TypeReference<List<UUID>>(){});
         } else {
             throw new StatementClientException(String.format(
-                "Error, Non-200 Status. Received: %",
+                "Error, Non-200 Status. Received: %s",
                 response.getStatusLine().getStatusCode()));
         }
     }
@@ -101,7 +101,7 @@ public class StatementClient {
             return Mapper.getMapper().readValue(responseBody, StatementResult.class);
         } else {
             throw new StatementClientException(String.format(
-                "Error, Non-200 Status. Received: %",
+                "Error, Non-200 Status. Received: %s",
                 response.getStatusLine().getStatusCode()));
         }
     }
@@ -116,7 +116,7 @@ public class StatementClient {
             return Mapper.getMapper().readValue(responseBody, Statement.class);
         } else {
             throw new StatementClientException(String.format(
-                "Error, Non-200 Status. Received: %",
+                "Error, Non-200 Status. Received: %s",
                 response.getStatusLine().getStatusCode()));
         }
     }
