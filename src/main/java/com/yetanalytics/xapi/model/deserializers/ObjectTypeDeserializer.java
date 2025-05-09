@@ -1,9 +1,13 @@
 package com.yetanalytics.xapi.model.deserializers;
 
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+
+import java.io.IOException;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yetanalytics.xapi.exception.XApiModelException;
 import com.yetanalytics.xapi.model.ObjectType;
 import com.yetanalytics.xapi.util.Mapper;
 
@@ -25,9 +29,9 @@ public class ObjectTypeDeserializer extends StdDeserializer<ObjectType> {
         try {
             ObjectMapper mapper = Mapper.getMapper();
             return ObjectType.getByDisplayName(mapper.readValue(jp, String.class));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        } catch (IOException e) {
+            throw new XApiModelException(
+                "Could not deserialize ObjectType", e);
         }
     }
 }

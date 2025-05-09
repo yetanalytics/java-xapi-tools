@@ -24,6 +24,7 @@ import org.apache.http.util.EntityUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
 import com.yetanalytics.xapi.client.filters.StatementFilters;
+import com.yetanalytics.xapi.exception.StatementClientException;
 import com.yetanalytics.xapi.model.Statement;
 import com.yetanalytics.xapi.model.StatementResult;
 import com.yetanalytics.xapi.util.Mapper;
@@ -68,8 +69,9 @@ public class StatementClient {
                 responseBody, 
                 new TypeReference<List<UUID>>(){});
         } else {
-            //TODO: custom and more codes
-            throw new RuntimeException("Non-200 Status");
+            throw new StatementClientException(String.format(
+                "Error, Non-200 Status. Received: %",
+                response.getStatusLine().getStatusCode()));
         }
     }
 
@@ -85,7 +87,7 @@ public class StatementClient {
             }
             return result;
         } catch (ParseException | IOException e) {
-            throw new RuntimeException("Error posting Statements", e);
+            throw new StatementClientException("Error posting Statements", e);
         }
     }
 
@@ -98,8 +100,9 @@ public class StatementClient {
             String responseBody = EntityUtils.toString(response.getEntity());
             return Mapper.getMapper().readValue(responseBody, StatementResult.class);
         } else {
-            //TODO: custom and more codes
-            throw new RuntimeException("Non-200 Status");
+            throw new StatementClientException(String.format(
+                "Error, Non-200 Status. Received: %",
+                response.getStatusLine().getStatusCode()));
         }
     }
 
@@ -112,8 +115,9 @@ public class StatementClient {
             String responseBody = EntityUtils.toString(response.getEntity());
             return Mapper.getMapper().readValue(responseBody, Statement.class);
         } else {
-            //TODO: custom and more codes
-            throw new RuntimeException("Non-200 Status");
+            throw new StatementClientException(String.format(
+                "Error, Non-200 Status. Received: %",
+                response.getStatusLine().getStatusCode()));
         }
     }
 
@@ -147,7 +151,7 @@ public class StatementClient {
             }
             
         } catch (IOException e) {
-            throw new RuntimeException("Error getting Statements", e);
+            throw new StatementClientException("Error getting Statements", e);
         }
         return statements;
     }
