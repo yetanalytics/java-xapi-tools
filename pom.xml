@@ -4,7 +4,7 @@
   <groupId>com.yetanalytics</groupId>
   <artifactId>xapi-tools</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <name>xAPI Tools</name>
   <description>Java Serialization Model and Tools for xAPI Standard (IEEE 9274.1.1)</description>
   <url>https://github.com/yetanalytics/java-xapi-tools</url>
