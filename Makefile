@@ -1,4 +1,4 @@
-.phony: install, ci, clean
+.phony: install, ci, clean, ci-integration
 
 clean:
 	mvn clean
@@ -8,3 +8,6 @@ install:
 
 ci:
 	mvn test
+
+ci-integration:	
+	mvn -Dlrs.integration.tests=true test

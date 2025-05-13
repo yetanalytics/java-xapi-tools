@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model.deserializers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.yetanalytics.xapi.exception.XApiModelException;
 import com.yetanalytics.xapi.model.Activity;
 import com.yetanalytics.xapi.util.Mapper;
 
@@ -40,9 +42,9 @@ public class ContextActivityListDeserializer extends StdDeserializer<List<Activi
                 ctxActList.add(mapper.convertValue(node, Activity.class));
                 return ctxActList;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        } catch (IOException e) {
+            throw new XApiModelException(
+                "Could not deserialize ContextActivityList", e);
         }
     }
 }

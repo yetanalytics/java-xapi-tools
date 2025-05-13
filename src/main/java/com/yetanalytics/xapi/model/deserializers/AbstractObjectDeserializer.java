@@ -4,9 +4,12 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 import com.yetanalytics.xapi.model.Group;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.yetanalytics.xapi.exception.XApiModelException;
 import com.yetanalytics.xapi.model.AbstractObject;
 import com.yetanalytics.xapi.model.Activity;
 import com.yetanalytics.xapi.model.Agent;
@@ -53,9 +56,9 @@ public class AbstractObjectDeserializer extends StdDeserializer<AbstractObject> 
         try {
             JsonNode node = jp.readValueAsTree();
             return Mapper.getMapper().convertValue(node, getObjectType(node));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        } catch (IOException e) {
+            throw new XApiModelException(
+                "Could not deserialize AbstractObject", e);
         }
     }
 }

@@ -1,4 +1,9 @@
-package com.yetanalytics;
+package com.yetanalytics.xapi;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,9 +15,10 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 import java.util.UUID;
 
+import org.junit.jupiter.api.Test;
+
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
-import com.yetanalytics.util.TestFileUtils;
 import com.yetanalytics.xapi.model.AbstractActor;
 import com.yetanalytics.xapi.model.Activity;
 import com.yetanalytics.xapi.model.ActivityDefinition;
@@ -31,23 +37,13 @@ import com.yetanalytics.xapi.model.Statement;
 import com.yetanalytics.xapi.model.StatementResult;
 import com.yetanalytics.xapi.model.Verb;
 import com.yetanalytics.xapi.util.Mapper;
+import com.yetanalytics.xapi.util.TestFileUtils;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
-public class XapiDeserializationTest extends TestCase {
 
-    public XapiDeserializationTest( String testName )
-    {
-        super( testName );
-    }
+public class XapiDeserializationTest {
 
-    public static Test suite()
-    {
-        return new TestSuite( XapiDeserializationTest.class );
-    }
-
+    @Test
     public void testBasicStatement() throws StreamReadException, DatabindException, IOException {
         File testFile = TestFileUtils.getJsonTestFile("basic");
         Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
@@ -83,6 +79,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(authority.getMbox(), URI.create("mailto:authority@yetanalytics.com"));
     }
 
+    @Test
     public void testAttachments() throws StreamReadException, DatabindException, IOException {
         File testFile = TestFileUtils.getJsonTestFile("attachments");
         Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
@@ -97,6 +94,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(att1.getFileUrl(), URI.create("https://www.yetanalytics.com/files/file1.json"));
     }
 
+    @Test
     public void testExtensions() throws StreamReadException, DatabindException, IOException {
         File testFile = TestFileUtils.getJsonTestFile("extensions");
         Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
@@ -131,6 +129,7 @@ public class XapiDeserializationTest extends TestCase {
         assertNull(badKeyMiss);
     }
 
+    @Test
     public void testResult() throws StreamReadException, DatabindException, IOException {
         File testFile = TestFileUtils.getJsonTestFile("result");
         Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
@@ -148,6 +147,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(score.getScaled(), new BigDecimal("0.0"));
     }
 
+    @Test
     public void testContext() throws StreamReadException, DatabindException, IOException {
         File testFile = TestFileUtils.getJsonTestFile("context");
         Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
@@ -171,6 +171,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(ctxActs.getOther().get(0).getId(), URI.create("https://www.yetanalytics.com/activities/other1"));
     }
 
+    @Test
     public void testInteractionActivity() throws StreamReadException, DatabindException, IOException {
         File testFile = TestFileUtils.getJsonTestFile("interaction-activity");
         Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
@@ -188,6 +189,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(choice.getDescription().get("en"), "A");
     }
 
+    @Test
     public void testGroupActor() throws StreamReadException, DatabindException, IOException {
         File testFile = TestFileUtils.getJsonTestFile("group-actor");
         Statement stmt = Mapper.getMapper().readValue(testFile, Statement.class);
@@ -199,6 +201,7 @@ public class XapiDeserializationTest extends TestCase {
         assertEquals(group.getMember().get(0).getName(), "Cliff Casey");
     }
 
+    @Test
     public void testStatementResults() throws StreamReadException, DatabindException, IOException {
         File testFile = TestFileUtils.getJsonTestFile("statementresults");
         StatementResult stmtRes = Mapper.getMapper().readValue(testFile, StatementResult.class);

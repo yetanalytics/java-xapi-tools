@@ -4,7 +4,7 @@
   <groupId>com.yetanalytics</groupId>
   <artifactId>xapi-tools</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <name>xAPI Tools</name>
   <description>Java Serialization Model and Tools for xAPI Standard (IEEE 9274.1.1)</description>
   <url>https://github.com/yetanalytics/java-xapi-tools</url>
@@ -63,9 +63,36 @@
       <version>5.4.1</version>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.14</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>33.4.8-jre</version>
+    </dependency>
+    <!-- logging -->
+    <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-core</artifactId>
+        <version>1.5.12</version>
+    </dependency>
+    <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.5.12</version>
+    </dependency>
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>2.0.16</version>
+    </dependency>
+    <!-- testing -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.2.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -73,6 +100,12 @@
       <artifactId>zjsonpatch</artifactId>
       <version>0.4.16</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>testcontainers</artifactId>
+        <version>1.20.6</version>
+        <scope>test</scope>
     </dependency>
   </dependencies>
   <profiles>

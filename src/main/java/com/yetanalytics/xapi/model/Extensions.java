@@ -2,14 +2,19 @@ package com.yetanalytics.xapi.model;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
+import com.jayway.jsonpath.TypeRef;
 import com.yetanalytics.xapi.model.deserializers.ExtensionDeserializer;
 import com.yetanalytics.xapi.model.serializers.FreeMapSerializer;
 import com.yetanalytics.xapi.util.Mapper;
@@ -24,6 +29,8 @@ import com.yetanalytics.xapi.util.Mapper;
 @JsonDeserialize(using = ExtensionDeserializer.class)
 @JsonSerialize(using = FreeMapSerializer.class)
 public class Extensions implements IFreeMap<URI, Object>{
+
+    private static final Logger log = LoggerFactory.getLogger(Extensions.class);
 
     private Map<URI, Object> extMap = new HashMap<>();
 
@@ -87,12 +94,12 @@ public class Extensions implements IFreeMap<URI, Object>{
             Object jsonObject = extMap.get(key);
             if (jsonObject == null) return null;
             String json = Mapper.getMapper().writeValueAsString(jsonObject);
-            return (T) JsonPath.read(json, jsonPathExpression);
+            T result = (T) JsonPath.read(json, jsonPathExpression);
+            return result;
         } catch (PathNotFoundException e) {
-            //TODO: logging framework
-            e.printStackTrace();
+            log.warn("JSONPath Query: Path not found", e);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            log.warn("JSONPath Query: Unable to parse resulting value", e);
         }
         return null;
     }

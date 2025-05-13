@@ -1,4 +1,4 @@
-package com.yetanalytics.util;
+package com.yetanalytics.xapi.util;
 
 import java.io.File;
 
