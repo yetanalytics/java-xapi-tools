@@ -1,3 +1,6 @@
+com.yetanalytics.xapi.client
+com.yetanalytics.xapi.client.filters
+com.yetanalytics.xapi.exception
 com.yetanalytics.xapi.model
 com.yetanalytics.xapi.model.deserializers
 com.yetanalytics.xapi.model.serializers
