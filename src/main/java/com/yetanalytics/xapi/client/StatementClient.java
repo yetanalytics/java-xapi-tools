@@ -14,7 +14,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -29,6 +28,9 @@ import com.yetanalytics.xapi.model.Statement;
 import com.yetanalytics.xapi.model.StatementResult;
 import com.yetanalytics.xapi.util.Mapper;
 
+/**
+ * Minimal xAPI Client featuring GET and POST Operations for LRS interop.
+ */
 public class StatementClient {
 
     private static final String STATEMENT_ENDPOINT = "statements";
@@ -36,6 +38,11 @@ public class StatementClient {
     private LRS lrs;
     private CloseableHttpClient client;
 
+    /**
+     * Constructor to create an xAPI Client
+     * 
+     * @param lrs The Learning Record store to connect to
+     */
     public StatementClient (LRS lrs) {
         this.lrs = lrs;
   
@@ -75,10 +82,22 @@ public class StatementClient {
         }
     }
 
+    /**
+     * Method to post a single xAPI Statement to an LRS.
+     * 
+     * @param stmt Statement to post to LRS
+     * @return List of IDs for created statement(s) from LRS
+     */
     public List<UUID> postStatement(Statement stmt) {
         return postStatements(new ArrayList<>(List.of(stmt)));
     }
 
+    /**
+     * Method to post a List of xAPI Statements to an LRS.
+     * 
+     * @param stmts Statements to post to LRS
+     * @return List of IDs for created statement(s) from LRS
+     */
     public List<UUID> postStatements(List<Statement> stmts) {
         try {
             List<UUID> result = new ArrayList<UUID>();
@@ -128,6 +147,12 @@ public class StatementClient {
         return uri.resolve(moreLink.toString());
     }
 
+    /**
+     * Method to get Statements from LRS
+     * 
+     * @param filters StatementFilters object to filter the query.
+     * @return All statements that match filter
+     */
     public List<Statement> getStatements(StatementFilters filters) {
         List<Statement> statements = new ArrayList<Statement>();
 
@@ -156,6 +181,11 @@ public class StatementClient {
         return statements;
     }
 
+    /**
+     * Method to get Statements from LRS with no filters
+     * 
+     * @return All statements
+     */
     public List<Statement> getStatements() {
         return getStatements(null);
     }

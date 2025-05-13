@@ -1,11 +1,14 @@
 package com.yetanalytics.xapi.client;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -180,5 +183,20 @@ public class StatementClientTest {
         assertEquals(1, result.size());
         assertEquals(agent2.getMbox(),
             ((Agent) result.get(0).getActor()).getMbox());
+    }
+
+    @Test
+    public void testDateFilters() throws StreamReadException, DatabindException, IOException {
+        
+        String sinceStr = "2024-09-25T00:15:24Z";
+        ZonedDateTime since = ZonedDateTime.parse(sinceStr, DateTimeFormatter.ISO_DATE_TIME);
+
+        LRS lrs = new LRS(getMappedHost(), KEY, SECRET);
+        StatementClient client = new StatementClient(lrs);
+        StatementFilters filters = new StatementFilters();
+        filters.setSince(since);
+        List<Statement> result = client.getStatements(filters);
+        assertNotNull(result);
+        
     }
 }

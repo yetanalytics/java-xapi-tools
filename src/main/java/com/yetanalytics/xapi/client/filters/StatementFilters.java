@@ -2,7 +2,9 @@ package com.yetanalytics.xapi.client.filters;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import org.apache.http.client.utils.URIBuilder;
@@ -11,6 +13,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.yetanalytics.xapi.model.AbstractActor;
 import com.yetanalytics.xapi.util.Mapper;
 
+/**
+ * Object which allows the setting and parsing of xAPI GET filter fields
+ */
 public class StatementFilters {
 
     private URI verb;
@@ -39,6 +44,12 @@ public class StatementFilters {
 
     private Boolean ascending;
 
+    /**
+     * Method to compose the filter query onto a base LRS URI.
+     * 
+     * @param uri LRS URI to add filter params to
+     * @return Full URI with filters encoded
+     */
     public URI addQueryToUri(URI uri) {
         URIBuilder builder = new URIBuilder(uri);
         
@@ -65,9 +76,9 @@ public class StatementFilters {
         if(relatedAgents != null && relatedAgents) 
             builder.addParameter("related_agents", "true");
 
-        if(since != null) builder.addParameter("since", since.toString());
+        if(since != null) builder.addParameter("since", since.format(DateTimeFormatter.ISO_DATE_TIME));
 
-        if(until != null) builder.addParameter("until", until.toString());
+        if(until != null) builder.addParameter("until", until.format(DateTimeFormatter.ISO_DATE_TIME));
 
         if(limit != null) builder.addParameter("limit", limit.toString());
 
@@ -159,12 +170,20 @@ public class StatementFilters {
         this.since = since;
     }
 
+    public void setSince(String since) {
+        this.since = ZonedDateTime.parse(since, DateTimeFormatter.ISO_DATE_TIME);
+    }
+
     public ZonedDateTime getUntil() {
         return until;
     }
 
     public void setUntil(ZonedDateTime until) {
         this.until = until;
+    }
+
+    public void setUntil(String until) {
+        this.until = ZonedDateTime.parse(until, DateTimeFormatter.ISO_DATE_TIME);
     }
 
     public Integer getLimit() {

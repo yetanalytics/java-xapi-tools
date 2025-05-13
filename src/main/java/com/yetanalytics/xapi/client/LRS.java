@@ -2,8 +2,19 @@ package com.yetanalytics.xapi.client;
 
 import java.net.URI;
 
+/**
+ * Object for holding LRS connection details for StatementClient.
+ */
 public class LRS {
 
+    /**
+     * Constructor to create an LRS object with specific connection params
+     * 
+     * @param host Host for LRS. Should include path, e.g. 'http://lrs.yetanalytics.com/xapi'
+     * @param key Key for LRS credentials
+     * @param secret Secret for LRS credentials
+     * @param batchSize Optional post batch size, defaults to 50
+     */
     public LRS (String host, String key, String secret, Integer batchSize){
         
         if(key == null || key.isEmpty())
@@ -30,6 +41,13 @@ public class LRS {
         }
     }
 
+    /**
+     * Constructor to create an LRS object with specific connection params
+     * 
+     * @param host Host for LRS. Should include path, e.g. 'http://lrs.yetanalytics.com/xapi'
+     * @param key Key for LRS credentials
+     * @param secret Secret for LRS credentials
+     */
     public LRS (String host, String key, String secret){
         this(host, key, secret, null);
     }

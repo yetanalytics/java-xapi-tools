@@ -3,13 +3,19 @@ package com.yetanalytics.xapi.client.filters;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.IOException;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
+
 
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.yetanalytics.xapi.model.Agent;
 
 
@@ -34,8 +40,8 @@ public class StatementFiltersTest {
         filters.setVoidedStatementId(voidedStatementId);
         filters.setRelatedActivities(true);
         filters.setRelatedAgents(true);
-        filters.setSince(ZonedDateTime.parse("2025-05-07T00:00:00Z"));
-        filters.setUntil(ZonedDateTime.parse("2025-05-07T23:59:59Z"));
+        filters.setSince("2025-05-07T00:00:00Z");
+        filters.setUntil("2025-05-07T23:59:59Z");
         filters.setLimit(1000);
         filters.setFormat(StatementFormat.CANONICAL);
         filters.setAscending(true);
@@ -51,7 +57,7 @@ public class StatementFiltersTest {
             + "&voidedStatementId=23a0652e-9365-4c14-b9bd-4d83fbb701e7"
             + "&registration=23a0652e-9365-4c14-b9bd-4d83fbb701e5"
             + "&related_activities=true&related_agents=true"
-            + "&since=2025-05-07T00%3A00Z"
+            + "&since=2025-05-07T00%3A00%3A00Z"
             + "&until=2025-05-07T23%3A59%3A59Z"
             + "&limit=1000&format=canonical&ascending=true";
         
