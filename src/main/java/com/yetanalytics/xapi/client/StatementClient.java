@@ -159,7 +159,7 @@ public class StatementClient {
         List<Statement> statements = new ArrayList<Statement>();
 
         if (max != null && filters.getLimit() != null && 
-            filters.getLimit() > max)
+                filters.getLimit() > max)
             filters.setLimit(max);
 
         Integer remaining = max;
