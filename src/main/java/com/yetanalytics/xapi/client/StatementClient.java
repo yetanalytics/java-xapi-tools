@@ -151,10 +151,18 @@ public class StatementClient {
      * Method to get Statements from LRS
      * 
      * @param filters StatementFilters object to filter the query.
+     * @param max Max total number of statements to retrieve regardless
+     * of `limit` size per query
      * @return All statements that match filter
      */
-    public List<Statement> getStatements(StatementFilters filters) {
+    public List<Statement> getStatements(StatementFilters filters, Integer max) {
         List<Statement> statements = new ArrayList<Statement>();
+
+        if (max != null && filters.getLimit() != null && 
+            filters.getLimit() > max)
+            filters.setLimit(max);
+
+        Integer remaining = max;
 
         URI target = lrs.getHost().resolve(STATEMENT_ENDPOINT);
         if (filters != null) {
@@ -170,8 +178,16 @@ public class StatementClient {
                     target = null;
                 } else {
                     StatementResult result = doGetStatementResult(target);
-                    statements.addAll(result.getStatements());
-                    target = resolveMore(result.getMore());
+                    List<Statement> stmts = result.getStatements();
+                    if (remaining != null && stmts.size() >= remaining) {
+                        stmts = stmts.subList(0, remaining);
+                        target = null;
+                    } else {
+                        target = resolveMore(result.getMore());
+                        if (remaining != null) 
+                            remaining = remaining - stmts.size();
+                    }
+                    statements.addAll(stmts);
                 }
             }
             
@@ -182,12 +198,22 @@ public class StatementClient {
     }
 
     /**
+     * Wrapper for getStatements where `max` = `null` (unlimited).
+     * 
+     * @param filters StatementFilters object to filter the query.
+     * @return All statements that match filter
+     */
+    public List<Statement> getStatements(StatementFilters filters) {
+        return getStatements(filters, null);
+    }
+
+    /**
      * Method to get Statements from LRS with no filters
      * 
      * @return All statements
      */
     public List<Statement> getStatements() {
-        return getStatements(null);
+        return getStatements(null, null);
     }
     
 }

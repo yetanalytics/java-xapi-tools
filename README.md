@@ -69,8 +69,9 @@ Current API methods include:
 
 `List<UUID> postStatements(List<Statement> stmts)`
 `List<UUID> postStatement(Statement stmt)`
-`List<Statement> getStatements(StatementFilters filters)`
-`List<Statement> getStatements()`
+`List<Statement> getStatements(StatementFilters filters, Integer max)` - *GET with filters and a max number of statements*
+`List<Statement> getStatements(StatementFilters filters)` - *GET with filters and no max*
+`List<Statement> getStatements()` - *GET all statements (no max, no filters)*
 
 The client will batch at the size (optionally) provided to the LRS object. It will also handle retrieving the results from `more` links when the LRS paginates responses.
 

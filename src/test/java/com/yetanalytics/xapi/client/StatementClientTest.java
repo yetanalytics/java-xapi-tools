@@ -146,6 +146,24 @@ public class StatementClientTest {
         assertTrue(result != null);
         assertEquals(result.size(), 200);
         assertEquals(result.get(0).getContext().getRegistration(), sessionId);
+
+        //max
+        List<Statement> resultMax = client.getStatements(filter, 37);
+        assertEquals(resultMax.size(), 37);
+
+        //max with low limit
+        filter.setLimit(10);
+        List<Statement> resultMaxLowLimit = client.getStatements(filter, 42);
+        assertEquals(resultMaxLowLimit.size(), 42);
+
+        //max with high limit
+        filter.setLimit(100);
+        List<Statement> resultMaxHighLimit = client.getStatements(filter, 96);
+        assertEquals(resultMaxHighLimit.size(), 96);
+
+        //max above result
+        List<Statement> resultMaxAboveResult = client.getStatements(filter, 300);
+        assertEquals(resultMaxAboveResult.size(), 200);
     }
 
     @Test
