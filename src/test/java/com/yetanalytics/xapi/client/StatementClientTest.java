@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.GenericContainer;
 
@@ -220,6 +221,7 @@ public class StatementClientTest {
     }
 
     @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
     public void testConnectionPoolOnError() throws StreamReadException, DatabindException, IOException {
         LRS lrs = new LRS(getMappedHost(), KEY, SECRET);
         StatementClient client = new StatementClient(lrs);
@@ -241,7 +243,7 @@ public class StatementClientTest {
             assertTrue(e.getMessage().contains("Error, Non-200 Status. Received: 400"));
         }
 
-        // Try 3, will await indefinitely if connection pool is not cleaned up properly
+        // Try 3, will await indefinitely if connection pool is not cleaned up properly (timeout will trigger)
         // Test will finish successfully if client is handling conns right
         try {
             client.postStatement(statement);
