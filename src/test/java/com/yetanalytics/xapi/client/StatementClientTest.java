@@ -19,12 +19,14 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.testcontainers.containers.GenericContainer;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.yetanalytics.xapi.client.filters.StatementFilters;
+import com.yetanalytics.xapi.exception.StatementClientException;
 import com.yetanalytics.xapi.model.Agent;
 import com.yetanalytics.xapi.model.Statement;
 import com.yetanalytics.xapi.util.Mapper;
@@ -216,5 +218,40 @@ public class StatementClientTest {
         List<Statement> result = client.getStatements(filters);
         assertNotNull(result);
         
+    }
+
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    public void testConnectionPoolOnError() throws StreamReadException, DatabindException, IOException {
+        LRS lrs = new LRS(getMappedHost(), KEY, SECRET);
+        StatementClient client = new StatementClient(lrs);
+        
+        Statement statement = new Statement();
+        statement.setId(UUID.randomUUID());
+
+        // Try 1, handled, no issue
+        try {
+            client.postStatement(statement);
+        } catch (StatementClientException e) {
+            assertTrue(e.getMessage().contains("Error, Non-200 Status. Received: 400"));
+        }
+
+        // Try 2, handled, no issue
+        try {
+            client.postStatement(statement);
+        } catch (StatementClientException e) {
+            assertTrue(e.getMessage().contains("Error, Non-200 Status. Received: 400"));
+        }
+
+        // Try 3, will await indefinitely if connection pool is not cleaned up properly (timeout will trigger)
+        // Test will finish successfully if client is handling conns right
+        try {
+            client.postStatement(statement);
+        } catch (StatementClientException e) {
+            assertTrue(e.getMessage().contains("Error, Non-200 Status. Received: 400"));
+        }
+        
+
+
     }
 }
