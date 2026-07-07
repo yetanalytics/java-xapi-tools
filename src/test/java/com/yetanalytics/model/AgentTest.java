@@ -29,9 +29,33 @@ public class AgentTest {
     }
 
     @Test
+    public void testInvalidMboxScheme() throws URISyntaxException {
+        agent.setMbox(new URI("http://foo@example.com"));
+        ValidationUtils.assertInvalid(validator, agent);
+    }
+
+    @Test
+    public void testInvalidMboxAddress() throws URISyntaxException {
+        agent.setMbox(new URI("mailto:not-an-email"));
+        ValidationUtils.assertInvalid(validator, agent);
+    }
+
+    @Test
     public void testMboxSha1Sum() {
         agent.setMbox_sha1sum("767e74eab7081c41e0b83630511139d130249666");
         ValidationUtils.assertValid(validator, agent);
+    }
+
+    @Test
+    public void testInvalidMboxSha1SumLength() {
+        agent.setMbox_sha1sum("767e74eab7081c41e0b83630511139d13024966");
+        ValidationUtils.assertInvalid(validator, agent);
+    }
+
+    @Test
+    public void testInvalidMboxSha1SumHex() {
+        agent.setMbox_sha1sum("z67e74eab7081c41e0b83630511139d130249666");
+        ValidationUtils.assertInvalid(validator, agent);
     }
 
     @Test

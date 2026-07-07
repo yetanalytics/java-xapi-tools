@@ -5,6 +5,8 @@ import java.net.URI;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.AbstractActorDeserializer;
+import com.yetanalytics.xapi.validation.MboxUri;
+import com.yetanalytics.xapi.validation.Sha1Sum;
 
 import jakarta.validation.Valid;
 
@@ -18,11 +20,11 @@ public abstract class AbstractActor extends AbstractObject {
 
     // IFIs
 
-    // TODO: Validate mbox is a valid mailto IRI
+    @MboxUri
     private URI mbox;
-    // TODO: Validate mbox_sha1sum is a valid hash string
+    @Sha1Sum
     private String mbox_sha1sum;
-    // TODO: Validate openid is a valid IRI
+    
     private URI openid;
     
     @Valid

@@ -42,9 +42,21 @@ public class GroupTest {
     }
 
     @Test
+    public void testInvalidMbox() throws URISyntaxException {
+        group.setMbox(new URI("mailto:not-an-email"));
+        ValidationUtils.assertInvalid(validator, group);
+    }
+
+    @Test
     public void testMboxSha1Sum() {
         group.setMbox_sha1sum("767e74eab7081c41e0b83630511139d130249666");
         ValidationUtils.assertValid(validator, group);
+    }
+
+    @Test
+    public void testInvalidMboxSha1Sum() {
+        group.setMbox_sha1sum("not-a-sha1sum");
+        ValidationUtils.assertInvalid(validator, group);
     }
 
     @Test
