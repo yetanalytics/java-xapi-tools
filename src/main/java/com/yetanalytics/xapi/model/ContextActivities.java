@@ -53,7 +53,7 @@ public class ContextActivities implements JSONObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "ContextActivities must not be empty")
     public boolean isEmpty() {
         return (
             parent == null && grouping == null &&

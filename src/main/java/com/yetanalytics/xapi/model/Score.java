@@ -54,7 +54,7 @@ public class Score implements JSONObject {
     // Validation
 
     @JsonIgnore
-    @AssertTrue
+    @AssertTrue(message = "Min Score must be less than Raw Score")
     public boolean isMinLessThanRaw() {
         if (raw != null && min != null) {
             return min.compareTo(raw) < 0;
@@ -64,7 +64,7 @@ public class Score implements JSONObject {
     }
 
     @JsonIgnore
-    @AssertTrue
+    @AssertTrue(message = "Raw Score must be less than Max Score")
     public boolean isRawLessThanMax() {
         if (raw != null && max != null) {
             return raw.compareTo(max) < 0;
@@ -74,7 +74,7 @@ public class Score implements JSONObject {
     }
 
     @JsonIgnore
-    @AssertTrue
+    @AssertTrue(message = "Min Score must be less than Max Score")
     public boolean isMinLessThanMax() {
         if (min != null && max != null) {
             return min.compareTo(max) < 0;
@@ -85,7 +85,7 @@ public class Score implements JSONObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "Score must not be empty")
     public boolean isEmpty() {
         return raw == null && min == null && max == null && scaled == null;
     }

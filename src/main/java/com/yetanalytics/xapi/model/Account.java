@@ -38,7 +38,7 @@ public class Account implements JSONObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "Account must not be empty")
     public boolean isEmpty() {
         return homePage == null && name == null;
     }

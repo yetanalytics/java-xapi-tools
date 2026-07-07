@@ -157,7 +157,7 @@ public class Extensions implements IFreeMap<URI, Object>, JSONObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "Extensions must not be empty")
     public boolean isEmpty() {
         return extMap.isEmpty();
     }

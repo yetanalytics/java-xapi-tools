@@ -115,7 +115,7 @@ public class LangMap implements IFreeMap<LangTag, String>, JSONObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "Language Map must not be empty")
     public boolean isEmpty() {
         return languageHashMap.isEmpty();
     }

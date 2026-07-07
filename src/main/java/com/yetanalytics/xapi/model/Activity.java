@@ -40,7 +40,7 @@ public class Activity extends AbstractObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "Activity must not be empty")
     public boolean isEmpty() {
         return id == null && definition == null;
     }

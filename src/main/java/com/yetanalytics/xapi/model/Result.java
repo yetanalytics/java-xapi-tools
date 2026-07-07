@@ -63,7 +63,7 @@ public class Result implements JSONObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "Result must not be empty")
     public boolean isEmpty() {
         return (
             score == null &&

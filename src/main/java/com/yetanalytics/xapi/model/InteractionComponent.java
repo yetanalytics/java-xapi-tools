@@ -38,7 +38,7 @@ public class InteractionComponent implements JSONObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "InteractionComponent must not be empty")
     public boolean isEmpty() {
         return id == null && description == null;
     }

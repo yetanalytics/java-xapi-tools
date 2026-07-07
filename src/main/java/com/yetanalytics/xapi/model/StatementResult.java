@@ -39,7 +39,7 @@ public class StatementResult implements JSONObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "StatementResult must not be empty")
     public boolean isEmpty() {
         return statements == null && more == null;
     }

@@ -65,6 +65,7 @@ public class StatementTest {
         statement.setVerb(null);
         statement.setObject(null);
         // One error for empty statement, one error each for missing property
+        
         ValidationUtils.assertInvalid(validator, statement, 4);
     }
 

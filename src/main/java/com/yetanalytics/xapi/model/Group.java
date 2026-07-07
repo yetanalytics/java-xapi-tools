@@ -29,7 +29,7 @@ public class Group extends AbstractActor {
     }
 
     @JsonIgnore
-    @AssertTrue
+    @AssertTrue(message = "Anonymous Group must have member property")
     public boolean isAnonymousOrIdentifiedGroup() {
         return (
             (countIFIs() == 0 && member != null) ||
@@ -55,7 +55,7 @@ public class Group extends AbstractActor {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "Group must not be empty")
     public boolean isEmpty() {
         // zero-length member arrays still count as non-empty
         return super.isEmpty() && member == null;

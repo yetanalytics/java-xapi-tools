@@ -89,7 +89,7 @@ public class Attachment implements JSONObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "Attachment must not be empty")
     public boolean isEmpty() {
         return (
             usageType == null &&

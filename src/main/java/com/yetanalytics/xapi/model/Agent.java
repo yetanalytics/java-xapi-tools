@@ -21,7 +21,7 @@ public class Agent extends AbstractActor {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "Agent must not be empty")
     public boolean isEmpty() {
         return super.isEmpty();
     }
@@ -31,7 +31,7 @@ public class Agent extends AbstractActor {
      * @return true if the Agent has exactly 1 IFI, false otherwise
      */
     @JsonIgnore
-    @AssertTrue
+    @AssertTrue(message = "Agent must have exactly 1 Inverse Functional Identifier (IFI)")
     public boolean isIdentifiedAgent() {
         return countIFIs() == 1;
     }

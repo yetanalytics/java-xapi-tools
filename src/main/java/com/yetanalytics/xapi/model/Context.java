@@ -82,7 +82,7 @@ public class Context implements JSONObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "Context must not be empty")
     public boolean isEmpty() {
         return (
             registration == null &&

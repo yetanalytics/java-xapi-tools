@@ -51,7 +51,7 @@ public class Verb implements JSONObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "Verb must not be empty")
     public boolean isEmpty() {
         return id == null && display == null;
     }

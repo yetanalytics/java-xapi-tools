@@ -30,7 +30,7 @@ public class StatementRef extends AbstractObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "StatementRef must not be empty")
     public boolean isEmpty() {
         return id == null;
     }

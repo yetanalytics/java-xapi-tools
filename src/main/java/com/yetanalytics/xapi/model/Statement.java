@@ -151,7 +151,7 @@ public class Statement extends AbstractObject {
     // Validation
 
     @JsonIgnore
-    @AssertTrue
+    @AssertTrue(message = "Voiding statements must have a StatementRef as their object")
     public boolean isValidVoidingStatement() {
         if (verb != null && verb.isVoiding()) {
             return object instanceof StatementRef;
@@ -169,7 +169,7 @@ public class Statement extends AbstractObject {
     }
 
     @JsonIgnore
-    @AssertTrue
+    @AssertTrue(message = "Context.revision must not be present if object is not an Activity")
     public boolean isValidContextRevision() {
         return (
             isObjectActivity() ||
@@ -179,7 +179,7 @@ public class Statement extends AbstractObject {
     }
 
     @JsonIgnore
-    @AssertTrue
+    @AssertTrue(message = "Context.platform must not be present if object is not an Activity")
     public boolean isValidContextPlatform() {
         return (
             isObjectActivity() ||
@@ -222,7 +222,7 @@ public class Statement extends AbstractObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "Statement must not be empty")
     public boolean isEmpty() {
         return (
             id == null &&

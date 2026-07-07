@@ -167,7 +167,7 @@ public class ActivityDefinition implements JSONObject {
 
     @Override
     @JsonIgnore
-    @AssertFalse
+    @AssertFalse(message = "ActivityDefinition must not be empty")
     public boolean isEmpty() {
         return (
             name == null && description == null &&
@@ -177,7 +177,7 @@ public class ActivityDefinition implements JSONObject {
     }
 
     @JsonIgnore
-    @AssertTrue
+    @AssertTrue(message = "ActivityDefinition must be a valid interaction activity")
     public boolean isValidInteractionActivity() {
         if (interactionType == null) {
             return isNoInteraction();
