@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.yetanalytics.xapi.model.deserializers.MimeTypeDeserializer;
+import com.yetanalytics.xapi.validation.Sha256Sum;
 
 import jakarta.activation.MimeType;
 
@@ -35,8 +36,8 @@ public class Attachment implements JSONObject {
     @NotNull
     private Integer length;
 
-    // TODO: Validate that sha2 is a SHA256, 64-char hex string
     @NotNull
+    @Sha256Sum
     private String sha2;
     
     private URI fileUrl;

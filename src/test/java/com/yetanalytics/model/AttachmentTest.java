@@ -25,8 +25,7 @@ public class AttachmentTest {
         attachment = new Attachment();
     }
 
-    @Test
-    public void testAttachment() throws URISyntaxException, MimeTypeParseException {
+    private void populateValidAttachment() throws URISyntaxException, MimeTypeParseException {
         LangMap display = new LangMap(new HashMap<>());
         display.put("en-US", "Display");
 
@@ -45,8 +44,26 @@ public class AttachmentTest {
         attachment.setLength(length);
         attachment.setSha2(sha2);
         attachment.setFileUrl(fileUrl);
+    }
 
+    @Test
+    public void testAttachment() throws URISyntaxException, MimeTypeParseException {
+        populateValidAttachment();
         ValidationUtils.assertValid(validator, attachment);
+    }
+
+    @Test
+    public void testInvalidSha2Length() throws URISyntaxException, MimeTypeParseException {
+        populateValidAttachment();
+        attachment.setSha2("426cf3a8b2864dd91201b989ba5728181da52bfff9a0489670e54cd8ec8b3a5");
+        ValidationUtils.assertInvalid(validator, attachment);
+    }
+
+    @Test
+    public void testInvalidSha2Hex() throws URISyntaxException, MimeTypeParseException {
+        populateValidAttachment();
+        attachment.setSha2("z26cf3a8b2864dd91201b989ba5728181da52bfff9a0489670e54cd8ec8b3a50");
+        ValidationUtils.assertInvalid(validator, attachment);
     }
 
     @Test
