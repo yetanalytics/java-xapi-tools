@@ -1,6 +1,8 @@
 package com.yetanalytics.xapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.net.URI;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -13,16 +15,17 @@ import jakarta.validation.constraints.NotNull;
 */
 @JsonInclude(Include.NON_NULL)
 public class Account implements JSONObject {
-    
+
     @NotNull
-    private String homePage;
+    private URI homePage;
+    
     @NotNull
     private String name;
     
-    public String getHomePage() {
+    public URI getHomePage() {
         return homePage;
     }
-    public void setHomePage(String homePage) {
+    public void setHomePage(URI homePage) {
         this.homePage = homePage;
     }
     

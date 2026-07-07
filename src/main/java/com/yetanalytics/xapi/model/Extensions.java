@@ -1,8 +1,12 @@
 package com.yetanalytics.xapi.model;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,7 +15,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import com.yetanalytics.xapi.model.deserializers.ExtensionDeserializer;
-import com.yetanalytics.xapi.model.serializers.ExtensionSerializer;
+import com.yetanalytics.xapi.model.serializers.FreeMapSerializer;
 import com.yetanalytics.xapi.util.Mapper;
 
 import jakarta.validation.constraints.AssertFalse;
@@ -24,79 +28,130 @@ import jakarta.validation.constraints.AssertFalse;
  * or through a JSONPath API.
  */
 @JsonDeserialize(using = ExtensionDeserializer.class)
-@JsonSerialize(using = ExtensionSerializer.class)
-public class Extensions implements JSONObject {
+@JsonSerialize(using = FreeMapSerializer.class)
+public class Extensions implements IFreeMap<URI, Object>, JSONObject {
 
-    private Map<String,Object> extMap = new HashMap<>();
+    private static final Logger log = LoggerFactory.getLogger(Extensions.class);
 
-    public Extensions(Map<String, Object> input) {
+    private Map<URI, Object> extMap = new HashMap<>();
+
+    public Extensions(Map<URI, Object> input) {
         extMap = input;
     }
 
     /**
      * Sets an entry in the Extensions Map
-     * @param key the IRI key of the extension
+     * @param key the URI key of the extension
      * @param value The Collections API representation of the JSON Data
      */
-    public void put(String key, Object value) {
+    @Override
+    public void put(URI key, Object value) {
         extMap.put(key, value);
     }
 
     /**
+     * Sets an entry in the Extensions Map
+     * @param key the IRI String key of the extension
+     * @param value The Collections API representation of the JSON Data
+     * @throws IllegalArgumentException
+     */
+    @Override
+    public void put(String key, Object value) throws IllegalArgumentException {
+        put(URI.create(key), value);
+    }
+
+    /**
      * Retrieve extension data
-     * @param key The IRI of the extension
+     * @param key The URI key of the extension
      * @return The Collections API representation of the JSON Data
      */
-    public Object get(String key) {
+    @Override
+    public Object get(URI key) {
         return extMap.get(key);
     }
 
     /**
+     * Retrieve extension data
+     * @param key The IRI string key of the extension
+     * @return The Collections API representation of the JSON Data
+     * @throws IllegalArgumentException
+     */
+    @Override
+    public Object get(String key) throws IllegalArgumentException {
+        return get(URI.create(key));
+    }
+
+    /**
      * Attempt a JSONPath query of the Extension data.
-     * @param key The IRI key of the extension in which to perform the query
+     * @param key The URI key of the extension in which to perform the query
      * @param jsonPathExpression A JSONPath query to perform in the Extension data
      * @param typeKey The typereference for the type that the query is expecting to retrieve
      * @param <T> The type that the query is expecting to convert the results to
      * @return Object of type T that is the result of deserialization from the query
      */
     @SuppressWarnings("unchecked")
-    public <T> T read(String key, String jsonPathExpression, Class<T> typeKey) {
+    public <T> T read(URI key, String jsonPathExpression, Class<T> typeKey) {
         try {
             Object jsonObject = extMap.get(key);
             if (jsonObject == null) return null;
             String json = Mapper.getMapper().writeValueAsString(jsonObject);
-            return (T) JsonPath.read(json, jsonPathExpression);
+            T result = (T) JsonPath.read(json, jsonPathExpression);
+            return result;
         } catch (PathNotFoundException e) {
-            //TODO: logging framework
-            System.err.println("Path not found");
-            // e.printStackTrace();
+            log.error("JSONPath Query: Path not found", e);
         } catch (JsonProcessingException e) {
-            System.err.println("JSON cannot be processed");
-            // e.printStackTrace();
+            log.warn("JSONPath Query: Unable to parse resulting value", e);
         }
         return null;
     }
 
     /**
-     * Remove an extension by IRI key
-     * @param key the IRI of the extension to remove
+     * Attempt a JSONPath query of the Extension data.
+     * @param key The IRI String key of the extension in which to perform the query
+     * @param jsonPathExpression A JSONPath query to perform in the Extension data
+     * @param typeKey The typereference for the type that the query is expecting to retrieve
+     * @param <T> The type that the query is expecting to convert the results to
+     * @return Object of type T that is the result of deserialization from the query
+     * @throws IllegalArgumentException
      */
-    public void remove(String key) {
+    public <T> T read(String key, String jsonPathExpression, Class<T> typeKey) throws IllegalArgumentException {
+        return read(URI.create(key), jsonPathExpression, typeKey);
+    }
+
+    /**
+     * Remove an extension by IRI key
+     * @param key the URI key of the extension to remove
+     */
+    @Override
+    public void remove(URI key) {
         extMap.remove(key);
+    }
+
+    /**
+     * Remove an extension by IRI key
+     * @param key the IRI String key of the extension to remove
+     * @throws IllegalArgumentException
+     */
+    @Override
+    public void remove(String key) throws IllegalArgumentException {
+        remove(URI.create(key));        
     }
 
     /**
      * Returns a set of all IRI Extension keys
      * @return Set of IRI keys
      */
-    public Set<String> getKeys() {
+    @Override
+    public Set<URI> getKeys() {
         return extMap.keySet();
     }
+
     /**
-     * Returns the full raw Extension Map as a HashMap&lt;String, Object&gt;
+     * Returns the full raw Extension Map as a HashMap&lt;URI, Object&gt;
      * @return The raw Extensions Map
      */
-    public Map<String, Object> getMap() {
+    @Override
+    public Map<URI, Object> getMap() {
         return extMap;
     }
 

@@ -1,6 +1,8 @@
 package com.yetanalytics.xapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.net.URI;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.AbstractActorDeserializer;
 
@@ -17,11 +19,12 @@ public abstract class AbstractActor extends AbstractObject {
     // IFIs
 
     // TODO: Validate mbox is a valid mailto IRI
-    private String mbox;
+    private URI mbox;
     // TODO: Validate mbox_sha1sum is a valid hash string
     private String mbox_sha1sum;
     // TODO: Validate openid is a valid IRI
-    private String openid;
+    private URI openid;
+    
     @Valid
     private Account account;
     
@@ -33,10 +36,10 @@ public abstract class AbstractActor extends AbstractObject {
         this.name = name;
     }
 
-    public String getMbox() {
+    public URI getMbox() {
         return mbox;
     }
-    public void setMbox(String mbox) {
+    public void setMbox(URI mbox) {
         this.mbox = mbox;
     }
     
@@ -47,10 +50,10 @@ public abstract class AbstractActor extends AbstractObject {
         this.mbox_sha1sum = mbox_sha1sum;
     }
     
-    public String getOpenid() {
+    public URI getOpenid() {
         return openid;
     }
-    public void setOpenid(String openid) {
+    public void setOpenid(URI openid) {
         this.openid = openid;
     }
     

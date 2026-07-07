@@ -1,12 +1,14 @@
 package com.yetanalytics.model;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import com.yetanalytics.util.ValidationUtils;
+import com.yetanalytics.xapi.util.ValidationUtils;
 import com.yetanalytics.xapi.model.Activity;
 import com.yetanalytics.xapi.model.Agent;
 import com.yetanalytics.xapi.model.Statement;
@@ -19,22 +21,22 @@ public class StatementResultTest {
     private Validator validator;
     private StatementResult statementResult;
 
-    @Before
+    @BeforeEach
     public void init() {
         validator = ValidationUtils.getValidator();
         statementResult = new StatementResult();
     }
 
     @Test
-    public void testStatementResult() {
+    public void testStatementResult() throws URISyntaxException {
         Agent actor = new Agent();
-        actor.setMbox("mailto:foo@example.com");
+        actor.setMbox(new URI("mailto:foo@example.com"));
 
         Verb verb = new Verb();
-        verb.setId("http://example.org/verb");
+        verb.setId(new URI("http://example.org/verb"));
 
         Activity object = new Activity();
-        object.setId("http://example.org/object");
+        object.setId(new URI("http://example.org/object"));
 
         Statement statement = new Statement();
         statement.setActor(actor);

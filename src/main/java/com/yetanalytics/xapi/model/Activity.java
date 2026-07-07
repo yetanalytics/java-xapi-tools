@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.NotNull;
+import java.net.URI;
 
 /**
 * Class representation of the Activity Object Type of the 
@@ -16,16 +17,17 @@ import jakarta.validation.constraints.NotNull;
 @JsonInclude(Include.NON_NULL)
 @JsonDeserialize
 public class Activity extends AbstractObject {
+
     @NotNull
-    private String id;
+    private URI id;
 
     @Valid
     private ActivityDefinition definition;
 
-    public String getId() {
+    public URI getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(URI id) {
         this.id = id;
     }
 

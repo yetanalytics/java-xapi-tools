@@ -2,10 +2,10 @@ package com.yetanalytics.model;
 
 import java.math.BigDecimal;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import com.yetanalytics.util.ValidationUtils;
+import com.yetanalytics.xapi.util.ValidationUtils;
 import com.yetanalytics.xapi.model.Score;
 
 import jakarta.validation.Validator;
@@ -14,7 +14,7 @@ public class ScoreTest {
     private Validator validator;
     private Score score;
 
-    @Before
+    @BeforeEach
     public void init() {
         validator = ValidationUtils.getValidator();
         score = new Score();

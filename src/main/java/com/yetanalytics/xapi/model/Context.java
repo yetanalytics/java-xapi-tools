@@ -21,7 +21,7 @@ public class Context implements JSONObject {
     private ContextActivities contextActivities;
     private String revision;
     private String platform;
-    private String language;
+    private LangTag language;
     private StatementRef statement;
     private Extensions extensions;
     
@@ -61,10 +61,10 @@ public class Context implements JSONObject {
     public void setPlatform(String platform) {
         this.platform = platform;
     }
-    public String getLanguage() {
+    public LangTag getLanguage() {
         return language;
     }
-    public void setLanguage(String language) {
+    public void setLanguage(LangTag language) {
         this.language = language;
     }
     public StatementRef getStatement() {

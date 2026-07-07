@@ -1,8 +1,16 @@
 package com.yetanalytics.xapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.net.URI;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.yetanalytics.xapi.model.deserializers.MimeTypeDeserializer;
+
+import jakarta.activation.MimeType;
 
 import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.NotNull;
@@ -15,22 +23,28 @@ import jakarta.validation.constraints.NotNull;
 public class Attachment implements JSONObject {
 
     @NotNull
-    private String usageType;
+    private URI usageType;
     @NotNull
     private LangMap display;
     private LangMap description;
+
+    @JsonDeserialize(using = MimeTypeDeserializer.class)
+    @JsonSerialize(using = ToStringSerializer.class)
     @NotNull
-    private String contentType;
+    private MimeType contentType;
     @NotNull
     private Integer length;
+
+    // TODO: Validate that sha2 is a SHA256, 64-char hex string
     @NotNull
     private String sha2;
-    private String fileUrl;
     
-    public String getUsageType() {
+    private URI fileUrl;
+    
+    public URI getUsageType() {
         return usageType;
     }
-    public void setUsageType(String usageType) {
+    public void setUsageType(URI usageType) {
         this.usageType = usageType;
     }
     public LangMap getDisplay() {
@@ -45,10 +59,10 @@ public class Attachment implements JSONObject {
     public void setDescription(LangMap description) {
         this.description = description;
     }
-    public String getContentType() {
+    public MimeType getContentType() {
         return contentType;
     }
-    public void setContentType(String contentType) {
+    public void setContentType(MimeType contentType) {
         this.contentType = contentType;
     }
     public Integer getLength() {
@@ -63,10 +77,10 @@ public class Attachment implements JSONObject {
     public void setSha2(String sha2) {
         this.sha2 = sha2;
     }
-    public String getFileUrl() {
+    public URI getFileUrl() {
         return fileUrl;
     }
-    public void setFileUrl(String fileUrl) {
+    public void setFileUrl(URI fileUrl) {
         this.fileUrl = fileUrl;
     }
 

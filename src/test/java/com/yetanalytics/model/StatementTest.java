@@ -1,14 +1,17 @@
 package com.yetanalytics.model;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.assertTrue;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.semver4j.Semver;
 
-import com.yetanalytics.util.ValidationUtils;
+import com.yetanalytics.xapi.util.ValidationUtils;
 import com.yetanalytics.xapi.model.Account;
 import com.yetanalytics.xapi.model.Activity;
 import com.yetanalytics.xapi.model.Agent;
@@ -31,20 +34,20 @@ public class StatementTest {
         return statementRef;
     }
 
-    @Before
-    public void init() {
+    @BeforeEach
+    public void init() throws URISyntaxException {
         validator = ValidationUtils.getValidator();
         statement = new Statement();
 
         // Valid statement by default
         Agent actor = new Agent();
-        actor.setMbox("mailto:foo@example.com");
+        actor.setMbox(new URI("mailto:foo@example.com"));
 
         Verb verb = new Verb();
-        verb.setId("http://example.org/verb");
+        verb.setId(new URI("http://example.org/verb"));
 
         Activity object = new Activity();
-        object.setId("http://example.org/object");
+        object.setId(new URI("http://example.org/object"));
 
         statement.setActor(actor);
         statement.setVerb(verb);
@@ -66,9 +69,9 @@ public class StatementTest {
     }
 
     @Test
-    public void testVoidingStatement() {
+    public void testVoidingStatement() throws URISyntaxException {
         Verb voidingVerb = new Verb();
-        voidingVerb.setId(Verb.VOIDING_VERB_IRI);
+        voidingVerb.setId(new URI(Verb.VOIDING_VERB_IRI));
 
         statement.setVerb(voidingVerb);
         ValidationUtils.assertInvalid(validator, statement);
@@ -107,9 +110,9 @@ public class StatementTest {
     }
 
     @Test
-    public void testValidAuthority() {
+    public void testValidAuthority() throws URISyntaxException {
         Account authAccount = new Account();
-        authAccount.setHomePage("http://myauthority.com");
+        authAccount.setHomePage(new URI("http://myauthority.com"));
         authAccount.setName("My Authority");
         
         // Agent authority is always valid
@@ -128,7 +131,7 @@ public class StatementTest {
 
         // Need to add second member
         Agent nonConsumer = new Agent();
-        nonConsumer.setMbox("mailto:someagent@example.com");
+        nonConsumer.setMbox(new URI("mailto:someagent@example.com"));
         groupAuthMember.add(nonConsumer);
         assertTrue(validator.validate(statement).isEmpty());
 
@@ -143,14 +146,14 @@ public class StatementTest {
     }
 
     @Test
-    public void testValidSubStatement() {
+    public void testValidSubStatement() throws URISyntaxException {
         Statement subStatement = new Statement();
         Agent actor = new Agent();
-        actor.setMbox("mailto:bar@example.com");
+        actor.setMbox(new URI("mailto:bar@example.com"));
         Verb verb = new Verb();
-        verb.setId("http://example.org/verb2");
+        verb.setId(new URI("http://example.org/verb2"));
         Activity object = new Activity();
-        object.setId("http://example.org/object2");
+        object.setId(new URI("http://example.org/object2"));
         subStatement.setActor(actor);
         subStatement.setVerb(verb);
         subStatement.setObject(object);
@@ -164,27 +167,27 @@ public class StatementTest {
 
         // TODO: test Stored presence
 
-        String version = "1.0.3";
+        Semver version = new Semver("1.0.3");
         subStatement.setId(null);
         subStatement.setVersion(version);
         ValidationUtils.assertInvalid(validator, statement);
 
         Agent authority = new Agent();
-        authority.setMbox("mailto:myauthority@example.com");
+        authority.setMbox(new URI("mailto:myauthority@example.com"));
         subStatement.setVersion(null);
         subStatement.setAuthority(authority);
         ValidationUtils.assertInvalid(validator, statement);
 
         Statement subSubStatement = new Statement();
         Agent actor2 = new Agent();
-        actor2.setMbox("mailto:baz@example.com");
+        actor2.setMbox(new URI("mailto:baz@example.com"));
         Verb verb2 = new Verb();
-        verb2.setId("http://example.org/verb3");
+        verb2.setId(new URI("http://example.org/verb3"));
         Activity object2 = new Activity();
-        object2.setId("http://example.org/object3");
-        subSubStatement.setActor(actor);
-        subSubStatement.setVerb(verb);
-        subSubStatement.setObject(object);
+        object2.setId(new URI("http://example.org/object3"));
+        subSubStatement.setActor(actor2);
+        subSubStatement.setVerb(verb2);
+        subSubStatement.setObject(object2);
         subStatement.setAuthority(null);
         subStatement.setObject(subStatement);
         // TODO: Dig deeper why this is 2 errors and not 1

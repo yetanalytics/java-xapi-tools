@@ -1,4 +1,4 @@
-package com.yetanalytics.util;
+package com.yetanalytics.xapi.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

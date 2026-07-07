@@ -1,5 +1,7 @@
 package com.yetanalytics.xapi.model;
 
+import java.net.URI;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -19,16 +21,16 @@ public class Verb implements JSONObject {
     public static final String VOIDING_VERB_IRI = "http://adlnet.gov/expapi/verbs/voided";
     
     @NotNull
-    private String id; // TODO: Validate id is an IRI
+    private URI id;
 
     @JsonDeserialize(using = LangMapDeserializer.class)
     private LangMap display;
 
-    public String getId() {
+    public URI getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(URI id) {
         this.id = id;
     }
 
@@ -44,7 +46,7 @@ public class Verb implements JSONObject {
 
     @JsonIgnore
     public boolean isVoiding() {
-        return id == VOIDING_VERB_IRI;
+        return id.toString().equals(VOIDING_VERB_IRI);
     }
 
     @Override

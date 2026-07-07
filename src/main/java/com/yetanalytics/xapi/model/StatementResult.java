@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model;
 
+import java.net.URI;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,7 +19,7 @@ public class StatementResult implements JSONObject {
     @NotNull
     private List<Statement> statements;
 
-    private String more;
+    private URI more;
 
     public List<Statement> getStatements() {
         return statements;
@@ -28,11 +29,11 @@ public class StatementResult implements JSONObject {
         this.statements = statements;
     }
 
-    public String getMore() {
+    public URI getMore() {
         return more;
     }
 
-    public void setMore(String more) {
+    public void setMore(URI more) {
         this.more = more;
     }
 

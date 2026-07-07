@@ -1,9 +1,12 @@
 package com.yetanalytics.model;
 
-import org.junit.Before;
-import org.junit.Test;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-import com.yetanalytics.util.ValidationUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.yetanalytics.xapi.util.ValidationUtils;
 import com.yetanalytics.xapi.model.Account;
 
 import jakarta.validation.Validator;
@@ -12,15 +15,15 @@ public class AccountTest {
     private Validator validator;
     private Account account;
 
-    @Before
+    @BeforeEach
     public void init() {
         validator = ValidationUtils.getValidator();
         account = new Account();
     }
 
     @Test
-    public void testValidAccount() {
-        account.setHomePage("http://examplehomepage.com");
+    public void testValidAccount() throws URISyntaxException {
+        account.setHomePage(new URI("http://examplehomepage.com"));
         account.setName("My Account");
         ValidationUtils.assertValid(validator, account);
     }

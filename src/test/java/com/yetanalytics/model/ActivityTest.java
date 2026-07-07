@@ -1,9 +1,12 @@
 package com.yetanalytics.model;
 
-import org.junit.Before;
-import org.junit.Test;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-import com.yetanalytics.util.ValidationUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.yetanalytics.xapi.util.ValidationUtils;
 import com.yetanalytics.xapi.model.Activity;
 import com.yetanalytics.xapi.model.ActivityDefinition;
 
@@ -14,7 +17,7 @@ public class ActivityTest {
     private ActivityDefinition definition;
     private Activity activity;
 
-    @Before
+    @BeforeEach
     public void init() {
         validator = ValidationUtils.getValidator();
         definition = new ActivityDefinition();
@@ -22,12 +25,12 @@ public class ActivityTest {
     }
 
     @Test
-    public void testActivity() {
-        activity.setId("http://example.org/activity");
+    public void testActivity() throws URISyntaxException {
+        activity.setId(new URI("http://example.org/activity"));
         ValidationUtils.assertValid(validator, activity);
 
         activity.setDefinition(definition);
-        definition.setMoreInfo("https://yetanalytics.com");
+        definition.setMoreInfo(new URI("https://yetanalytics.com"));
         ValidationUtils.assertValid(validator, activity);
     }
 

@@ -51,7 +51,33 @@ If you need to create your own ObjectMapper or prefer to use an existing one in 
 
 ## LRS Client
 
-Coming Soon...
+A very basic LRS Client has been added to deal with statements only (not attachments). Other resources and attachments will be added in the future.
+
+You must create an LRS object with host and prefix, and credentials in order to initialize a client. Here is a code sample of API usage:
+
+```
+//presume some statements using the model
+List<Statement> stmts = new ArrayList<>(List.of(stmt1, stmt2));
+
+LRS lrs = new LRS("https://lrs.yetanalytics.com/xapi/", "username", "password");
+StatementClient client = new StatementClient(lrs);
+List<UUID> resultIds = client.postStatements(stmts);
+```
+Note the format of the host. It includes the prefix path, but excludes resources like `/statements`. The trailing `/` is optional.
+
+Current API methods include:
+
+`List<UUID> postStatements(List<Statement> stmts)`
+`List<UUID> postStatement(Statement stmt)`
+`List<Statement> getStatements(StatementFilters filters, Integer max)` - *GET with filters and a max number of statements*
+`List<Statement> getStatements(StatementFilters filters)` - *GET with filters and no max*
+`List<Statement> getStatements()` - *GET all statements (no max, no filters)*
+
+The client will batch at the size (optionally) provided to the LRS object. It will also handle retrieving the results from `more` links when the LRS paginates responses.
+
+A StatementFilters object can optionally be given to the `getStatements` method to allow for all xAPI statement resource filter types (except attachment).
+
+More methods will be added in future to support other resources and also attachments.
 
 ## xAPI Validation
 
@@ -59,6 +85,6 @@ Coming Soon...
 
 ## License
 
-Copyright © 2024 Yet Analytics, Inc.
+Copyright © 2024-2026 Yet Analytics, Inc.
 
 Distributed under the Apache License version 2.0.

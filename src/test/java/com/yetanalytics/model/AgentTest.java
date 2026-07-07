@@ -1,9 +1,12 @@
 package com.yetanalytics.model;
 
-import org.junit.Before;
-import org.junit.Test;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-import com.yetanalytics.util.ValidationUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.yetanalytics.xapi.util.ValidationUtils;
 import com.yetanalytics.xapi.model.Account;
 import com.yetanalytics.xapi.model.Agent;
 
@@ -13,15 +16,15 @@ public class AgentTest {
     private Validator validator;
     private Agent agent;
 
-    @Before
+    @BeforeEach
     public void init() {
         validator = ValidationUtils.getValidator();
         agent = new Agent();
     }
 
     @Test
-    public void testMbox() {
-        agent.setMbox("mailto:foo@example.com");
+    public void testMbox() throws URISyntaxException {
+        agent.setMbox(new URI("mailto:foo@example.com"));
         ValidationUtils.assertValid(validator, agent);
     }
 
@@ -32,15 +35,15 @@ public class AgentTest {
     }
 
     @Test
-    public void testOpenid() {
-        agent.setOpenid("http://openid.example.com");
+    public void testOpenid() throws URISyntaxException {
+        agent.setOpenid(new URI("http://openid.example.com"));
         ValidationUtils.assertValid(validator, agent);
     }
 
     @Test
-    public void testAccount() {
+    public void testAccount() throws URISyntaxException {
         Account account = new Account();
-        account.setHomePage("http://examplehomepage.com");
+        account.setHomePage(new URI("http://examplehomepage.com"));
         account.setName("My Account");
 
         agent.setAccount(account);
@@ -62,8 +65,8 @@ public class AgentTest {
     }
     
     @Test
-    public void testMultiIFI() {
-        agent.setMbox("mailto:foo@example.com");
+    public void testMultiIFI() throws URISyntaxException {
+        agent.setMbox(new URI("mailto:foo@example.com"));
         agent.setMbox_sha1sum("767e74eab7081c41e0b83630511139d130249666");
         ValidationUtils.assertInvalid(validator, agent);
     }

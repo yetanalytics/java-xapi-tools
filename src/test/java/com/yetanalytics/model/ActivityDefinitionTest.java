@@ -1,14 +1,16 @@
 package com.yetanalytics.model;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import com.yetanalytics.util.ValidationUtils;
+import com.yetanalytics.xapi.util.ValidationUtils;
 import com.yetanalytics.xapi.model.ActivityDefinition;
 import com.yetanalytics.xapi.model.Extensions;
 import com.yetanalytics.xapi.model.InteractionComponent;
@@ -35,7 +37,7 @@ public class ActivityDefinitionTest {
         return components;
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         validator = ValidationUtils.getValidator();
         definition = new ActivityDefinition();
@@ -47,16 +49,16 @@ public class ActivityDefinitionTest {
     }
 
     @Test
-    public void testDefinition() {
+    public void testDefinition() throws URISyntaxException {
         LangMap name = new LangMap(new HashMap<>());
         name.put("en-US", "Example Definition");
 
         LangMap desc = new LangMap(new HashMap<>());
         desc.put("en-US", "This is an example Activity Definition");
 
-        String type = "http://example.com/activity-type";
+        URI type = new URI("http://example.com/activity-type");
 
-        String moreInfo = "http://yetanalytics.com";
+        URI moreInfo = new URI("http://yetanalytics.com");
         
         Extensions ext = new Extensions(new HashMap<>());
         ext.put("http://example.org/string-value", "Foo Bar");

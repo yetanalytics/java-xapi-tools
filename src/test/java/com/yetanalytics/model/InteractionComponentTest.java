@@ -2,10 +2,10 @@ package com.yetanalytics.model;
 
 import java.util.HashMap;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import com.yetanalytics.util.ValidationUtils;
+import com.yetanalytics.xapi.util.ValidationUtils;
 import com.yetanalytics.xapi.model.InteractionComponent;
 import com.yetanalytics.xapi.model.LangMap;
 
@@ -15,7 +15,7 @@ public class InteractionComponentTest {
     private Validator validator;
     private InteractionComponent interactionComponent;
 
-    @Before
+    @BeforeEach
     public void init() {
         validator = ValidationUtils.getValidator();
         interactionComponent = new InteractionComponent();
