@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertFalse;
 
 /**
@@ -16,13 +17,18 @@ import jakarta.validation.constraints.AssertFalse;
 public class Context implements JSONObject {
 
     private UUID registration;
+
+    @Valid
     private AbstractActor instructor;
+    @Valid
     private Group team;
+    @Valid
     private ContextActivities contextActivities;
     private String revision;
     private String platform;
     private LangTag language;
     private StatementRef statement;
+    @Valid
     private Extensions extensions;
     
     public UUID getRegistration() {

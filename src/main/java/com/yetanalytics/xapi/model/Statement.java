@@ -58,6 +58,7 @@ public class Statement extends AbstractObject {
     @JsonSerialize(using = SemverSerializer.class)
     private Semver version;
 
+    @Valid
     private List<Attachment> attachments;
 
     public UUID getId() {

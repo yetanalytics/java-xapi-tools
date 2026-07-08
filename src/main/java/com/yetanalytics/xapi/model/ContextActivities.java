@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.ContextActivityListDeserializer;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertFalse;
 
 /**
@@ -17,12 +18,16 @@ import jakarta.validation.constraints.AssertFalse;
 @JsonInclude(Include.NON_NULL)
 public class ContextActivities implements JSONObject {
 
+    @Valid
     @JsonDeserialize(using = ContextActivityListDeserializer.class)
     private List<Activity> parent;
+    @Valid
     @JsonDeserialize(using = ContextActivityListDeserializer.class)
     private List<Activity> grouping;
+    @Valid
     @JsonDeserialize(using = ContextActivityListDeserializer.class)
     private List<Activity> category;
+    @Valid
     @JsonDeserialize(using = ContextActivityListDeserializer.class)
     private List<Activity> other;
     
