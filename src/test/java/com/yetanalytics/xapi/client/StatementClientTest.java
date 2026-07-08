@@ -50,6 +50,7 @@ public class StatementClientTest {
         return map;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked", "resource" })
     private static GenericContainer lrs = 
         new GenericContainer("yetanalytics/lrsql:latest")
             .withEnv(getContainerEnv())

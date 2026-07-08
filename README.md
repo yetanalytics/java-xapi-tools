@@ -81,7 +81,20 @@ More methods will be added in future to support other resources and also attachm
 
 ## xAPI Validation
 
-Coming Soon...
+The xAPI model in this library can be used for statement validation using the `jakarta.validation` standard. You can either validate specific parts of a statement using the `jakarta.validation` API directly, or you can use the included helper which takes either a `String` or `Statement` argument and returns a validation object (including the `Statement` object, if valid):
+
+
+```
+String statement = "...";
+StatementValidator validator = new StatementValidator();
+
+// validate by string
+StatementValidationResult result = validator.validateStatement(stmt);
+
+result.isValid(); // boolean
+result.getErrors(); // Set<String> containing the violation messages
+result.getStatement(); // valid Statement object (if isValid() is true)
+```
 
 ## License
 

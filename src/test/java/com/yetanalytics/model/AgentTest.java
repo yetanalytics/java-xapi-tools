@@ -2,7 +2,6 @@ package com.yetanalytics.model;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,6 @@ import com.yetanalytics.xapi.util.ValidationUtils;
 import com.yetanalytics.xapi.model.Account;
 import com.yetanalytics.xapi.model.Agent;
 
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 
 public class AgentTest {
@@ -86,7 +84,6 @@ public class AgentTest {
 
     @Test
     public void testNoIFI() {
-        Set<ConstraintViolation<Agent>> violations = validator.validate(agent);
         // One error for empty agent, one error for missing IFI
         ValidationUtils.assertInvalid(validator, agent, 2);
     }

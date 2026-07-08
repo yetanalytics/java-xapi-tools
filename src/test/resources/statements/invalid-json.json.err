@@ -1,5 +1,3 @@
-
-
 {
   "id": "6fbd600f-d87c-4c74-801a-2ec2e53231c8",
   "actor": {
@@ -29,6 +27,6 @@
     "mbox": "mailto:authority@yetanalytics.com"
   },
   "version": "1.0.3",
-  "stored": "2023-10-27T09:03:21.722Z",
+  "stored": "2023-10-27T09:03:21.722Z"
   "timestamp": "2023-10-27T09:03:21.723Z"
-}
+
