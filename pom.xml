@@ -4,7 +4,7 @@
   <groupId>com.yetanalytics</groupId>
   <artifactId>xapi-tools</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.4</version>
+  <version>0.0.5</version>
   <name>xAPI Tools</name>
   <description>Java Serialization Model and Tools for xAPI Standard (IEEE 9274.1.1)</description>
   <url>https://github.com/yetanalytics/java-xapi-tools</url>
@@ -53,6 +53,18 @@
       <artifactId>json-path</artifactId>
       <version>2.9.0</version>
     </dependency>
+    <dependency>
+      <groupId>jakarta.validation</groupId>
+      <artifactId>jakarta.validation-api</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.bval</groupId>
+      <artifactId>bval-jsr</artifactId>
+      <version>3.0.1</version>
+    </dependency>
+    <!-- Test dependencies -->
+    
     <dependency>
       <groupId>jakarta.activation</groupId>
       <artifactId>jakarta.activation-api</artifactId>

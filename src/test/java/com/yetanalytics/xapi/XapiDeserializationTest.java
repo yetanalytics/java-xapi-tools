@@ -39,8 +39,6 @@ import com.yetanalytics.xapi.model.Verb;
 import com.yetanalytics.xapi.util.Mapper;
 import com.yetanalytics.xapi.util.TestFileUtils;
 
-
-
 public class XapiDeserializationTest {
 
     @Test
@@ -117,7 +115,7 @@ public class XapiDeserializationTest {
         Integer elementNumber = ext.read(extKey, "$.listOfThings[1].number", Integer.class);
         assertEquals(elementNumber, Integer.valueOf(2));
         Double decimalEntry = ext.read(extKey, "$.decimalEntry", Double.class);
-        assertEquals(decimalEntry, Double.valueOf(3.14159));
+        assertEquals(decimalEntry, 3.14159);
         Boolean boolEntry = ext.read(extKey, "$.boolEntry", Boolean.class);
         assertEquals(boolEntry, Boolean.TRUE);
         String nullEntry = ext.read(extKey, "$.nullEntry", String.class);

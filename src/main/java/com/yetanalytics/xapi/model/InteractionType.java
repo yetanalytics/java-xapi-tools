@@ -21,7 +21,7 @@ public enum InteractionType {
     NUMERIC("numeric"), 
     OTHER("other");
 
-    private String displayName;
+    private final String displayName;
 
     InteractionType(String displayName) {
         this.displayName = displayName;

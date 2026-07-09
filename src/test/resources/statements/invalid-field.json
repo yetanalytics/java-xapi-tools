@@ -1,0 +1,18 @@
+{
+  "id": "6fbd600f-d87c-4c74-801a-2ec2e53231c8",
+  "actor": {
+    "name": "Cliff Casey"
+  },
+  "object": {
+    "id": "https://www.yetanalytics.com/profiles/thing/1.0/concepts/activities/act1",
+    "definition": {
+      "name": {
+        "en-us": "Activity 1"
+      },
+      "descriptionz": {
+        "en-us": "The First Activity"
+      }
+    }
+  },
+  "timestamp": "2023-10-27T09:03:21.723Z"
+}

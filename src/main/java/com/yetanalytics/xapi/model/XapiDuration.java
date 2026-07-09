@@ -3,9 +3,9 @@ package com.yetanalytics.xapi.model;
 import java.time.Duration;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
 * Class representation of <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#46-iso-8601-durations">ISO 8601 Duration</a> 
@@ -26,9 +26,9 @@ public class XapiDuration {
         this.duration = Duration.parse(duration);
     }
 
-    private String original;
+    private final String original;
 
-    private Duration duration;
+    private final Duration duration;
 
     /**
      * Returns the original String version of the Duration

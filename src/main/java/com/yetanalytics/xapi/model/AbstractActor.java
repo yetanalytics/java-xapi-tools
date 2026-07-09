@@ -1,9 +1,14 @@
 package com.yetanalytics.xapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.net.URI;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.AbstractActorDeserializer;
+import com.yetanalytics.xapi.validation.MboxUri;
+import com.yetanalytics.xapi.validation.Sha1Sum;
+
+import jakarta.validation.Valid;
 
 /**
 * Abstract Class for serialization and deserialization of xAPI Actors
@@ -13,13 +18,19 @@ public abstract class AbstractActor extends AbstractObject {
     
     private String name;
 
-    //IFI
+    // IFIs
+
+    @MboxUri
     private URI mbox;
-    // TODO: Validate that mbox_sha1sum is a SHA1, 40-char hex string
+    @Sha1Sum
     private String mbox_sha1sum;
+    
     private URI openid;
+    
+    @Valid
     private Account account;
     
+    // Getters and Setters
     public String getName() {
         return name;
     }
@@ -53,5 +64,34 @@ public abstract class AbstractActor extends AbstractObject {
     }
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    // Validation
+    protected int countIFIs() {
+        int notNullCount = 0;
+        if (mbox != null) {
+            ++notNullCount;
+        }
+        if (mbox_sha1sum != null) {
+            ++notNullCount;
+        }
+        if (openid != null) {
+            ++notNullCount;
+        }
+        if (account != null) {
+            ++notNullCount;
+        }
+        return notNullCount;
+    }
+
+    public abstract boolean isValidAuthority();
+
+    @Override
+    @JsonIgnore
+    public boolean isEmpty() {
+        return (
+            mbox == null && mbox_sha1sum == null &&
+            openid == null && account == null
+        );
     }
 }

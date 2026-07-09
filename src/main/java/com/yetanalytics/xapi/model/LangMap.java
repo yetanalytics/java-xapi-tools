@@ -5,10 +5,13 @@ import java.util.IllformedLocaleException;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
 import com.yetanalytics.xapi.model.serializers.FreeMapSerializer;
+
+import jakarta.validation.constraints.AssertFalse;
 
 /**
  * Java wrapper object for the 
@@ -19,7 +22,7 @@ import com.yetanalytics.xapi.model.serializers.FreeMapSerializer;
  */
 @JsonDeserialize(using = LangMapDeserializer.class)
 @JsonSerialize(using = FreeMapSerializer.class)
-public class LangMap implements IFreeMap<LangTag, String> {
+public class LangMap implements IFreeMap<LangTag, String>, JSONObject {
 
     private HashMap<LangTag,String> languageHashMap = new HashMap<>();
 
@@ -108,5 +111,12 @@ public class LangMap implements IFreeMap<LangTag, String> {
     @Override
     public Map<LangTag, String> getMap() {
         return languageHashMap;
+    }
+
+    @Override
+    @JsonIgnore
+    @AssertFalse(message = "Language Map must not be empty")
+    public boolean isEmpty() {
+        return languageHashMap.isEmpty();
     }
 }

@@ -1,24 +1,34 @@
 package com.yetanalytics.xapi.model;
 
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertFalse;
 
 /**
 * Class representation of the Context Component of the 
 * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#246-context">9274.1.1 xAPI Specification</a>.
 */
 @JsonInclude(Include.NON_NULL)
-public class Context {
+public class Context implements JSONObject {
 
     private UUID registration;
+
+    @Valid
     private AbstractActor instructor;
+    @Valid
     private Group team;
+    @Valid
     private ContextActivities contextActivities;
     private String revision;
     private String platform;
     private LangTag language;
     private StatementRef statement;
+    @Valid
     private Extensions extensions;
     
     public UUID getRegistration() {
@@ -76,4 +86,20 @@ public class Context {
         this.extensions = extensions;
     }
 
+    @Override
+    @JsonIgnore
+    @AssertFalse(message = "Context must not be empty")
+    public boolean isEmpty() {
+        return (
+            registration == null &&
+            instructor == null &&
+            team == null &&
+            contextActivities == null &&
+            revision == null &&
+            platform == null &&
+            language == null &&
+            statement == null &&
+            extensions == null
+        );
+    }
 }

@@ -2,18 +2,25 @@ package com.yetanalytics.xapi.model;
 
 import java.net.URI;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yetanalytics.xapi.model.deserializers.LangMapDeserializer;
+
+import jakarta.validation.constraints.AssertFalse;
+import jakarta.validation.constraints.NotNull;
 
 /**
 * Class representation of the Verb component of the 
 * <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#243-verb">9274.1.1 xAPI Specification</a>.
 */
 @JsonInclude(Include.NON_NULL)
-public class Verb {
+public class Verb implements JSONObject {
 
+    public static final String VOIDING_VERB_IRI = "http://adlnet.gov/expapi/verbs/voided";
+    
+    @NotNull
     private URI id;
 
     @JsonDeserialize(using = LangMapDeserializer.class)
@@ -34,5 +41,18 @@ public class Verb {
     public void setDisplay(LangMap display) {
         this.display = display;
     }
-    
+
+    // Validation
+
+    @JsonIgnore
+    public boolean isVoiding() {
+        return id.toString().equals(VOIDING_VERB_IRI);
+    }
+
+    @Override
+    @JsonIgnore
+    @AssertFalse(message = "Verb must not be empty")
+    public boolean isEmpty() {
+        return id == null && display == null;
+    }
 }

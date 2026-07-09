@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.semver4j.Semver;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -11,6 +12,11 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yetanalytics.xapi.model.serializers.DateTimeSerializer;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertFalse;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.NotNull;
 import com.yetanalytics.xapi.model.serializers.SemverSerializer;
 
 /**
@@ -22,16 +28,25 @@ public class Statement extends AbstractObject {
 
     private UUID id;
 
+    @NotNull
+    @Valid
     private AbstractObject actor;
 
+    @NotNull
+    @Valid
     private Verb verb;
 
+    @Valid
     private Result result;
 
+    @Valid
     private Context context;
 
+    @NotNull
+    @Valid
     private AbstractObject object;
 
+    @Valid
     private AbstractActor authority;
 
     @JsonSerialize(using = DateTimeSerializer.class)
@@ -43,6 +58,7 @@ public class Statement extends AbstractObject {
     @JsonSerialize(using = SemverSerializer.class)
     private Semver version;
 
+    @Valid
     private List<Attachment> attachments;
 
     public UUID getId() {
@@ -131,5 +147,96 @@ public class Statement extends AbstractObject {
 
     public void setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
+    }
+
+    // Validation
+
+    @JsonIgnore
+    @AssertTrue(message = "Voiding statements must have a StatementRef as their object")
+    public boolean isValidVoidingStatement() {
+        if (verb != null && verb.isVoiding()) {
+            return object instanceof StatementRef;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean isObjectActivity() {
+        if (object != null) {
+            return object instanceof Activity;
+        } else {
+            return false; // Invalid statement anyways
+        }
+    }
+
+    @JsonIgnore
+    @AssertTrue(message = "Context.revision must not be present if object is not an Activity")
+    public boolean isValidContextRevision() {
+        return (
+            isObjectActivity() ||
+            context == null ||
+            context.getRevision() == null
+        );
+    }
+
+    @JsonIgnore
+    @AssertTrue(message = "Context.platform must not be present if object is not an Activity")
+    public boolean isValidContextPlatform() {
+        return (
+            isObjectActivity() ||
+            context == null ||
+            context.getPlatform() == null
+        );
+    }
+
+    // TODO: Somehow validate this on the Authority object itself
+    @JsonIgnore
+    @AssertTrue
+    public boolean isValidAuthority() {
+        return authority == null || authority.isValidAuthority();
+    }
+
+    private boolean isValidSubStmt() {
+        return (
+            id == null &&
+            stored == null &&
+            version == null &&
+            authority == null &&
+            !(object instanceof Statement)
+        );
+    }
+
+    // TODO: Validate this on the SubStatement itself
+    // (e.g. setting the objectType field)
+    @JsonIgnore
+    @AssertTrue
+    public boolean isValidSubStatement() {
+        // System.out.println("Object is Statement: " + (object instanceof Statement));
+        // TODO: If object is true...
+        if (object instanceof Statement) {
+            Statement subStatement = (Statement) object;
+            return subStatement.isValidSubStmt();
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    @JsonIgnore
+    @AssertFalse(message = "Statement must not be empty")
+    public boolean isEmpty() {
+        return (
+            id == null &&
+            actor == null &&
+            verb == null &&
+            object == null &&
+            context == null &&
+            result == null &&
+            authority == null &&
+            timestamp == null &&
+            stored == null &&
+            version == null &&
+            attachments == null
+        );
     }
 }

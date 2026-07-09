@@ -2,22 +2,23 @@ package com.yetanalytics.xapi.model;
 
 import java.net.URI;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
-import com.jayway.jsonpath.TypeRef;
 import com.yetanalytics.xapi.model.deserializers.ExtensionDeserializer;
 import com.yetanalytics.xapi.model.serializers.FreeMapSerializer;
 import com.yetanalytics.xapi.util.Mapper;
+
+import jakarta.validation.constraints.AssertFalse;
 
 /**
  * A wrapper object for using <a href="https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#41-extensions">xAPI Extensions</a>.
@@ -28,7 +29,7 @@ import com.yetanalytics.xapi.util.Mapper;
  */
 @JsonDeserialize(using = ExtensionDeserializer.class)
 @JsonSerialize(using = FreeMapSerializer.class)
-public class Extensions implements IFreeMap<URI, Object>{
+public class Extensions implements IFreeMap<URI, Object>, JSONObject {
 
     private static final Logger log = LoggerFactory.getLogger(Extensions.class);
 
@@ -97,7 +98,7 @@ public class Extensions implements IFreeMap<URI, Object>{
             T result = (T) JsonPath.read(json, jsonPathExpression);
             return result;
         } catch (PathNotFoundException e) {
-            log.warn("JSONPath Query: Path not found", e);
+            log.error("JSONPath Query: Path not found", e);
         } catch (JsonProcessingException e) {
             log.warn("JSONPath Query: Unable to parse resulting value", e);
         }
@@ -152,5 +153,12 @@ public class Extensions implements IFreeMap<URI, Object>{
     @Override
     public Map<URI, Object> getMap() {
         return extMap;
+    }
+
+    @Override
+    @JsonIgnore
+    @AssertFalse(message = "Extensions must not be empty")
+    public boolean isEmpty() {
+        return extMap.isEmpty();
     }
 }
