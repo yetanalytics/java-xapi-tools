@@ -79,7 +79,8 @@ public class StatementClient {
             EntityUtils.consumeQuietly(response.getEntity());
             throw new StatementClientException(String.format(
                 "Error, Non-200 Status. Received: %s",
-                response.getStatusLine().getStatusCode()));
+                response.getStatusLine().getStatusCode()), 
+                response.getStatusLine().getStatusCode());
         }
     }
 
@@ -107,7 +108,7 @@ public class StatementClient {
             }
             return result;
         } catch (ParseException | IOException e) {
-            throw new StatementClientException("Error posting Statements", e);
+            throw new StatementClientException("Error posting Statements", 0, e);
         }
     }
 
@@ -123,7 +124,8 @@ public class StatementClient {
             EntityUtils.consumeQuietly(response.getEntity());
             throw new StatementClientException(String.format(
                 "Error, Non-200 Status. Received: %s",
-                response.getStatusLine().getStatusCode()));
+                response.getStatusLine().getStatusCode()),
+                response.getStatusLine().getStatusCode());
         }
     }
 
@@ -139,7 +141,8 @@ public class StatementClient {
             EntityUtils.consumeQuietly(response.getEntity());
             throw new StatementClientException(String.format(
                 "Error, Non-200 Status. Received: %s",
-                response.getStatusLine().getStatusCode()));
+                response.getStatusLine().getStatusCode()),
+                response.getStatusLine().getStatusCode());
         }
     }
 
@@ -195,7 +198,7 @@ public class StatementClient {
             }
             
         } catch (IOException e) {
-            throw new StatementClientException("Error getting Statements", e);
+            throw new StatementClientException("Error getting Statements", 0, e);
         }
         return statements;
     }
