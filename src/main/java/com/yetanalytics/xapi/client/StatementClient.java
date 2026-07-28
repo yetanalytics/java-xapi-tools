@@ -77,10 +77,9 @@ public class StatementClient {
                 new TypeReference<List<UUID>>(){});
         } else {
             EntityUtils.consumeQuietly(response.getEntity());
+            int statusCode = response.getStatusLine().getStatusCode();
             throw new StatementClientException(String.format(
-                "Error, Non-200 Status. Received: %s",
-                response.getStatusLine().getStatusCode()), 
-                response.getStatusLine().getStatusCode());
+                "Error, Non-200 Status. Received: %s", statusCode), statusCode);
         }
     }
 
@@ -122,10 +121,9 @@ public class StatementClient {
             return Mapper.getMapper().readValue(responseBody, StatementResult.class);
         } else {
             EntityUtils.consumeQuietly(response.getEntity());
+            int statusCode = response.getStatusLine().getStatusCode();
             throw new StatementClientException(String.format(
-                "Error, Non-200 Status. Received: %s",
-                response.getStatusLine().getStatusCode()),
-                response.getStatusLine().getStatusCode());
+                "Error, Non-200 Status. Received: %s", statusCode), statusCode);
         }
     }
 
@@ -139,10 +137,9 @@ public class StatementClient {
             return Mapper.getMapper().readValue(responseBody, Statement.class);
         } else {
             EntityUtils.consumeQuietly(response.getEntity());
+            int statusCode = response.getStatusLine().getStatusCode();
             throw new StatementClientException(String.format(
-                "Error, Non-200 Status. Received: %s",
-                response.getStatusLine().getStatusCode()),
-                response.getStatusLine().getStatusCode());
+                "Error, Non-200 Status. Received: %s", statusCode), statusCode);
         }
     }
 
