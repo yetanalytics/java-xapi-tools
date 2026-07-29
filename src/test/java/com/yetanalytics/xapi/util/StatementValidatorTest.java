@@ -1,10 +1,10 @@
 package com.yetanalytics.xapi.util;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.yetanalytics.xapi.model.Activity;
 import com.yetanalytics.xapi.model.LangTag;
