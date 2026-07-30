@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model;
 
+import java.io.Serializable;
 import java.time.Duration;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -12,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 * allowing for retrieval of the original String.
 */
 @JsonInclude(Include.NON_NULL)
-public class XapiDuration {
+public class XapiDuration implements Serializable {
 
     /**
     * This constructor takes an 8601 formatted String and converts it to an
