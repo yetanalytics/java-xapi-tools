@@ -1,5 +1,6 @@
 package com.yetanalytics.xapi.model;
 
+import java.io.Serializable;
 import java.util.IllformedLocaleException;
 import java.util.Locale;
 import java.util.Locale.Builder;
@@ -14,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * allowing for retrieval of both the original String and the corresponding Locale.
  */
 @JsonInclude(Include.NON_NULL)
-public class LangTag {
+public class LangTag implements Serializable {
     private final String languageTagString;
     private final Locale languageTagLocale;
 

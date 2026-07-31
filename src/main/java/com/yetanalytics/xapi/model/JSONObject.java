@@ -1,5 +1,7 @@
 package com.yetanalytics.xapi.model;
 
-public interface JSONObject {
+import java.io.Serializable;
+
+public interface JSONObject extends Serializable {
     public boolean isEmpty();
 }
